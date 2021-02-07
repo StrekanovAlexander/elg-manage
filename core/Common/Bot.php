@@ -21,7 +21,7 @@ class Bot extends \TelegramBot\Api\Client
         $this->prefix = $prefix;
     }
 
-    public function sendMsg($message, $text)
+    public function simpleMessage($message, $text)
     {
         $this->sendMessage($message->getChat()->getId(), $text);
     }

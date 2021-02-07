@@ -1,15 +1,10 @@
 <?php
 
-require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../core/app.php');
+require(__DIR__ . '/../core/routes.php');
 
-$app = new \Slim\App([
-    'settings' => [
-       'displayErrorDetails' => false,
-    ]
-]);
-
-$app->get('/', function () {
-    return 'App is running';
-});
+// $app->get('/', function () {
+//     return 'App is running';
+// });
 
 $app->run();

@@ -12,7 +12,14 @@ $prefix = 'zp';
 $bot = new Bot($token, $prefix);
 
 $bot->command('start', function ($message) use ($bot) {
-    $bot->sendMsg($message, 'Добро пожаловать в Евроломбард - '. $bot->getCity() .'!');
+    $bot->simpleMessage($message, 'Добро пожаловать в Евроломбард - '. $bot->getCity() .'!');
+    $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup([
+        [
+            ['text' => 'Курсы валют'], 
+            ['text' => 'Сайт компании'],
+        ],
+    ], true, true);
+	$bot->sendMessage($message->getChat()->getId(), 'test', false, null, null, $keyboard);
 });
 
 $bot->run();
