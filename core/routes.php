@@ -1,5 +1,5 @@
 <?php
 
-$app->get('/', function () {
-    return 'App is running';
-});
+$app->group('', function() {
+    $this->get('/', 'HomeController:index')->setName('home.index');
+});    
