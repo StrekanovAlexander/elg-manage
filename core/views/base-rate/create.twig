@@ -1,27 +1,35 @@
 {% extends 'templates/layout.twig' %}
 
 {% block content %}
-     <h3 class="my-5">Установить базовые курсы</h3>
-    <form action="#" method="POST">
-        <div class="form-group">
-            <label for="curr_id">Валюта</label>
-            <select class="form-control" name="curr_id" id="curr_id">
-              {% for curr in currs %}
-                <option value="{{ curr.id }}">{{ curr.short_name }}</option>
-              {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="rate_buy">Покупка (оптовый)</label>
-            <input class="form-control" name="rate_buy" id="rate_buy" type="number" step="0.01">
-        </div>
-        <div class="form-group">
-            <label for="rate_buy">Дельта</label>
-            <input class="form-control" name="steps" id="steps" type="number" value="1">
-        </div>
-        <div class="form-group">
-            <button class="btn btn-success btn-sm" type="submit">ЗАПИСАТЬ</button>
-        </div>
+    <h3 class="my-5">Установить базовые курсы</h3>
+    <form action="{{ path_for('base-rate.create')}}" method="POST">
+        <table class="table">
+            <tr>
+                <th>Валюта</th>
+                <th>Покупка (оптовый)</th>
+                <th>Дельта</th>
+            </tr>
+            {% for curr in currs %}
+                {% set curr_id = curr.curr.id ? curr.curr.id : curr.id %}
+                {% set curr_sign = curr.curr.sign ? curr.curr.sign : curr.sign %}
+                {% set curr_short_name = curr.curr.short_name ? curr.curr.short_name : curr.short_name %}
+                {% set curr_step_size_format = curr.curr.step_size_format ? curr.curr.step_size_format : curr.step_size_format %}
+                {% set curr_rate_buy = curr.rate_buy ? curr.rate_buy : 0 %}
+                <tr>
+                    <td>
+                        {{ curr_sign|raw }} {{ curr_short_name }}
+                        <input name="curr_id_{{ curr_id }}" id="curr_id_{{ curr_id }}" value="{{ curr_id }}" type="hidden">
+                    </td>
+                    <td>
+                        <input class="form-control" name="rate_buy_{{ curr_id }}" id="rate_buy_{{ curr_id }}" type="number" step="{{ curr_step_size_format }}" value="{{ curr_rate_buy }}">
+                    </td>
+                    <td>
+                        <input class="form-control" name="steps_{{ curr_id }}" id="steps_{{ curr_id }}" type="number" value="1">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>    
+        <button class="btn btn-success" type="submit">Записать</button>
         {{ csrf.field | raw}}
     </form>
 {% endblock %}    

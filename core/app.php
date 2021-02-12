@@ -29,12 +29,18 @@ $c['view'] = function($c) {
       $c->router,
       $c->request->getUri()
     ));
+    $view->getEnvironment()->addGlobal('flash', $c->flash);
     return $view;
 };
 
 $c['csrf'] = function() {
     return new \Slim\Csrf\Guard;
 };
+
+$c['flash'] = function() {
+    return new \Slim\Flash\Messages;
+};
+   
    
 
 $c['BaseRateController'] = function($c) {

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Elg-Панель управления</title>
 </head>
-<body>
+<body style="padding-top: 5em">
     {# {% if auth.check %} #}
         {% include 'templates/partials/_nav.twig' %}
      {#   {% include 'templates/partials/_breadcrumbs.twig' %} #}
     {# {% endif %} #}
     <div class="container">
-        {# {% include 'templates/partials/_flash.twig' %} #}
+        {% include 'templates/partials/_flash.twig' %}
         {% block content %}{% endblock %}
     </div>    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

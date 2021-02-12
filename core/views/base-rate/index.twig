@@ -1,29 +1,33 @@
 {% extends 'templates/layout.twig' %}
 
 {% block content %}
-    <h3 class="my-5">Базовые курсы валют</h3>
+    <h3 class="my-5">Базовые курсы валют (Текущие)</h3>
+    <a href="{{ path_for('base-rate.create') }}" class="btn btn-success mb-2" role="button">Установить новые </a>
     {% if base_rates|length %}
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>Валюта</th>
+                    <th colspan="2">Валюта</th>
                     <th>Покупка</th>
                     <th>Продажа</th>
+                    <th>Дельта</th>
+                    <th>Дата</th>
                     <th>Время</th>
                 </tr>
             </thead>
             <tbody>
             {% for base_rate in base_rates %}
                 <tr>
+                   <td>{{ base_rate.curr.sign|raw }}</td>
                    <td>{{ base_rate.curr.short_name }}</td>
                    <td>{{ base_rate.rate_buy }}</td>
                    <td>{{ base_rate.rate_sale }}</td>
-                   <td>{{ base_rate.created_at }}</td>
+                   <td>{{ base_rate.steps }}</td>
+                   <td>{{ base_rate.created_at|date("d.m.Y") }}</td>
+                   <td>{{ base_rate.created_at|date("H:i:s") }}</td>
                 </tr>    
             {% endfor %}
             </body>
         </table>        
     {% endif %}
-    <a href="{{ path_for('base-rate.create') }}" class="btn btn-success btn-sm" role="button">УСТАНОВИТЬ</a>
-
 {% endblock %}

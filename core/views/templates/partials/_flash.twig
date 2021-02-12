@@ -1,0 +1,6 @@
+{% if flash.getMessage('message') %}
+    <div class="alert alert-info">
+        {{ flash.getMessage('message')|first }}
+    </div>
+{% endif %}
+
