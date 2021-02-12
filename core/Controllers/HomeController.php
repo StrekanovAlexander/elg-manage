@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index($req, $res)
     {
-        $base_rates = BaseRate::orderBy('curr_id', 'ASC')->get();
+        $base_rates = BaseRate::actual();
         return $this->view->render($res, 'base-rate/index.twig', [
             'base_rates' => $base_rates,
         ]);

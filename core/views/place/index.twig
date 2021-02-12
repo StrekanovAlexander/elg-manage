@@ -1,0 +1,28 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Населенные пункты</h3>
+    {% if places|length %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Префикс</th>
+                    <th colspan="2">Курсы валют</th>
+                    <th>Актуальность</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for place in places %}
+                <tr>
+                   <td>{{ place.full_name }}</td>
+                   <td>{{ place.sign }}</td>
+                   <td><a href="#">Текущие курсы</a></td>
+                   <td><a href="#">Настройка курсов</a></td>
+                   <td><i class="fas {{ place.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                </tr>    
+            {% endfor %}
+            </body>
+        </table>        
+    {% endif %}
+{% endblock %}

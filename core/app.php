@@ -40,8 +40,6 @@ $c['csrf'] = function() {
 $c['flash'] = function() {
     return new \Slim\Flash\Messages;
 };
-   
-   
 
 $c['BaseRateController'] = function($c) {
     return new App\Controllers\BaseRateController($c);
@@ -49,6 +47,10 @@ $c['BaseRateController'] = function($c) {
 
 $c['HomeController'] = function($c) {
     return new App\Controllers\HomeController($c);
+};
+
+$c['PlaceController'] = function($c) {
+    return new App\Controllers\PlaceController($c);
 };
 
 $app->add(new \App\Middleware\CsrfMiddleware($c));
