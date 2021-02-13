@@ -25,15 +25,7 @@ class BaseRateController extends Controller
     public function store($req, $res)
     {
         $timestamp = date('Y-m-d H:i:s');
-        $str = '';
-
-        foreach($req->getParams() as $key => $value) {
-            if (($key == 'csrf_name') || ($key == 'csrf_value')) continue; 
-            $str .= $value . '|';
-        }
-
-        $arr= explode('|', mb_substr($str, 0, -1));
-        $arr = array_chunk($arr, 3);
+        $arr = \App\Common\String::cleanParams($req->getParams(), 3);
 
         foreach($arr as $value) {
             BaseRate::create([
