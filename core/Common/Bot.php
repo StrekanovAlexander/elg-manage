@@ -5,25 +5,29 @@ namespace App\Common;
 class Bot extends \TelegramBot\Api\Client
 {
 
-    private $prefix;
+    private $place;
 
-    public function getCity()
-    {
-        if ($this->prefix == 'zp') {
-            $city = 'Запорожье';
-        }
-        return $city; 
-    }
-    
-    public function __construct($token, $prefix)
+    public function __construct($token, $place)
     {
         parent::__construct($token);
-        $this->prefix = $prefix;
+        $this->place = $place;
     }
 
-    public function simpleMessage($message, $text)
+    public function getPlace()
     {
-        $this->sendMessage($message->getChat()->getId(), $text);
+        return $this->place;
+    }
+
+    public function replyKeyboard($message, $buttons, $text)
+    {
+        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup($buttons, false, true);
+        $this->sendMessage($message->getChat()->getId(), $text, false, null, null, $keyboard);
+    }
+
+    public function inlineKeyboard($message, $buttons, $text)
+    {
+        $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup($buttons, $text);
+        $this->sendMessage($message->getChat()->getId(), $text, false, null, null, $keyboard);
     }
 
 }
