@@ -5,8 +5,8 @@
     {% if places|length %}
         <table class="table table-bordered table-striped">
             <thead>
-                <tr>
-                    <th>Наименование</th>
+                <tr class="text-center">
+                    <th class="text-left">Наименование</th>
                     <th>Префикс</th>
                     <th colspan="2">Курсы валют</th>
                     <th>Актуальность</th>
@@ -14,11 +14,11 @@
             </thead>
             <tbody>
             {% for place in places %}
-                <tr>
-                   <td>{{ place.full_name }}</td>
+                <tr class="text-center">
+                   <td class="text-left">{{ place.full_name }}</td>
                    <td>{{ place.sign }}</td>
-                   <td><a href="#">Текущие курсы</a></td>
-                   <td><a href="#">Настройка курсов</a></td>
+                   <td><a href="{{ path_for('rate.details', {'id': place.id}) }}">Текущие курсы</a></td>
+                   <td><a href="{{ path_for('curr-rule.details', {'id': place.id}) }}">Настройка курсов</a></td>
                    <td><i class="fas {{ place.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                 </tr>    
             {% endfor %}

@@ -1,0 +1,37 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('place.index') }}">Населенные пункты</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ place.full_name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">Настройки курсов валют</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Настройки курсов валют: {{ place.full_name }}</h3>
+    {% if curr_rules|length %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th colspan="2">Валюта</th>
+                    <th class="text-right">Покупка</th>
+                    <th class="text-right">Продажа</th>
+                    <th>Актуальность</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for curr_rule in curr_rules %}
+                <tr class="text-center">
+                   <td>{{ curr_rule.curr.sign|raw }}</td>
+                   <td>{{ curr_rule.curr.short_name }}</td>
+                   <td class="text-right">{{ curr_rule.diff_buy }}</td>
+                   <td class="text-right">{{ curr_rule.diff_sale }}</td>
+                   <td><i class="fas {{ curr_rule.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                   <td>{{ curr_rule.updated_at|date("d.m.Y H:i:s") }}</td>
+                </tr>    
+            {% endfor %}
+            </tbody>
+        </table>        
+    {% endif %}
+{% endblock %}

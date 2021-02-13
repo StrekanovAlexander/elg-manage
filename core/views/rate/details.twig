@@ -1,0 +1,35 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('place.index') }}">Населенные пункты</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ place.full_name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">Текущие курсы валют</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Текущие курсы валют: {{ place.full_name }}</h3>
+    {% if rates|length %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th colspan="2">Валюта</th>
+                    <th class="text-right">Покупка</th>
+                    <th class="text-right">Продажа</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for rate in rates %}
+                <tr class="text-center">
+                   <td>{{ rate.curr.sign|raw }}</td>
+                   <td>{{ rate.curr.short_name }}</td>
+                   <td class="text-right">{{ rate.rate_buy }}</td>
+                   <td class="text-right">{{ rate.rate_sale }}</td>
+                   <td>{{ rate.created_at|date("d.m.Y H:i:s") }}</td>
+                </tr>    
+            {% endfor %}
+            </tbody>
+        </table>        
+    {% endif %} 
+{% endblock %}

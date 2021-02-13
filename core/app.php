@@ -45,12 +45,36 @@ $c['BaseRateController'] = function($c) {
     return new App\Controllers\BaseRateController($c);
 };
 
+$c['CurrRuleController'] = function($c) {
+    return new App\Controllers\CurrRuleController($c);
+};
+
 $c['HomeController'] = function($c) {
     return new App\Controllers\HomeController($c);
 };
 
 $c['PlaceController'] = function($c) {
     return new App\Controllers\PlaceController($c);
+};
+
+$c['RateController'] = function($c) {
+    return new App\Controllers\RateController($c);
+};
+
+$c['errorHandler'] = function($c) {
+    return function ($req, $res, $e) use ($c) {
+        return $res->withStatus(500)
+            ->withHeader('Content-Type', 'text/html')
+            ->write('500. Server error');
+    };
+};
+  
+$c['notFoundHandler'] = function($c) {
+    return function($req, $res) use ($c) {
+        return $res->withStatus(404)
+        ->withHeader('Content-Type', 'text/html')
+        ->write('404. Page not found');
+    };
 };
 
 $app->add(new \App\Middleware\CsrfMiddleware($c));

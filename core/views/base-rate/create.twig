@@ -3,9 +3,9 @@
 {% block content %}
     <h3 class="my-5">Установить базовые курсы</h3>
     <form action="{{ path_for('base-rate.create')}}" method="POST">
-        <table class="table">
-            <tr>
-                <th>Валюта</th>
+        <table class="table table-striped w-50">
+            <tr class="text-center">
+                <th colspan="2">Валюта</th>
                 <th>Покупка (оптовый)</th>
                 <th>Дельта</th>
             </tr>
@@ -15,13 +15,14 @@
                 {% set curr_short_name = curr.curr.short_name ? curr.curr.short_name : curr.short_name %}
                 {% set curr_step_size_format = curr.curr.step_size_format ? curr.curr.step_size_format : curr.step_size_format %}
                 {% set curr_rate_buy = curr.rate_buy ? curr.rate_buy : 0 %}
-                <tr>
-                    <td>
-                        {{ curr_sign|raw }} {{ curr_short_name }}
+                <tr class="text-center">
+                    <td>{{ curr_sign|raw }}</td>
+                    <td>    
+                        {{ curr_short_name }}
                         <input name="curr_id_{{ curr_id }}" id="curr_id_{{ curr_id }}" value="{{ curr_id }}" type="hidden">
                     </td>
                     <td>
-                        <input class="form-control" name="rate_buy_{{ curr_id }}" id="rate_buy_{{ curr_id }}" type="number" step="{{ curr_step_size_format }}" value="{{ curr_rate_buy }}">
+                        <input class="form-control" name="rate_buy_{{ curr_id }}" id="rate_buy_{{ curr_id }}" type="number" step="{{ curr_step_size_format }}" value="{{ curr_rate_buy }}" style="text-align: right">
                     </td>
                     <td>
                         <input class="form-control" name="steps_{{ curr_id }}" id="steps_{{ curr_id }}" type="number" value="1">

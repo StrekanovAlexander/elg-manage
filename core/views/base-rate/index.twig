@@ -6,25 +6,23 @@
     {% if base_rates|length %}
         <table class="table table-bordered table-striped">
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th colspan="2">Валюта</th>
-                    <th>Покупка</th>
-                    <th>Продажа</th>
-                    <th>Дельта</th>
+                    <th class="text-right">Покупка</th>
+                    <th class="text-right">Продажа</th>
+                    <th class="text-right">Дельта</th>
                     <th>Дата</th>
-                    <th>Время</th>
                 </tr>
             </thead>
             <tbody>
             {% for base_rate in base_rates %}
-                <tr>
+                <tr class="text-center">
                    <td>{{ base_rate.curr.sign|raw }}</td>
                    <td>{{ base_rate.curr.short_name }}</td>
-                   <td>{{ base_rate.rate_buy }}</td>
-                   <td>{{ base_rate.rate_sale }}</td>
-                   <td>{{ base_rate.steps }}</td>
-                   <td>{{ base_rate.created_at|date("d.m.Y") }}</td>
-                   <td>{{ base_rate.created_at|date("H:i:s") }}</td>
+                   <td class="text-right">{{ base_rate.rate_buy }}</td>
+                   <td class="text-right">{{ base_rate.rate_sale }}</td>
+                   <td class="text-right">{{ base_rate.steps }}</td>
+                   <td>{{ base_rate.created_at|date("d.m.Y H:i:s") }}</td>
                 </tr>    
             {% endfor %}
             </body>
