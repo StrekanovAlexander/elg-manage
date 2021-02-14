@@ -45,10 +45,6 @@ $c['BaseRateController'] = function($c) {
     return new App\Controllers\BaseRateController($c);
 };
 
-$c['CurrRuleController'] = function($c) {
-    return new App\Controllers\CurrRuleController($c);
-};
-
 $c['HomeController'] = function($c) {
     return new App\Controllers\HomeController($c);
 };
@@ -59,6 +55,10 @@ $c['PlaceController'] = function($c) {
 
 $c['RateController'] = function($c) {
     return new App\Controllers\RateController($c);
+};
+
+$c['RuleController'] = function($c) {
+    return new App\Controllers\RuleController($c);
 };
 
 $c['errorHandler'] = function($c) {

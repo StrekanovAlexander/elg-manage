@@ -25,8 +25,10 @@ class BaseRateController extends Controller
     public function store($req, $res)
     {
         $timestamp = date('Y-m-d H:i:s');
-        $arr = \App\Common\String::cleanParams($req->getParams(), 3);
-
+        $arr = \App\Common\String::cleanParams($req->getParams(), [
+            'csrf_name', 
+            'csrf_value',
+        ], 3);
         foreach($arr as $value) {
             BaseRate::create([
                 'curr_id' => $value[0],

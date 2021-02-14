@@ -4,9 +4,9 @@ namespace App\Models;
 
 use  \Illuminate\Database\Eloquent\Model;
 
-class CurrRule extends Model
+class Rule extends Model
 {
-    protected $table = 'curr_rules';
+    protected $table = 'rules';
     protected $fillable = [
         'diff_buy',
         'diff_sale',

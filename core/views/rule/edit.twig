@@ -1,0 +1,49 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('place.index') }}">Населенные пункты</a></li>
+            <li class="breadcrumb-item"><a href="{{ path_for('rule.details', {'id': place.id}) }}">{{ place.full_name }} / Настройки курсов валют</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Редактирование настроек курсов валют: {{ place.full_name }}</h3>
+    {% if rules|length %}
+        <form action="{{ path_for('rule.edit') }}" method="POST">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th colspan="2">Валюта</th>
+                        <th class="text-right w-25">Покупка</th>
+                        <th class="text-right w-25">Продажа</th>
+                        <th>Актуальность</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rule in rules %}
+                    <tr class="text-center">
+                    <td>
+                        {{ rule.curr.sign|raw }}
+                        <input type="hidden" name="id_{{ rule.id }}" id="id_{{ rule.id }}" value="{{ rule.id }}"> 
+                    </td>
+                    <td>{{ rule.curr.short_name }}</td>
+                    <td>
+                        <input class="form-control" name="rule_diff_buy_{{ rule.curr.id }}" id="rule_diff_buy_{{ rule.curr.id }}" type="number" step="1" value="{{ rule.diff_buy }}" style="text-align: right">
+                    </td>
+                    <td class="text-right">
+                        <input class="form-control" name="rule_diff_sale_{{ rule.curr.id }}" id="rule_diff_sale_{{ rule.curr.id }}" type="number" step="1" value="{{ rule.diff_sale }}" style="text-align: right">
+                    </td>
+                    <td><i class="fas {{ rule.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                    <td>{{ rule.updated_at|date("d.m.Y H:i:s") }}</td>
+                    </tr>    
+                {% endfor %}
+                </tbody>
+            </table>
+            <button class="btn btn-success" type="submit">Записать</button>
+            <input type="hidden" name="id" id="id" value="{{ place.id }}">
+            {{ csrf.field | raw}}
+        </form>        
+    {% endif %}
+{% endblock %}

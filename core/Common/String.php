@@ -4,12 +4,13 @@ namespace App\Common;
 
 class String
 {
-    public static function cleanParams($params, $chanks)
+    public static function cleanParams($params, $filtered, $chanks)
     {
         $str = '';
 
         foreach($params as $key => $value) {
-            if (($key == 'csrf_name') || ($key == 'csrf_value')) continue; 
+            if (in_array($key, $filtered)) continue;
+            // if (($key == 'csrf_name') || ($key == 'csrf_value')) continue; 
             $str .= $value . '|';
         }
 

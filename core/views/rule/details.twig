@@ -9,7 +9,7 @@
         </ol>
     </nav>
     <h3 class="my-5">Настройки курсов валют: {{ place.full_name }}</h3>
-    {% if curr_rules|length %}
+    {% if rules|length %}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr class="text-center">
@@ -21,17 +21,18 @@
                 </tr>
             </thead>
             <tbody>
-            {% for curr_rule in curr_rules %}
+            {% for rule in rules %}
                 <tr class="text-center">
-                   <td>{{ curr_rule.curr.sign|raw }}</td>
-                   <td>{{ curr_rule.curr.short_name }}</td>
-                   <td class="text-right">{{ curr_rule.diff_buy }}</td>
-                   <td class="text-right">{{ curr_rule.diff_sale }}</td>
-                   <td><i class="fas {{ curr_rule.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
-                   <td>{{ curr_rule.updated_at|date("d.m.Y H:i:s") }}</td>
+                   <td>{{ rule.curr.sign|raw }}</td>
+                   <td>{{ rule.curr.short_name }}</td>
+                   <td class="text-right">{{ rule.diff_buy }}</td>
+                   <td class="text-right">{{ rule.diff_sale }}</td>
+                   <td><i class="fas {{ rule.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                   <td>{{ rule.updated_at|date("d.m.Y H:i:s") }}</td>
                 </tr>    
             {% endfor %}
             </tbody>
-        </table>        
+        </table>
+        <a href="{{ path_for('rule.edit', {'id': place.id}) }}" class="btn btn-success mb-2" role="button">Редактировать</a>        
     {% endif %}
 {% endblock %}
