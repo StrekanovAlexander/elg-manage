@@ -15,5 +15,12 @@ $app->group('', function() {
     $this->post('/rules/place/edit', 'RuleController:update');
 
     $this->get('/rules/place/{id}', 'RuleController:details')->setName('rule.details');
+
+    $this->get('/user/logout', 'UserController:logout')->setName('user.logout');
     
-});    
+})->add(new \App\Middleware\AuthMiddleware($c));
+
+$app->group('', function() {
+    $this->get('/user/login', 'UserController:login')->setName('user.login');
+    $this->post('/user/login', 'UserController:postLogin');
+})->add(new \App\Middleware\AdminMiddleware($c));    

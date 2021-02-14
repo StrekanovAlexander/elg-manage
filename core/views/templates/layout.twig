@@ -9,10 +9,9 @@
     <title>Elg-Панель управления</title>
 </head>
 <body style="padding-top: 5em">
-    {# {% if auth.check %} #}
+    {% if auth.check %}
         {% include 'templates/partials/_nav.twig' %}
-     {#   {% include 'templates/partials/_breadcrumbs.twig' %} #}
-    {# {% endif %} #}
+    {% endif %}
     <div class="container">
         {% include 'templates/partials/_flash.twig' %}
         {% block content %}{% endblock %}

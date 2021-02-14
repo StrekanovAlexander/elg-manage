@@ -30,6 +30,10 @@ $c['view'] = function($c) {
       $c->request->getUri()
     ));
     $view->getEnvironment()->addGlobal('flash', $c->flash);
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $c->auth->check(),
+    ]);
+     
     return $view;
 };
 
@@ -39,6 +43,10 @@ $c['csrf'] = function() {
 
 $c['flash'] = function() {
     return new \Slim\Flash\Messages;
+};
+
+$c['auth'] = function() {
+    return new App\Common\Auth;
 };
 
 $c['BaseRateController'] = function($c) {
@@ -59,6 +67,10 @@ $c['RateController'] = function($c) {
 
 $c['RuleController'] = function($c) {
     return new App\Controllers\RuleController($c);
+};
+
+$c['UserController'] = function($c) {
+    return new App\Controllers\UserController($c);
 };
 
 $c['errorHandler'] = function($c) {
