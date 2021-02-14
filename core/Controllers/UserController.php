@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-// use App\Models\BaseRate;
-
 class UserController extends Controller
 {
     public function login($req, $res)
