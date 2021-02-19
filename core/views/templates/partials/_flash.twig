@@ -2,5 +2,9 @@
     <div class="alert alert-info">
         {{ flash.getMessage('message')|first }}
     </div>
+{% elseif flash.getMessage('error') %}
+    <div class="alert alert-danger">
+        {{ flash.getMessage('error')|first }}
+    </div>    
 {% endif %}
 

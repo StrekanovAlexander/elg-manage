@@ -8,6 +8,7 @@
                 <tr class="text-center">
                     <th class="text-left">Наименование</th>
                     <th>Префикс</th>
+                    <th>Правила</th>
                     <th colspan="2">Курсы валют</th>
                     <th>Актуальность</th>
                 </tr>
@@ -17,8 +18,10 @@
                 <tr class="text-center">
                    <td class="text-left">{{ place.full_name }}</td>
                    <td>{{ place.sign }}</td>
+                   <td><a href="{{ path_for('rule.details', {'id': place.id}) }}">Настройка</a></td>
                    <td><a href="{{ path_for('rate.details', {'id': place.id}) }}">Текущие курсы</a></td>
-                   <td><a href="{{ path_for('rule.details', {'id': place.id}) }}">Настройка курсов</a></td>
+                   <td><a href="{{ path_for('rate.json', {'id': place.id}) }}">JSON</a></td>
+                   
                    <td><i class="fas {{ place.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                 </tr>    
             {% endfor %}

@@ -73,16 +73,16 @@ $c['UserController'] = function($c) {
     return new App\Controllers\UserController($c);
 };
 
-$c['errorHandler'] = function($c) {
-    return function ($req, $res, $e) use ($c) {
+$c['errorHandler'] = function() {
+    return function ($req, $res, $e) {
         return $res->withStatus(500)
             ->withHeader('Content-Type', 'text/html')
             ->write('500. Server error');
     };
 };
   
-$c['notFoundHandler'] = function($c) {
-    return function($req, $res) use ($c) {
+$c['notFoundHandler'] = function() {
+    return function($req, $res) {
         return $res->withStatus(404)
         ->withHeader('Content-Type', 'text/html')
         ->write('404. Page not found');
