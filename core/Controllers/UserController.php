@@ -42,6 +42,10 @@ class UserController extends Controller
             return $res->withRedirect($this->router->pathFor('user.edit'));
         }
 
+        $user->update([
+            'password' => password_hash($req->getParam('password'), PASSWORD_DEFAULT),
+        ]);
+
         $this->flash->addMessage('message', 'Данные доступа были изменены.');
         return $res->withRedirect($this->router->pathFor('user.index'));
     }
