@@ -2,32 +2,59 @@
 
 namespace App\Common;
 
+use App\Common\Settings;
+
 class Bot extends \TelegramBot\Api\Client
 {
 
     private $place;
+    private $settings;
 
     public function __construct($token, $place)
     {
         parent::__construct($token);
         $this->place = $place;
+        $this->settings = Settings::$global;
     }
 
-    public function getPlace()
+    public function replyKeyboard($message)
     {
-        return $this->place;
+        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup(
+            $this->settings['mainButtons'], 
+            false, 
+            true
+        );
+
+        $this->sendMessage(
+            $message->getChat()->getId(), 
+            $this->settings['brand'] . ' - ' . $this->place,
+            false, 
+            null, 
+            null, 
+            $keyboard
+        );
     }
 
-    public function replyKeyboard($message, $buttons, $text)
+    public function inlineKeyboard($message, $buttons, $title)
     {
-        $keyboard = new \TelegramBot\Api\Types\ReplyKeyboardMarkup($buttons, false, true);
-        $this->sendMessage($message->getChat()->getId(), $text, false, null, null, $keyboard);
+        $caption = $this->getCaption($title);
+        $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup($buttons, $caption);
+        $this->sendMessage($message->getChat()->getId(), $caption, false, null, null, $keyboard);
     }
 
-    public function inlineKeyboard($message, $buttons, $text)
+    public function message($message, $title)
     {
-        $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup($buttons, $text);
-        $this->sendMessage($message->getChat()->getId(), $text, false, null, null, $keyboard);
+        $this->sendMessage($message->getChat()->getId(), $this->getCaption($title));
+    }
+
+    public function getCaption($title)
+    {
+        return $this->settings['titles'][$title]; 
+    }
+
+    public function getSiteButton()
+    {
+        return $this->settings['siteButton'];
     }
 
 }
