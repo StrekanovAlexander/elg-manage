@@ -6,15 +6,60 @@ use App\Common\Settings;
 
 class Bot extends \TelegramBot\Api\Client
 {
-
-    private $place;
+    private $db;
+    private $placeId;
     private $settings;
 
-    public function __construct($token, $place)
+    public function __construct($token, $placeId, $db)
     {
         parent::__construct($token);
-        $this->place = $place;
+        $this->db = new \PDO(
+            'mysql:host=' . $db['host'] . 
+            ';dbname=' . $db['database'], 
+            $db['username'], 
+            $db['password']
+        );
+        $this->placeId = $placeId;
         $this->settings = Settings::$global;
+    }
+
+    private function maxRateTimestamp()
+    {
+        $stmt = $this->db->prepare('SELECT max(created_at) as created_at FROM elg_rates');
+        $stmt->execute();    
+        return $stmt->fetch(\PDO::FETCH_OBJ)->created_at;  
+    }
+
+    private function placeName()
+    {
+        $stmt = $this->db->prepare('SELECT full_name FROM elg_places WHERE id = ?');
+        $stmt->execute([$this->placeId]);    
+        return $stmt->fetch(\PDO::FETCH_OBJ)->full_name;  
+    }
+
+    private function rates()
+    {
+        $created_at = $this->maxRateTimestamp();
+        $stmt = $this->db->prepare(
+            'SELECT r.*, c.short_name 
+            FROM elg_rates r INNER JOIN elg_currs c ON r.curr_id = c.id 
+            WHERE r.place_id = ? AND r.created_at = ? 
+            ORDER BY c.id'
+        );
+
+        $stmt->execute([$this->placeId, $created_at]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
+    }
+
+    public function printRates()
+    {
+        $rates = $this->rates();
+        $s = $this->placeName();
+        $s .= sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа"); 
+        foreach ($rates as $rate){
+            $s .= sprintf("\n%-10s %' 9s  %' 9s", $rate['short_name'], $rate['rate_buy'], $rate['rate_sale']);
+        }
+        return $s;
     }
 
     public function replyKeyboard($message)
@@ -27,7 +72,7 @@ class Bot extends \TelegramBot\Api\Client
 
         $this->sendMessage(
             $message->getChat()->getId(), 
-            $this->settings['brand'] . ' - ' . $this->place,
+            $this->settings['brand'] . ' - ' . $this->placeName(),
             false, 
             null, 
             null, 
@@ -40,11 +85,6 @@ class Bot extends \TelegramBot\Api\Client
         $caption = $this->getCaption($title);
         $keyboard = new \TelegramBot\Api\Types\Inline\InlineKeyboardMarkup($buttons, $caption);
         $this->sendMessage($message->getChat()->getId(), $caption, false, null, null, $keyboard);
-    }
-
-    public function message($message, $title)
-    {
-        $this->sendMessage($message->getChat()->getId(), $this->getCaption($title));
     }
 
     public function getCaption($title)
