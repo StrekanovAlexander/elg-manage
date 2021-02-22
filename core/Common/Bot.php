@@ -97,4 +97,9 @@ class Bot extends \TelegramBot\Api\Client
         return $this->settings['siteButton'];
     }
 
+    public function getPlacesButtons()
+    {
+        return $this->settings['placesButtons'];
+    }
+
 }
