@@ -2,7 +2,10 @@
 
 {% block content %}
     <h3 class="my-5">Базовые курсы валют (Текущие)</h3>
-    <a href="{{ path_for('base-rate.create') }}" class="btn btn-success mb-2" role="button">Установить новые </a>
+    <div>
+    <a href="{{ path_for('base-rate.create') }}" class="btn btn-success mb-2" role="button">Установить новые</a>
+    <a href="{{ path_for('rate.send') }}" class="btn btn-primary mb-2 float-right" role="button">Отправить курсы</a>
+    </div>
     {% if base_rates|length %}
         <table class="table table-bordered table-striped">
             <thead>

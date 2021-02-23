@@ -11,6 +11,7 @@ $app->group('', function() {
     
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');
     $this->get('/rates/places/json/{id}', 'RateController:json')->setName('rate.json');
+    $this->get('/send', 'RateController:send')->setName('rate.send');
 
     $this->get('/rules/place/edit[/{id}]', 'RuleController:edit')->setName('rule.edit');
     $this->post('/rules/place/edit', 'RuleController:update');

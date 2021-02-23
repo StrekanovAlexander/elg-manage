@@ -25,5 +25,13 @@ class Rate extends Model
             ->where('created_at', self::max('created_at'))
             ->get();
     }
+
+    public function actualByCurr($id)
+    {
+        return self::orderBy('place_id', 'ASC')
+            ->where('curr_id', $id)
+            ->where('created_at', self::max('created_at'))
+            ->get();
+    }
     
 }
