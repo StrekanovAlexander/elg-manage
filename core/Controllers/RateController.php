@@ -39,82 +39,53 @@ class RateController extends Controller
     {
         $currs = Curr::orderBy('id')->where('is_actual', true)->where('is_main', false)->get();
         $places = Place::orderBy('id')->where('is_actual', true)->get();
-        $header = '';
-        foreach($places as $place) {
-            $header .= '<td>' . $place->full_name . '</td>'; 
-        }
-        $header = '<tr><td>Валюта</td>' . $header . '</tr>';
-        $rate_buy = '';
-        foreach($currs as $curr) {
-            $rate_buy .= '<td>' . $curr->short_name . '&nbsp;пок</td>';
-            $rate_sale .= '<td>' . $curr->short_name . '&nbsp;прод</td>';
-            $data = Rate::actualByCurr($curr->id);
-            foreach($data as $el) {
-                $rate_buy .= '<td align="right">' . $el->rate_buy . '</td>';
-                $rate_sale .= '<td align="right">' . $el->rate_sale . '</td>';
-            }
-            $rate_buy = '<tr>' . $rate_buy . '</tr>';
-            $rate_sale = '<tr>' . $rate_sale . '</tr>';
-        }
-
-        return '<table border="1">' . $header . $rate_buy . $rate_sale . '</table>';
-    }
-
-    private function ratesTable2()
-    {
-        $currs = Curr::orderBy('id')->where('is_actual', true)->where('is_main', false)->get();
-        $places = Place::orderBy('id')->where('is_actual', true)->get();
         $tds = '';
 
         foreach($places as $place) {
-            $tds .= String::setTD($place->full_name); 
+            $tds .= String::setTag('th', $place->full_name, 'border: 1px solid gray'); 
         }
-        
-        $theader = String::setTR(String::setTD('') . $tds);
+       
+        $theader = String::setTag('tr', String::setTag('td', '') . $tds);
         
         $trs_buy = '';
         $trs_sale = '';
         foreach($currs as $curr) {
-            $trs_buy .= String::setTD($curr->short_name . '_пок');
-            $trs_sale .= String::setTD($curr->short_name . '_прод');
+            $trs_buy .= String::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
+            $trs_sale .= String::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
             $rates = Rate::actualByCurr($curr->id);
             foreach($rates as $rate) {
-                $trs_buy .= String::setTD($rate->rate_buy, 'right');
-                $trs_sale .= String::setTD($rate->rate_sale, 'right');;
+                $trs_buy .= String::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
+                $trs_sale .= String::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
             }
-            $trs_buy = String::setTR($trs_buy);
-            $trs_sale = String::setTR($trs_sale);
+            $trs_buy = String::setTag('tr', $trs_buy);
+            $trs_sale = String::setTag('tr', $trs_sale);
+
         }
 
-        return String::setTB($theader . $trs_buy . $trs_sale);
+        $trs_empty = String::setTag('tr', String::setTag('td', '', 'height: 1em'));
+        return String::setTag('table', $theader . $trs_buy . $trs_empty . $trs_sale, 'border-collapse: collapse');
         
     }
 
     public function send($req, $res)
     {
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
-        $body = '<h3>' . $title . '</h3>';
-        $body .= $this->ratesTable2();
-        
-        echo $body;
-        die();
-
-        // var_dump($title);
-        // die();
-
-        // $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
-        //     ->setUsername('strekanov.alexander@gmail.com')
-        //     ->setPassword('gooberbotsman1967');
+        $body = String::setH($title);
+        $body .= $this->ratesTable();
+     
+        $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
+            ->setUsername('strekanov.alexander@gmail.com')
+            ->setPassword('gooberbotsman1967');
     
-        // $mailer = new \Swift_Mailer($transport);
+        $mailer = new \Swift_Mailer($transport);
         
-        // $message = (new \Swift_Message($title))
-        //     ->setFrom(['strekanov.alexander@gmail.com' => 'Elg Manager'])
-        //     ->setTo(['alexis.s@i.ua'])
-        //     ->setBody($body, 'text/html');
+        $message = (new \Swift_Message($title))
+            ->setFrom(['strekanov.alexander@gmail.com' => 'Elg Manager'])
+            ->setTo(['alexis.s@i.ua'])
+            ->setBody($body, 'text/html');
 
-        // $result = $mailer->send($message);
-        // $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
-        // return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
+        $result = $mailer->send($message);
+        $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
+        return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
     }
 }    

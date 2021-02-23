@@ -19,6 +19,21 @@ class String
 
     }
 
+    public static function setTag($tag, $item, $style="")
+    {
+        return "<$tag style=\"$style\">$item</$tag>";
+    }
+
+    public static function setH($item)
+    {
+        return '<h3>' . $item . '</h3>';
+    }
+
+    public static function setTH($item)
+    {
+        return '<th>' . $item . '</th>';
+    }
+
     public static function setTD($item, $align='')
     {
         $al = $align ? ' align=' . $align : ''; 
