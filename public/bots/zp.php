@@ -8,9 +8,8 @@ require(__DIR__ . '/../../core/db.php');
 use App\Common\Bot;
 
 $token = '1406578567:AAFvfbiwcxE78FeMGdVxUvPF3MMCRXdo7Z4';
-$placeId = 1;
 
-$bot = new Bot($token, $placeId, $db);
+$bot = new Bot($token, $db);
 
 $bot->command('start', function ($message) use ($bot) {
     $bot->replyKeyboard($message);

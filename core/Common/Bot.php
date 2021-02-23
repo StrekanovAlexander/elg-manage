@@ -7,10 +7,10 @@ use App\Common\Settings;
 class Bot extends \TelegramBot\Api\Client
 {
     private $db;
-    private $placeId;
     private $settings;
+    private $token;
 
-    public function __construct($token, $placeId, $db)
+    public function __construct($token, $db)
     {
         parent::__construct($token);
         $this->db = new \PDO(
@@ -19,8 +19,8 @@ class Bot extends \TelegramBot\Api\Client
             $db['username'], 
             $db['password']
         );
-        $this->placeId = $placeId;
         $this->settings = Settings::$global;
+        $this->token = $token;
     }
 
     private function maxRateTimestamp()
@@ -30,11 +30,31 @@ class Bot extends \TelegramBot\Api\Client
         return $stmt->fetch(\PDO::FETCH_OBJ)->created_at;  
     }
 
+    private function placeId()
+    {
+        $stmt = $this->db->prepare('SELECT id FROM elg_places WHERE bot_token = ?');
+        $stmt->execute([$this->token]);    
+        return $stmt->fetch(\PDO::FETCH_OBJ)->id;  
+    }
+
     private function placeName()
     {
         $stmt = $this->db->prepare('SELECT full_name FROM elg_places WHERE id = ?');
-        $stmt->execute([$this->placeId]);    
+        $stmt->execute([$this->placeId()]);    
         return $stmt->fetch(\PDO::FETCH_OBJ)->full_name;  
+    }
+
+    public function places()
+    {
+        $placeId = $this->placeId();
+        $stmt = $this->db->prepare(
+            'SELECT * 
+            FROM elg_places 
+            WHERE is_actual = ? AND id <> ?  
+            ORDER BY full_name'
+        );
+        $stmt->execute([true, $placeId]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
     private function rates()
@@ -47,8 +67,18 @@ class Bot extends \TelegramBot\Api\Client
             ORDER BY c.id'
         );
 
-        $stmt->execute([$this->placeId, $created_at]);
+        $stmt->execute([$this->placeId(), $created_at]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
+    }
+
+    public function printPlaces($parts = 3)
+    {
+        $arr = [];
+        $data = $this->places();
+        foreach ($data as $place){
+            $arr[] = ['url' => $place['bot_name'], 'text' => $place['full_name']];
+        }
+        return [array_chunk($arr, $parts)];
     }
 
     public function printRates()
