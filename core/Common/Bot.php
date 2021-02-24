@@ -76,9 +76,10 @@ class Bot extends \TelegramBot\Api\Client
         $arr = [];
         $data = $this->places();
         foreach ($data as $place){
-            $arr[] = ['url' => $place['bot_name'], 'text' => $place['full_name']];
+            $arr[] = ['url' => 'https://t.me/' . $place['bot_name'] , 'text' => $place['full_name']];
         }
-        return [array_chunk($arr, $parts)];
+        $arr = array_chunk($arr, 3);
+        return $arr;
     }
 
     public function printRates()
