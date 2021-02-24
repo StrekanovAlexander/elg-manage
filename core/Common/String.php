@@ -10,7 +10,6 @@ class String
 
         foreach($params as $key => $value) {
             if (in_array($key, $filtered)) continue;
-            // if (($key == 'csrf_name') || ($key == 'csrf_value')) continue; 
             $str .= $value . '|';
         }
 
@@ -23,32 +22,5 @@ class String
     {
         return "<$tag style=\"$style\">$item</$tag>";
     }
-
-    public static function setH($item)
-    {
-        return '<h3>' . $item . '</h3>';
-    }
-
-    public static function setTH($item)
-    {
-        return '<th>' . $item . '</th>';
-    }
-
-    public static function setTD($item, $align='')
-    {
-        $al = $align ? ' align=' . $align : ''; 
-        return '<td'. $al .'>' . $item . '</td>';
-    }
-
-    public static function setTR($items = '')
-    {
-        return '<tr>' . $items . '</tr>';
-    }
-
-    public static function setTB($items)
-    {
-        return '<table border="1">' . $items . '</table>';
-    }
+   
 }
-
-

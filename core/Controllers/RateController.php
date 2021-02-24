@@ -70,7 +70,7 @@ class RateController extends Controller
     public function send($req, $res)
     {
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
-        $body = String::setH($title);
+        $body = String::setTag('h4', $title);
         $body .= $this->ratesTable();
      
         $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
@@ -80,7 +80,7 @@ class RateController extends Controller
         $mailer = new \Swift_Mailer($transport);
         
         $message = (new \Swift_Message($title))
-            ->setFrom(['strekanov.alexander@gmail.com' => 'Elg Manager'])
+            ->setFrom(['manager@elg.co.ua' => 'Elg Manager'])
             ->setTo(['alexis.s@i.ua'])
             ->setBody($body, 'text/html');
 
