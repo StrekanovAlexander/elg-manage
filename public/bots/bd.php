@@ -7,7 +7,7 @@ require(__DIR__ . '/../../core/db.php');
 
 use App\Common\Bot;
 
-$token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE';
+$token = '1613257321:AAHXzqO3Ob_udoN4F6-2JbD7TBRw-jWI2nI';
 
 $bot = new Bot($token, $db);
 
