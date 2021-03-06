@@ -49,19 +49,19 @@ class RateController extends Controller
         
         $trs_buy = '';
         $trs_sale = '';
+        // $tds_buy = '';
+        // $tds_sale = '';
         foreach($currs as $curr) {
-            $trs_buy .= String::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
-            $trs_sale .= String::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
+            $tds_buy = String::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
+            $tds_sale = String::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
             $rates = Rate::actualByCurr($curr->id);
             foreach($rates as $rate) {
-                $trs_buy .= String::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
-                $trs_sale .= String::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
+                $tds_buy .= String::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
+                $tds_sale .= String::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
             }
-            $trs_buy = String::setTag('tr', $trs_buy);
-            $trs_sale = String::setTag('tr', $trs_sale);
-
+            $trs_buy .= String::setTag('tr', $tds_buy);
+            $trs_sale .= String::setTag('tr', $tds_sale);
         }
-
         $trs_empty = String::setTag('tr', String::setTag('td', '', 'height: 1em'));
         return String::setTag('table', $theader . $trs_buy . $trs_empty . $trs_sale, 'border-collapse: collapse');
         
@@ -70,9 +70,9 @@ class RateController extends Controller
     public function send($req, $res)
     {
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
-        $body = String::setTag('h4', $title);
+        $body = String::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
-     
+
         $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
             ->setUsername('strekanov.alexander@gmail.com')
             ->setPassword('gooberbotsman1967');
@@ -81,7 +81,7 @@ class RateController extends Controller
         
         $message = (new \Swift_Message($title))
             ->setFrom(['manager@elg.co.ua' => 'Elg Manager'])
-            ->setTo(['alexis.s@i.ua'])
+            ->setTo(['8899897@gmail.com'])
             ->setBody($body, 'text/html');
 
         $result = $mailer->send($message);
