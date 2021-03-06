@@ -26,7 +26,7 @@ class RuleController extends Controller
     public function update($req, $res)
     {
 
-        $arr = \App\Common\String::cleanParams($req->getParams(), [
+        $arr = \App\Common\StringUtil::cleanParams($req->getParams(), [
             'id',
             'csrf_name', 
             'csrf_value',

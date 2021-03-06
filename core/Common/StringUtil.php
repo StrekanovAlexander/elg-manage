@@ -2,7 +2,7 @@
 
 namespace App\Common;
 
-class String
+class StringUtil
 {
     public static function cleanParams($params, $filtered, $chanks)
     {

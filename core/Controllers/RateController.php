@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Curr;
 use App\Models\Place;
 use App\Models\Rate;
-use App\Common\String;
+use App\Common\StringUtil;
 
 class RateController extends Controller
 {
@@ -42,40 +42,40 @@ class RateController extends Controller
         $tds = '';
 
         foreach($places as $place) {
-            $tds .= String::setTag('th', $place->full_name, 'border: 1px solid gray'); 
+            $tds .= StringUtil::setTag('th', $place->full_name, 'border: 1px solid gray'); 
         }
        
-        $theader = String::setTag('tr', String::setTag('td', '') . $tds);
+        $theader = StringUtil::setTag('tr', StringUtil::setTag('td', '') . $tds);
         
         $trs_buy = '';
         $trs_sale = '';
         // $tds_buy = '';
         // $tds_sale = '';
         foreach($currs as $curr) {
-            $tds_buy = String::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
-            $tds_sale = String::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
+            $tds_buy = StringUtil::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
+            $tds_sale = StringUtil::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
             $rates = Rate::actualByCurr($curr->id);
             foreach($rates as $rate) {
-                $tds_buy .= String::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
-                $tds_sale .= String::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
+                $tds_buy .= StringUtil::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
+                $tds_sale .= StringUtil::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
             }
-            $trs_buy .= String::setTag('tr', $tds_buy);
-            $trs_sale .= String::setTag('tr', $tds_sale);
+            $trs_buy .= StringUtil::setTag('tr', $tds_buy);
+            $trs_sale .= StringUtil::setTag('tr', $tds_sale);
         }
-        $trs_empty = String::setTag('tr', String::setTag('td', '', 'height: 1em'));
-        return String::setTag('table', $theader . $trs_buy . $trs_empty . $trs_sale, 'border-collapse: collapse');
+        $trs_empty = StringUtil::setTag('tr', StringUtil::setTag('td', '', 'height: 1em'));
+        return StringUtil::setTag('table', $theader . $trs_buy . $trs_empty . $trs_sale, 'border-collapse: collapse');
         
     }
 
     public function send($req, $res)
     {
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
-        $body = String::setTag('h4', $title, 'font-weight: normal');
+        $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
 
         $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
-            ->setUsername('strekanov.alexander@gmail.com')
-            ->setPassword('gooberbotsman1967');
+            ->setUsername('')
+            ->setPassword('');
     
         $mailer = new \Swift_Mailer($transport);
         

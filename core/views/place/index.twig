@@ -20,7 +20,7 @@
                    <td>{{ place.sign }}</td>
                    <td><a href="{{ path_for('rule.details', {'id': place.id}) }}">Настройка</a></td>
                    <td><a href="{{ path_for('rate.details', {'id': place.id}) }}">Текущие курсы</a></td>
-                   <td><a href="{{ path_for('rate.json', {'id': place.id}) }}">JSON</a></td>
+                   <td><a href="{{ path_for('rate.json', {'id': place.id}) }}" target="_blank">JSON</a></td>
                    
                    <td><i class="fas {{ place.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                 </tr>    
