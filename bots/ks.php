@@ -2,8 +2,8 @@
 
 header('Content-Type: text/html; charset=utf-8');
 
-require(__DIR__ . '/../../vendor/autoload.php');
-require(__DIR__ . '/../../core/db.php');
+require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../core/db.php');
 
 use App\Common\Bot;
 
