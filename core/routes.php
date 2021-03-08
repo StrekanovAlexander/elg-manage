@@ -10,7 +10,6 @@ $app->group('', function() {
     $this->get('/places', 'PlaceController:index')->setName('place.index');
     
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');
-    $this->get('/rates/places/json/{id}', 'RateController:json')->setName('rate.json');
     $this->get('/send', 'RateController:send')->setName('rate.send');
 
     $this->get('/rules/place/edit[/{id}]', 'RuleController:edit')->setName('rule.edit');
@@ -29,3 +28,5 @@ $app->group('', function() {
     $this->get('/user/login', 'UserController:login')->setName('user.login');
     $this->post('/user/login', 'UserController:postLogin');
 })->add(new \App\Middleware\AdminMiddleware($c));    
+
+$app->get('/rates/places/json/{id}', 'RateController:json')->setName('rate.json');
