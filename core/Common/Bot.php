@@ -50,10 +50,10 @@ class Bot extends \TelegramBot\Api\Client
         $stmt = $this->db->prepare(
             'SELECT * 
             FROM elg_places 
-            WHERE is_actual = ? AND id <> ?  
+            WHERE is_actual = ? AND is_bot_active = ? AND id <> ?  
             ORDER BY full_name'
         );
-        $stmt->execute([true, $placeId]);
+        $stmt->execute([true, true, $placeId]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
@@ -71,14 +71,14 @@ class Bot extends \TelegramBot\Api\Client
         return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
-    public function printPlaces($parts = 3)
+    public function printPlaces($parts = 1)
     {
         $arr = [];
         $data = $this->places();
         foreach ($data as $place){
             $arr[] = ['url' => 'https://t.me/' . $place['bot_name'] , 'text' => $place['full_name']];
         }
-        $arr = array_chunk($arr, 3);
+        $arr = array_chunk($arr, $parts);
         return $arr;
     }
 
