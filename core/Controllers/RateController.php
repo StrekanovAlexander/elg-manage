@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Curr;
+use App\Models\Dep;
 use App\Models\Place;
 use App\Models\Rate;
 use App\Common\StringUtil;
@@ -69,6 +70,9 @@ class RateController extends Controller
 
     public function send($req, $res)
     {
+
+        $emails = $this->emailList();
+
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
@@ -81,11 +85,22 @@ class RateController extends Controller
         
         $message = (new \Swift_Message($title))
             ->setFrom(['manager@elg.co.ua' => 'Elg Manager'])
-            ->setTo(['alexis.s@i.ua', '8899897@gmail.com'])
+            // ->setTo(['alexis.s@i.ua', '8899897@gmail.com'])
+            ->setTo($emails)
             ->setBody($body, 'text/html');
 
         $result = $mailer->send($message);
         $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
         return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
+    }
+
+    private function emailList()
+    {
+        $emails = [];
+        $deps = Dep::where('is_actual', true)->get();
+        foreach($deps as $dep) {
+            $emails[] = $dep->email;
+        }
+        return $emails;
     }
 }    
