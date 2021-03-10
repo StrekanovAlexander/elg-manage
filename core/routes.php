@@ -8,12 +8,15 @@ $app->group('', function() {
     $this->get('/base-rates', 'BaseRateController:index')->setName('base-rate.index');
 
     $this->get('/places', 'PlaceController:index')->setName('place.index');
-    
+
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');
     $this->get('/send', 'RateController:send')->setName('rate.send');
 
     $this->get('/rules/place/edit[/{id}]', 'RuleController:edit')->setName('rule.edit');
     $this->post('/rules/place/edit', 'RuleController:update');
+
+    $this->get('/rules/set', 'RuleController:getRules')->setName('rules.set');
+    $this->post('/rules/set', 'RuleController:storeRules');
 
     $this->get('/rules/place/{id}', 'RuleController:details')->setName('rule.details');
 
