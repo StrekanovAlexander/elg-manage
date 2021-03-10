@@ -72,7 +72,8 @@ class RateController extends Controller
     {
 
         $emails = $this->emailList();
-
+        array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
+ 
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
@@ -85,12 +86,13 @@ class RateController extends Controller
         
         $message = (new \Swift_Message($title))
             ->setFrom(['manager@elg.co.ua' => 'Elg Manager'])
-            // ->setTo(['alexis.s@i.ua', '8899897@gmail.com'])
             ->setTo($emails)
             ->setBody($body, 'text/html');
 
         $result = $mailer->send($message);
-        $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
+        if ($result) {
+            $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
+        }
         return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
     }
 
