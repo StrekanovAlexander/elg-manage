@@ -1,0 +1,34 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Создать отделение</h3>
+    <form action="{{ path_for('dep.create')}}" method="POST">
+        <div class="form-group">
+            <label for="full_name">Наименование</label>
+            <input class="form-control" name="full_name" id="dep_full_name" type="text">
+        </div>
+        <div class="form-group">
+            <label for="dep_id">Населенный пункт</label>
+            <select class="form-control" name="place_id" id="place_id">
+                {% for place in places %}
+                    <option value="{{ place.id }}">{{ place.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input class="form-control" name="email" id="email" type="text">
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual">Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit" disabled>Записать</button>
+        </div>  
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    

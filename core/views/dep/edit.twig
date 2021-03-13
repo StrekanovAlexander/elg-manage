@@ -1,0 +1,41 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('dep.index') }}">Отделения</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Редактировать отделение: {{ dep.full_name }}</h3>
+    <form action="{{ path_for('dep.edit')}}" method="POST">
+        <div class="form-group">
+            <label for="dep_full_name">Наименование</label>
+            <input class="form-control" name="full_name" id="dep_full_name" type="text" value="{{ dep.full_name }}">
+        </div>
+        <div class="form-group">
+            <label for="place_id">Населенный пункт</label>
+            <select class="form-control" name="place_id" id="place_id">
+                {% for place in places %}
+                    <option value="{{ place.id }}" {{ place.id == dep.place_id ? 'selected' : '' }}>{{ place.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input class="form-control" name="email" id="email" type="text" value="{{ dep.email }}">
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual" {{ dep.is_actual ? ' checked="checked"' : ''}}>Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit">Записать</button>
+        </div>
+        <input type="hidden" name="id" id="id" value="{{ dep.id }}">    
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    

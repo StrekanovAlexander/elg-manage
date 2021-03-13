@@ -19,6 +19,7 @@
 
     const password = document.querySelector('#password');
     const curr_short_name = document.querySelector('#curr_short_name');
+    const dep_full_name = document.querySelector('#dep_full_name');
 
     if (password) {
         const btn = document.querySelector('#btn-save');
@@ -44,7 +45,14 @@
         curr_short_name.addEventListener('blur', function() {
             btn.disabled = !validate(curr_short_name);
         });
-    }    
+    }
 
+    if (dep_full_name) {
+        const btn = document.querySelector('#btn-save');
+        const validate = (el) => /^\w{3,}$/.test(el.value);
+        dep_full_name.addEventListener('blur', function() {
+            btn.disabled = !validate(dep_full_name);
+        });
+    }    
     
 })();

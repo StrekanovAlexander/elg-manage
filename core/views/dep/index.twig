@@ -1,0 +1,32 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Отделения</h3>
+    <div>
+        <a href="{{ path_for('dep.create') }}" class="btn btn-success mb-2" role="button">Создать</a>
+    </div>
+    {% if deps|length %}
+        <table class="table table-bordered table-sm table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th class="text-left">Наименование</th>
+                    <th>Населенный пункт</th>
+                    <th>Email</th>
+                    <th>Актуальность</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for dep in deps %}
+                <tr>
+                   <td>{{ dep.full_name }}</td>
+                   <td>{{ dep.place.full_name }}</td>
+                   <td>{{ dep.email }}</td>
+                   <td class="text-center"><i class="fas {{ dep.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                   <td class="text-center"><a href="{{ path_for('dep.edit', {'id': dep.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
+                </tr>    
+            {% endfor %}
+            </body>
+        </table>        
+    {% endif %}
+{% endblock %}

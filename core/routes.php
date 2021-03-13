@@ -15,6 +15,14 @@ $app->group('', function() {
     $this->get('/currs/edit[/{id}]', 'CurrController:edit')->setName('curr.edit');
     $this->post('/currs/edit', 'CurrController:update');
 
+    $this->get('/deps', 'DepController:index')->setName('dep.index');
+    
+    $this->get('/deps/create', 'DepController:create')->setName('dep.create');
+    $this->post('/deps/create', 'DepController:store');
+    
+    $this->get('/deps/edit[/{id}]', 'DepController:edit')->setName('dep.edit');
+    $this->post('/deps/edit', 'DepController:update');
+
     $this->get('/places', 'PlaceController:index')->setName('place.index');
 
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');
