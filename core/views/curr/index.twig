@@ -1,0 +1,34 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Валюты</h3>
+    <div>
+        <a href="{{ path_for('curr.create') }}" class="btn btn-success mb-2" role="button">Создать</a>
+    </div>
+    {% if currs|length %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th class="text-left">Наименование</th>
+                    <th>Знак</th>
+                    <th>Шаг пункта</th>
+                    <th>Формат пункта</th>
+                    <th>Актуальность</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for curr in currs %}
+                <tr class="text-center">
+                   <td class="text-left">{{ curr.short_name }}</td>
+                   <td>{{ curr.sign|raw }}</td>
+                   <td>{{ curr.step_size }}</td>
+                   <td>{{ curr.step_size_format }}</td>
+                   <td><i class="fas {{ curr.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
+                   <td><a href="{{ path_for('curr.edit', {'id': curr.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
+                </tr>    
+            {% endfor %}
+            </body>
+        </table>        
+    {% endif %}
+{% endblock %}

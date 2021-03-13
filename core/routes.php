@@ -7,6 +7,14 @@ $app->group('', function() {
     $this->post('/base-rates/create', 'BaseRateController:store');
     $this->get('/base-rates', 'BaseRateController:index')->setName('base-rate.index');
 
+    $this->get('/currs', 'CurrController:index')->setName('curr.index');
+    
+    $this->get('/currs/create', 'CurrController:create')->setName('curr.create');
+    $this->post('/currs/create', 'CurrController:store');
+    
+    $this->get('/currs/edit[/{id}]', 'CurrController:edit')->setName('curr.edit');
+    $this->post('/currs/edit', 'CurrController:update');
+
     $this->get('/places', 'PlaceController:index')->setName('place.index');
 
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');

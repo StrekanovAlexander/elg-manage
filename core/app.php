@@ -49,6 +49,10 @@ $c['auth'] = function() {
     return new App\Common\Auth;
 };
 
+$c['CurrController'] = function($c) {
+    return new App\Controllers\CurrController($c);
+};
+
 $c['BaseRateController'] = function($c) {
     return new App\Controllers\BaseRateController($c);
 };

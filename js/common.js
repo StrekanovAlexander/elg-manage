@@ -18,9 +18,10 @@
     }
 
     const password = document.querySelector('#password');
+    const curr_short_name = document.querySelector('#curr_short_name');
 
     if (password) {
-        const btn = document.querySelector('#btn-save-pwd');
+        const btn = document.querySelector('#btn-save');
         const password2 = document.querySelector('#password2');
 
         const validate = (el) => /^\w{3,}$/.test(el.value);
@@ -34,18 +35,16 @@
         password2.addEventListener('blur', function(ev) {
             btn.disabled = isValid(password, password2);
         });
-
-        // function validate (el) {
-        //     return /^\w{3,}$/.test(el.value);
-        // };
-    
-        // function compare (el1, el2) {
-        //     return el1.value == el2.value;
-        // };
-    
-        // function isValid(el1, el2) {
-        //     return !(validate(el1) && compare(el1, el2));
-        // }
+       
     }
+
+    if (curr_short_name) {
+        const btn = document.querySelector('#btn-save');
+        const validate = (el) => /^[a-zA-Z]{3}$/.test(el.value);
+        curr_short_name.addEventListener('blur', function() {
+            btn.disabled = !validate(curr_short_name);
+        });
+    }    
+
     
 })();

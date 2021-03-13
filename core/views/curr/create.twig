@@ -1,0 +1,42 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Создать валюту</h3>
+    <form action="{{ path_for('curr.create')}}" method="POST">
+        <div class="form-group">
+            <label for="short_name">Наименование</label>
+            <input class="form-control" name="short_name" id="curr_short_name" type="text">
+        </div>
+        <div class="form-group">
+            <label for="sign">Знак (html-код)</label>
+            <input class="form-control" name="sign" id="sign" type="text">
+        </div>
+        <div class="form-group">
+            <label for="step_size">Шаг пункта</label>
+            <select class="form-control" name="step_size" id="step_size">
+                {% for step_size in step_sizes %}
+                    <option value="{{ step_size.value }}">{{ step_size.value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="step_size_format">Формат пункта</label>
+            <select class="form-control" name="step_size_format" id="step_size_format">
+                {% for step_size_format in step_size_formats %}
+                    <option value="{{ step_size_format.value }}">{{ step_size_format.value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual">Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit" disabled>Записать</button>
+        </div>  
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    
