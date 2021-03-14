@@ -29,6 +29,7 @@ class DepController extends Controller
             'full_name' => $req->getParam('full_name'), 
             'place_id' => $req->getParam('place_id'), 
             'email' => $req->getParam('email'),
+            'is_mail' => $req->getParam('is_mail') ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
       
@@ -54,6 +55,7 @@ class DepController extends Controller
             'full_name' => $req->getParam('full_name'), 
             'place_id' => $req->getParam('place_id'), 
             'email' => $req->getParam('email'),
+            'is_mail' => $req->getParam('is_mail') ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 

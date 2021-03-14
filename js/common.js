@@ -62,7 +62,7 @@
                 const el = ev.target;
                 const div = el.closest('div');
                 const input = div.previousElementSibling;
-                const inc = el.innerHTML == '+' ? 1 : -1;
+                const inc = el.innerHTML == '⇑' ? 1 : -1;
                 input.value = Number(input.value) + inc;
                 const td = input.closest('div').closest('td');
                 td.className = '';

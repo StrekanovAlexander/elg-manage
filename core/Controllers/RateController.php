@@ -70,7 +70,6 @@ class RateController extends Controller
 
     public function send($req, $res)
     {
-
         $emails = $this->emailList();
         array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
  
@@ -99,7 +98,9 @@ class RateController extends Controller
     private function emailList()
     {
         $emails = [];
-        $deps = Dep::where('is_actual', true)->get();
+        $deps = Dep::where('is_actual', true)
+            ->where('is_mail', true)
+            ->get();
         foreach($deps as $dep) {
             $emails[] = $dep->email;
         }

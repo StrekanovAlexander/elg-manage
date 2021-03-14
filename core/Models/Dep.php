@@ -11,6 +11,7 @@ class Dep extends Model
         'full_name', 
         'place_id', 
         'email',
+        'is_mail',
         'is_actual',
     ];
 

@@ -12,6 +12,7 @@
                     <th class="text-left">Наименование</th>
                     <th>Населенный пункт</th>
                     <th>Email</th>
+                    <th>В рассылке</th>
                     <th>Актуальность</th>
                     <th></th>
                 </tr>
@@ -22,6 +23,7 @@
                    <td>{{ dep.full_name }}</td>
                    <td>{{ dep.place.full_name }}</td>
                    <td>{{ dep.email }}</td>
+                   <td class="text-center"><i class="fas {{ dep.is_mail ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><i class="fas {{ dep.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><a href="{{ path_for('dep.edit', {'id': dep.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
                 </tr>    
