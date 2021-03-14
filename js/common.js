@@ -72,5 +72,13 @@
 
         const getClass = (val) => val < 0 ? 'orange' : val == 0 ? 'white' : 'green'; 
     }
+
+    const alert = document.querySelector('.alert');
+    if (alert) {
+        alert.classList.add('hiding');
+        // setTimeout(function () {
+        //     alert.style.display = 'none'; 
+        // }, 5000);
+    }
     
 })();

@@ -1,3 +1,7 @@
+.alert {
+    /* height: 1.5em !important; */
+}
+
 .btn-step {
     background-color: white;
     display: block;
@@ -11,6 +15,23 @@
     background-color: yellow;
     cursor: pointer;
 } 
+
+.hiding {
+    animation-duration: 5s;
+    animation-name: hiding;
+    animation-fill-mode: both;
+}
+
+@keyframes hiding {
+    from { 
+        height: inherit;
+        opacity: 1;
+    }
+    to { 
+        height: 0;
+        opacity: 0;
+    }
+}
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
