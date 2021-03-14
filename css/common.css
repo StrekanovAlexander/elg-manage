@@ -1,0 +1,46 @@
+.btn-step {
+    background-color: white;
+    display: block;
+    font-weight: bold;
+    margin-left: 1px;
+    text-align: center;
+    width: 2em;
+} 
+
+.btn-step:hover {
+    background-color: yellow;
+    cursor: pointer;
+} 
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input[type=number]{
+  -moz-appearance: textfield;
+}
+
+.white {
+    background-color: white;
+}
+
+.orange {
+    background-color: orangered;
+}
+
+.green {
+    background-color: yellowgreen;
+}
+
+input[readonly] {
+    background-color: white !important;
+}
+
+.input-step {
+
+    width: 4em;
+}

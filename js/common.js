@@ -54,5 +54,23 @@
             btn.disabled = !validate(dep_full_name);
         });
     }    
+
+    const btn_steps = document.querySelectorAll('.btn-step');
+    if (btn_steps) {
+        [...btn_steps].forEach(el => {
+            el.addEventListener('click', function(ev) {
+                const el = ev.target;
+                const div = el.closest('div');
+                const input = div.previousElementSibling;
+                const inc = el.innerHTML == '+' ? 1 : -1;
+                input.value = Number(input.value) + inc;
+                const td = input.closest('div').closest('td');
+                td.className = '';
+                td.classList.add(getClass(input.value));
+            });
+        });
+
+        const getClass = (val) => val < 0 ? 'orange' : val == 0 ? 'white' : 'green'; 
+    }
     
 })();
