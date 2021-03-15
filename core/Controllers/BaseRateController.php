@@ -39,7 +39,7 @@ class BaseRateController extends Controller
             ]);
         }
 
-        $this->flash->addMessage('message', 'Базовые курсы валют успешно установлены');
-        return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
+        $this->flash->addMessage('message', 'Базовые курсы успешно установлены');
+        return $this->response->withRedirect($this->router->pathFor('rules.set'));
     }
 } 

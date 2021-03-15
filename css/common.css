@@ -1,7 +1,3 @@
-.alert {
-    /* height: 1.5em !important; */
-}
-
 .btn-step {
     background-color: white;
     display: block;
@@ -45,23 +41,71 @@ input[type=number]{
   -moz-appearance: textfield;
 }
 
-.white {
-    background-color: white;
-}
-
-.orange {
-    background-color: orangered;
-}
-
-.green {
-    background-color: yellowgreen;
-}
-
 input[readonly] {
     background-color: white !important;
 }
 
 .input-step {
-
     width: 4em;
 }
+
+th, td {
+    vertical-align: middle !important;
+}
+
+
+/* colors */
+
+.aquamarine {
+    background-color: aquamarine;
+}
+
+.darkseagreen {
+    background-color: darkseagreen;
+}
+
+.deepskyblue {
+    background-color: deepskyblue;
+}
+
+.gold {
+    background-color: gold;
+}
+
+.yellowgreen {
+    background-color: yellowgreen;
+}
+
+.khaki {
+    background-color: khaki;
+}
+
+.lightpink {
+    background-color: lightpink;
+}
+
+.orangered {
+    background-color: orangered;
+}
+
+.peachpuff {
+    background-color: peachpuff;
+}
+
+.powderblue {
+    background-color: powderblue;
+}
+
+.thistle {
+    background-color: thistle;
+}
+
+.tomato {
+    background-color: tomato;
+}
+
+.white {
+    background-color: white;
+}
+
+/* colors end */

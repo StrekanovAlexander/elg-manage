@@ -11,53 +11,74 @@
         {% endfor %}
       </tr>
       <tr class="small">
-        <td colspan="2" class="bg-secondary text-uppercase text-white">Покупка</td>
-        <td colspan="{{ places|length - 1 }}"></td>
+        <td colspan="{{ places|length + 1 }}" class="bg-secondary text-uppercase text-white">
+          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base-rate.create') }}"><small>Покупка. Установить</small></a>
+        </td>
       </tr>
       {% for curr in currs %}
         <tr class="small">
-          <th>{{ curr.short_name }}</th>
+          <th class="{{ curr.color.full_name }}">{{ curr.short_name }}</th>
           {% for place in places %}
-            {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
-              <td class="{{ rule.diff_buy < 0 ? 'orange' : (rule.diff_buy == 0 ? 'white' : 'green') }}">
-                <div style="display: flex;">
-                  <input class="form-control input-step" name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}"  style="text-align: center" readonly>
-                  <div>
-                    <span class="btn-step">⇑</span>
-                    <span class="btn-step">⇓</span>
-                  </div>
-                </div>  
+            {% if place.is_base == 1 %}
+              <td class="{{ curr.color.full_name }} font-weight-bold text-right">
+                {% for base_rate in base_rates|filter(base_rate => base_rate.curr_id == curr.id) %}
+                  {{ base_rate.rate_buy }}
+                {% endfor %}
               </td>
-            {% endfor %}
+            {% else %}
+              {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                <td class="{{ rule.diff_buy < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }}">
+                  <div style="display: flex;">
+                    <input class="form-control input-step" name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}"  style="text-align: center" readonly>
+                    <div>
+                      <span class="btn-step">⇑</span>
+                      <span class="btn-step">⇓</span>
+                    </div>
+                  </div>  
+                </td>
+              {% endfor %}
+            {% endif %}
           {% endfor %} 
         </tr>
       {% endfor %}
       <tr class="small">
-        <td colspan="2" class="bg-secondary text-uppercase text-white">Продажа</td>
-        <td colspan="{{ places|length - 1 }}"></td>
+        <td colspan="{{ places|length + 1 }}" class="bg-secondary text-uppercase text-white">
+          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base-rate.create') }}"><small>Продажа. Установить</small></a>
+        </td>
       </tr>
       {% for curr in currs %}
         <tr class="small">
-          <th>{{ curr.short_name }}</th>
+          <th class="{{ curr.color.full_name }}">{{ curr.short_name }}</th>
           {% for place in places %}
-            {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
-              <td class="{{ rule.diff_sale < 0 ? 'orange' : (rule.diff_buy == 0 ? 'white' : 'green') }}">
-                <div style="display: flex;">
-                  <input class="form-control input-step" name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" style="text-align: center" readonly>
-                  <div>
-                    <span class="btn-step">⇑</span>
-                    <span class="btn-step">⇓</span>
-                  </div>
-                </div>  
+             {% if place.is_base == 1 %}
+              <td class="{{ curr.color.full_name }} font-weight-bold text-right">
+                {% for base_rate in base_rates|filter(base_rate => base_rate.curr_id == curr.id) %}
+                  {{ base_rate.rate_sale }}
+                {% endfor %}
               </td>
-            {% endfor %}
+            {% else %}
+              {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                <td class="{{ rule.diff_sale < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }}">
+                  <div style="display: flex;">
+                    <input class="form-control input-step" name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" style="text-align: center" readonly>
+                    <div>
+                      <span class="btn-step">⇑</span>
+                      <span class="btn-step">⇓</span>
+                    </div>
+                  </div>  
+                </td>
+              {% endfor %}
+            {% endif %}
           {% endfor %} 
         </tr>
       {% endfor %}
     </table>
-    <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Сохранить</button>
+    <div>
+      <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Сохранить</button>
+    </div>  
     {{ csrf.field | raw}}
   </form>
+
 {% endif %}
 
 {% endblock %}

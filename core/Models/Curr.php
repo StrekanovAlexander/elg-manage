@@ -9,12 +9,18 @@ class Curr extends Model
     protected $table = 'currs';
 
     protected $fillable = [
+        'color_id',
         'short_name',
         'sign',
         'step_size',
         'step_size_format',
         'is_actual',
     ];
+
+    public function color()
+    {
+        return $this->belongsTo(ColorCss::class, 'color_id');
+    }
 
     public function actual()
     {

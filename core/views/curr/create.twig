@@ -8,6 +8,14 @@
             <input class="form-control" name="short_name" id="curr_short_name" type="text">
         </div>
         <div class="form-group">
+            <label for="color_id">Цвет</label>
+            <select class="form-control" name="color_id" id="color_id">
+                {% for color in colors %}
+                    <option value="{{ color.id }}">{{ color.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
             <label for="sign">Знак (html-код)</label>
             <input class="form-control" name="sign" id="sign" type="text">
         </div>

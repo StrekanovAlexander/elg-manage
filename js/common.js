@@ -70,15 +70,12 @@
             });
         });
 
-        const getClass = (val) => val < 0 ? 'orange' : val == 0 ? 'white' : 'green'; 
+        const getClass = (val) => val < 0 ? 'orangered' : val == 0 ? 'white' : 'yellowgreen'; 
     }
 
     const alert = document.querySelector('.alert');
     if (alert) {
         alert.classList.add('hiding');
-        // setTimeout(function () {
-        //     alert.style.display = 'none'; 
-        // }, 5000);
     }
     
 })();

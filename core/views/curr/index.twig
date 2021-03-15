@@ -10,6 +10,7 @@
             <thead>
                 <tr class="text-center">
                     <th class="text-left">Наименование</th>
+                    <th>Цвет</th>
                     <th>Знак</th>
                     <th>Шаг пункта</th>
                     <th>Формат пункта</th>
@@ -21,6 +22,7 @@
             {% for curr in currs %}
                 <tr class="text-center">
                    <td class="text-left">{{ curr.short_name }}</td>
+                   <td class="{{ curr.color.full_name }}">{{ curr.color.full_name }}</td>
                    <td>{{ curr.sign|raw }}</td>
                    <td>{{ curr.step_size }}</td>
                    <td>{{ curr.step_size_format }}</td>

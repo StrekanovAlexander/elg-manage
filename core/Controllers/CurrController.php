@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\ColorCss;
 use App\Models\Curr;
 
 class CurrController extends Controller
@@ -19,15 +20,19 @@ class CurrController extends Controller
 
     public function index($req, $res)
     {
+        $colors = ColorCss::orderBy('full_name')->get();
         $currs = Curr::orderBy('id')->where('is_main', false)->get();
         return $this->view->render($res, 'curr/index.twig', [
+            'colors' => $colors,
             'currs' => $currs,
         ]);
     }
 
     public function create($req, $res)
     {
+        $colors = ColorCss::orderBy('full_name')->get();
         return $this->view->render($res, 'curr/create.twig', [
+            'colors' => $colors,
             'step_sizes' => self::$step_sizes,
             'step_size_formats' => self::$step_size_formats,
         ]);
@@ -43,6 +48,7 @@ class CurrController extends Controller
     
         Curr::create([
             'short_name' => $req->getParam('short_name'), 
+            'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
             'step_size_format' => $req->getParam('step_size_format'),
@@ -56,8 +62,10 @@ class CurrController extends Controller
 
     public function edit($req, $res, $args)
     {
+        $colors = ColorCss::orderBy('full_name')->get();
         $curr = Curr::find($args['id']);
         return $this->view->render($res, 'curr/edit.twig', [
+            'colors' => $colors,
             'curr' => $curr,
             'step_sizes' => self::$step_sizes,
             'step_size_formats' => self::$step_size_formats,
@@ -69,6 +77,7 @@ class CurrController extends Controller
         $curr = Curr::find($req->getParam('id'));
         $curr->update([
             'short_name' => $req->getParam('short_name'), 
+            'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
             'step_size_format' => $req->getParam('step_size_format'),
