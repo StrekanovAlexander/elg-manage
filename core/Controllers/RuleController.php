@@ -82,6 +82,7 @@ class RuleController extends Controller
 
         $places = Place::orderBy('full_name')
             ->where('is_actual', true)
+            ->where('is_base', false)
             ->get();    
 
         foreach($currs as $curr) {
