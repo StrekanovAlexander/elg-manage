@@ -59,7 +59,7 @@
               </td>
             {% else %}
               {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
-                <td class="{{ rule.diff_sale < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }}">
+                <td class="{{ rule.diff_sale < 0 ? 'orangered' : (rule.diff_sale == 0 ? 'white' : 'yellowgreen') }}">
                   <div style="display: flex;">
                     <input class="form-control input-step" name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" style="text-align: center" readonly>
                     <div>

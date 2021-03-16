@@ -1,0 +1,16 @@
+.hiding {
+  animation-duration: 5s;
+  animation-name: hiding;
+  animation-fill-mode: both;
+}
+
+@keyframes hiding {
+  from { 
+      height: inherit;
+      opacity: 1;
+  }
+  to { 
+      height: 0;
+      opacity: 0;
+  }
+}
