@@ -49,4 +49,5 @@ $app->group('', function() {
     $this->post('/user/login', 'UserController:postLogin');
 })->add(new \App\Middleware\AdminMiddleware($c));    
 
-$app->get('/rates/places/json/{id}', 'RateController:json')->setName('rate.json');
+$app->get('/rates/json/place/{id}', 'RateController:json')->setName('rate.json');
+$app->get('/rates/json', 'RateController:json2')->setName('rate.json2');

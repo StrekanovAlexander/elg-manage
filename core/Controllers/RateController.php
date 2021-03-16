@@ -20,18 +20,26 @@ class RateController extends Controller
 
     public function json($req, $res, $args)
     {
-        $rates = Rate::actualByPlace($args['id']);
-        $arr = [];
-        foreach($rates as $value) {
-            $arr[] = [
-                'id' => $value->curr->id,
-                'currency' => $value->curr->short_name,
-                'buy' => $value->rate_buy,
-                'sale' => $value->rate_sale,
+        $json = $this->ratesByPlace($args['id']);  
+        $res->getBody()->write(json_encode($json));
+        return  $res->withHeader('Content-type', 'application/json; charset=utf-8');
+
+    }
+
+    public function json2($req, $res)
+    {
+        $json = [];
+        $json['timestamp'] = date('Y-m-d H:i:s');
+        $places = Place::actual();
+        foreach($places as $place) {
+            $json[] = [
+                'id' => $place->id,
+                'name' => $place->full_name,
+                'rates' => $this->ratesByPlace($place->id),    
             ];         
         } 
 
-        $res->getBody()->write(json_encode($arr));
+        $res->getBody()->write(json_encode($json, JSON_UNESCAPED_UNICODE));
         return  $res->withHeader('Content-type', 'application/json; charset=utf-8');
 
     }
@@ -39,7 +47,8 @@ class RateController extends Controller
     private function ratesTable()
     {
         $currs = Curr::orderBy('id')->where('is_actual', true)->where('is_main', false)->get();
-        $places = Place::orderBy('id')->where('is_actual', true)->get();
+        // $places = Place::orderBy('id')->where('is_actual', true)->get();
+        $places = Place::actual();
         $tds = '';
 
         foreach($places as $place) {
@@ -50,8 +59,7 @@ class RateController extends Controller
         
         $trs_buy = '';
         $trs_sale = '';
-        // $tds_buy = '';
-        // $tds_sale = '';
+
         foreach($currs as $curr) {
             $tds_buy = StringUtil::setTag('td', $curr->short_name . '_пок',  'border: 1px solid gray');
             $tds_sale = StringUtil::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
@@ -70,9 +78,11 @@ class RateController extends Controller
 
     public function send($req, $res)
     {
-        $emails = $this->emailList();
-        array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
- 
+        // $emails = $this->emailList();
+        $emalils = [];
+        // array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
+        array_push($emails, 'alexis.s@i.ua');
+         
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
@@ -105,5 +115,23 @@ class RateController extends Controller
             $emails[] = $dep->email;
         }
         return $emails;
+    }
+
+    private function ratesByPlace($id)
+    {
+        $rates = [];
+        $actualRates = Rate::actualByPlace($id);
+        
+        foreach($actualRates as $rate) {
+            $rates[] = [
+                'id' => $rate->curr->id,
+                'currency' => $rate->curr->short_name,
+                'buy' => $rate->rate_buy,
+                'sale' => $rate->rate_sale,
+            ];         
+        }
+        
+        return $rates;
+
     }
 }    

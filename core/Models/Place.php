@@ -12,4 +12,11 @@ class Place extends Model
     {
         return self::where('is_actual', true)->find($id);
     }
+
+    public function actual()
+    {
+        return self::where('is_actual', true)
+            ->orderBy('id')
+            ->get();
+    }
 }
