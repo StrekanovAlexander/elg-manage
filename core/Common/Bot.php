@@ -71,7 +71,7 @@ class Bot extends \TelegramBot\Api\Client
         return $stmt->fetchAll(\PDO::FETCH_ASSOC); 
     }
 
-    public function printPlaces($parts = 1)
+    public function printPlaces($parts = 2)
     {
         $arr = [];
         $data = $this->places();
