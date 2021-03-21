@@ -5,7 +5,7 @@ const setMask = () => {
   if (elems) {
     const currs = [...elems].map(el => el.dataset.currId);
     currs.forEach(el => {
-      const elem = document.querySelector('#rate_buy_' + el); 
+      const elem = document.querySelector('#rate_' + el); 
       if (elem) {
         IMask(elem, {
           mask: Number,  

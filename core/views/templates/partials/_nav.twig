@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path_for('base-rate.index') }}">Базовые курсы</a>
+                    <a class="nav-link" href="{{ path_for('base.index') }}">Базовые курсы</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path_for('rules.set') }}">Настройка правил</a>
@@ -21,6 +21,7 @@
                         <a class="dropdown-item" href="{{ path_for('dep.index') }}">Отделения</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ path_for('curr.index') }}">Валюты</a>
+                        <a class="dropdown-item" href="{{ path_for('curr.cross.index') }}">Валюты (кросс)</a>
                     </div>
                 </li>
             </ul>

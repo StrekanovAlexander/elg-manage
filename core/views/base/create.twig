@@ -2,7 +2,7 @@
 
 {% block content %}
     <h3 class="my-5">Установить базовые курсы</h3>
-    <form action="{{ path_for('base-rate.create')}}" method="POST">
+    <form action="{{ path_for('base.create')}}" method="POST">
         <table class="table table-striped w-50">
             <tr class="text-center">
                 <th colspan="2">Валюта</th>
@@ -22,7 +22,7 @@
                         <input name="{{ curr_id }}" id="{{ curr_id }}" value="{{ curr_id }}" type="hidden">
                     </td>
                     <td>
-                        <input class="form-control" name="rate_buy_{{ curr_name|lower }}" id="rate_buy_{{ curr_name|lower }}" value="{{ rate_buy }}" style="text-align: right">
+                        <input class="form-control" name="rate_{{ curr_name|lower }}" id="rate_{{ curr_name|lower }}" value="{{ rate_buy }}" style="text-align: right">
                     </td>
                     <td>
                         <input class="form-control" name="steps_{{ curr_name|lower }}" id="steps_{{ curr_name|lower }}" type="number" value="1">

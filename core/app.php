@@ -5,7 +5,7 @@ require(__DIR__ . '/../core/db.php');
 
 $app = new \Slim\App([
     'settings' => [
-       'displayErrorDetails' => false,
+       'displayErrorDetails' => true,
        'db' => $db,
     ]
 ]);
@@ -81,13 +81,13 @@ $c['UserController'] = function($c) {
     return new App\Controllers\UserController($c);
 };
 
-$c['errorHandler'] = function() {
-    return function ($req, $res) {
-        return $res->withStatus(500)
-            ->withHeader('Content-Type', 'text/html')
-            ->write('500. Server error');
-    };
-};
+// $c['errorHandler'] = function() {
+//     return function ($req, $res) {
+//         return $res->withStatus(500)
+//             ->withHeader('Content-Type', 'text/html')
+//             ->write('500. Server error');
+//     };
+// };
   
 $c['notFoundHandler'] = function() {
     return function($req, $res) {

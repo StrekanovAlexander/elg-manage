@@ -1,0 +1,98 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('curr.cross.index') }}">Валюты (кросс)</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Создание</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Создать валюту (кросс)</h3>
+    <form action="{{ path_for('curr.cross.create')}}" method="POST">
+        <table class="table">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <label for="base_curr_id">Основная</label>
+                        <select class="form-control" name="base_curr_id" id="curr_base_curr_id">
+                            {% for curr in currs %}
+                                <option value="{{ curr.id }}">{{ curr.short_name }}</option>
+                            {% endfor %}
+                        </select>
+                        {# <label for="short_name">Основная</label>
+                        <select class="form-control" name="short_name" id="curr_cross_short_name">
+                            {% for curr in currs %}
+                                <option value="{{ curr.short_name }}">{{ curr.short_name }}</option>
+                            {% endfor %}
+                        </select> #}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <label for="rel_curr_id">Подчиненная</label>
+                        <select class="form-control" name="rel_curr_id" id="rel_curr_id">
+                        {% for curr in currs %}
+                            <option value="{{ curr.id }}">{{ curr.short_name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </td>
+            </tr>            
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="color_id">Цвет</label>
+                        <select class="form-control" name="color_id" id="color_id">
+                        {% for color in colors %}
+                            <option value="{{ color.id }}">{{ color.full_name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </td>        
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <label for="step_size">Шаг пункта</label>
+                        <select class="form-control" name="step_size" id="step_size">
+                        {% for step_size in step_sizes %}
+                            <option value="{{ step_size.value }}">{{ step_size.value }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">        
+                    <div class="form-group">
+                        <label for="step_size_format">Формат пункта</label>
+                        <select class="form-control" name="step_size_format" id="step_size_format">
+                        {% for step_size_format in step_size_formats %}
+                            <option value="{{ step_size_format.value }}">{{ step_size_format.value }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">        
+                    <div class="form-group">
+                        <div class="form-check">
+                            <label for="is_actual" class="form-check-label">
+                                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual">Актуальность
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">    
+                    <div class="form-group">
+                        <button class="btn btn-success" id="btn-save" type="submit" disabled>Записать</button>
+                    </div>
+                </td>
+            </tr>
+        </table>              
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    

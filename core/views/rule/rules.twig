@@ -12,13 +12,15 @@
       </tr>
       <tr class="small">
         <td colspan="{{ places|length + 1 }}" class="bg-secondary text-uppercase text-white">
-          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base-rate.create') }}"><small>Покупка. Установить</small></a>  
+          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base.create') }}"><small>Покупка. Установить</small></a>  
           <a class="btn btn-sm btn-link text-white" href="{{ path_for('rate.json2') }}"><small>JSON</small></a>
         </td>
       </tr>
       {% for curr in currs %}
         <tr class="small">
-          <th class="{{ curr.color.full_name }}">{{ curr.short_name }}</th>
+          <th class="{{ curr.color.full_name }}">
+            {{ curr.short_name }}
+          </th>
           {% for place in places %}
             {% if place.is_base == 1 %}
               <td class="{{ curr.color.full_name }} font-weight-bold text-right">
@@ -44,12 +46,14 @@
       {% endfor %}
       <tr class="small">
         <td colspan="{{ places|length + 1 }}" class="bg-secondary text-uppercase text-white">
-          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base-rate.create') }}"><small>Продажа. Установить</small></a> <a class="btn btn-sm btn-link text-white" href="{{ path_for('rate.json2') }}"><small>JSON</small></a>
+          <a class="btn btn-sm btn-link text-white" href="{{ path_for('base.create') }}"><small>Продажа. Установить</small></a> <a class="btn btn-sm btn-link text-white" href="{{ path_for('rate.json2') }}"><small>JSON</small></a>
         </td>
       </tr>
       {% for curr in currs %}
         <tr class="small">
-          <th class="{{ curr.color.full_name }}">{{ curr.short_name }}</th>
+          <th class="{{ curr.color.full_name }}">
+             {{ curr.short_name }}
+          </th>
           {% for place in places %}
              {% if place.is_base == 1 %}
               <td class="{{ curr.color.full_name }} font-weight-bold text-right">

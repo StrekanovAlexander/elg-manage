@@ -4,18 +4,26 @@ $app->group('', function() {
     // $this->get('/', 'HomeController:index')->setName('home.index');
     $this->get('/', 'RuleController:getRules')->setName('home.index');
 
-    $this->get('/base-rates/create', 'BaseRateController:create')->setName('base-rate.create');
-    $this->post('/base-rates/create', 'BaseRateController:store');
-
-    $this->get('/base-rates', 'BaseRateController:index')->setName('base-rate.index');
+    $this->get('/base/create', 'BaseRateController:create')->setName('base.create');
+    $this->post('/base/create', 'BaseRateController:store');
+    $this->get('/base/cross/create', 'BaseRateController:createCross')->setName('base.cross.create');
+    $this->post('/base/cross/create', 'BaseRateController:storeCross');
+    
+    $this->get('/base', 'BaseRateController:index')->setName('base.index');
 
     $this->get('/currs', 'CurrController:index')->setName('curr.index');
-    
     $this->get('/currs/create', 'CurrController:create')->setName('curr.create');
     $this->post('/currs/create', 'CurrController:store');
-    
+        
     $this->get('/currs/edit[/{id}]', 'CurrController:edit')->setName('curr.edit');
     $this->post('/currs/edit', 'CurrController:update');
+
+    $this->get('/currs/cross', 'CurrController:indexCross')->setName('curr.cross.index');
+    $this->get('/currs/cross/create', 'CurrController:createCross')->setName('curr.cross.create');
+    $this->post('/currs/cross/create', 'CurrController:storeCross');
+
+    $this->get('/currs/cross/edit[/{id}]', 'CurrController:editCross')->setName('curr.cross.edit');
+    $this->post('/currs/cross/edit', 'CurrController:updateCross');
 
     $this->get('/deps', 'DepController:index')->setName('dep.index');
     

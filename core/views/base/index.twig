@@ -3,10 +3,11 @@
 {% block content %}
     <h3 class="my-5">Базовые курсы валют (Текущие)</h3>
     <div>
-    <a href="{{ path_for('base-rate.create') }}" class="btn btn-success mb-2" role="button">Установить новые</a>
+    <a href="{{ path_for('base.create') }}" class="btn btn-success mb-2" role="button">Создать</a>
+    <a href="{{ path_for('base.cross.create') }}" class="btn btn-info mb-2" role="button">Создать (кросс)</a>
     <a href="{{ path_for('rate.send') }}" class="btn btn-primary mb-2 float-right" role="button">Отправить курсы</a>
     </div>
-    {% if base_rates|length %}
+    {% if base|length %}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr class="text-center">
@@ -18,14 +19,14 @@
                 </tr>
             </thead>
             <tbody>
-            {% for base_rate in base_rates %}
+            {% for rate in base %}
                 <tr class="text-center">
-                   <td>{{ base_rate.curr.sign|raw }}</td>
-                   <td>{{ base_rate.curr.short_name }}</td>
-                   <td class="text-right">{{ base_rate.rate_buy }}</td>
-                   <td class="text-right">{{ base_rate.rate_sale }}</td>
-                   <td class="text-right">{{ base_rate.steps }}</td>
-                   <td>{{ base_rate.created_at|date("d.m.Y H:i:s") }}</td>
+                   <td>{{ rate.curr.sign|raw }}</td>
+                   <td>{{ rate.curr.short_name }}</td>
+                   <td class="text-right">{{ rate.rate_buy }}</td>
+                   <td class="text-right">{{ rate.rate_sale }}</td>
+                   <td class="text-right">{{ rate.steps }}</td>
+                   <td>{{ rate.created_at|date("d.m.Y H:i:s") }}</td>
                 </tr>    
             {% endfor %}
             </body>

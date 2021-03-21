@@ -1,0 +1,42 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <h3 class="my-5">Установить базовые кросс-курсы</h3>
+    <form action="{{ path_for('base.cross.create')}}" method="POST">
+        <table class="table table-striped">
+            <tr class="text-center">
+                <th>Валюта</th>
+                <th>Курс Форекс</th>
+                <th>Дельта (покупка)</th>
+                <th>Дельта (продажа)</th>
+                <th>Текущий USD (покупка)</th>
+                <th>Текущий USD (продажа)</th>
+            </tr>
+            {% for curr in currs %}
+                {% set curr_snake_short_name = (curr.base.short_name ~ '_' ~ curr.rel.short_name)|lower %}
+                <tr>
+                    <td>{{ curr.short_name }}
+                        <input name="{{ curr.id }}" id="{{ curr.id }}" value="{{ curr.id }}" type="hidden">
+                    </td>
+                    <td data-curr-id="{{ curr_snake_short_name }}">
+                        <input class="form-control" name="rate_{{ curr_snake_short_name }}" id="rate_{{ curr_snake_short_name }}" style="text-align: right">
+                    </td>
+                    <td>
+                        <input class="form-control" name="steps_cross_buy_{{ curr_snake_short_name }}" id="steps_cross_buy_{{ curr_snake_short_name }}" type="number" value="1" style="text-align: right">
+                    </td>
+                    <td>
+                       <input class="form-control" name="steps_cross_sale_{{ curr_snake_short_name }}" id="steps_cross_sale_{{ curr_snake_short_name }}" type="number" value="1" style="text-align: right">
+                    </td>
+                    <td>
+                        <input class="form-control" name="eq_curr_rate_buy_{{ curr_snake_short_name }}" id="eq_curr_rate_buy_{{ curr_snake_short_name }}" type="number" value="{{ eq_curr.rate_buy }}" readonly style="text-align: right">
+                    </td>
+                    <td>   
+                        <input class="form-control" name="eq_curr_rate_sale_{{ curr_snake_short_name }}" id="eq_curr_rate_sale_{{ curr_snake_short_name }}" type="number" value="{{ eq_curr.rate_sale }}" readonly style="text-align: right">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>    
+        <button class="btn btn-success" type="submit">Записать</button>
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    
