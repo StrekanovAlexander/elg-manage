@@ -71,6 +71,18 @@
             <tr>
                 <td colspan="2">
                     <div class="form-group">
+                        <label for="oper_cross">Операция</label>
+                        <select class="form-control" name="oper_cross" id="oper_cross">
+                            {% for oper_cross in oper_crosses %}
+                                <option value="{{ oper_cross.value }}" {{ oper_cross.value == curr.oper_cross ? 'selected' : '' }}>{{ oper_cross.value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
                         <div class="form-check">
                             <label for="is_actual" class="form-check-label">
                             <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual" {{ curr.is_actual ? ' checked="checked"' : ''}}>Актуальность

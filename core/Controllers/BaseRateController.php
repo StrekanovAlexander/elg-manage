@@ -32,10 +32,14 @@ class BaseRateController extends Controller
         ], 3);
 
         foreach($arr as $value) {
+            $curr = Curr::find($value[0]); 
+            $diff = $value[2] * $curr->step_size;
             BaseRate::create([
                 'curr_id' => $value[0],
                 'rate_buy' => $value[1],
+                'rate_sale' => $value[1] + $diff,
                 'steps' => $value[2],
+                'is_cross' => false,
                 'created_at' => $timestamp,
             ]);
         }
@@ -61,6 +65,7 @@ class BaseRateController extends Controller
 
     public function storeCross($req, $res)
     {
+
         $timestamp = BaseRate::max('created_at');
         $arr = \App\Common\StringUtil::cleanParams($req->getParams(), [
             'csrf_name', 
@@ -68,13 +73,28 @@ class BaseRateController extends Controller
         ], 6);
 
         foreach($arr as $value) {
+            BaseRate::drop($value[0], $timestamp);
+            $curr = Curr::find($value[0]); 
+            $rate_cross = $value[1];
+            $steps_cross_buy = $value[2];
+            $steps_cross_sale = $value[3];
+            $rate_base_buy = $value[4];
+            $rate_base_sale = $value[5];
+            $rate_cross_buy = $rate_cross - ($steps_cross_buy * $curr->step_size);
+            $rate_cross_sale = $rate_cross - ($steps_cross_sale * $curr->step_size);
+
             BaseRate::create([
                 'curr_id' => $value[0],
-                'rate_cross' => $value[1],
-                'steps_cross_buy' => $value[2],
-                'steps_cross_sale' => $value[3],
-                'rate_buy' => $value[1] * $value[4],
-                'rate_sale' => $value[1] * $value[5],
+                'rate_buy' => $rate_base_buy * $rate_cross_buy,
+                'rate_sale' => $rate_base_sale * $rate_cross_sale,
+                'rate_cross' => $rate_cross,
+                'rate_cross_buy' => $rate_cross_buy,
+                'rate_cross_sale' => $rate_cross_sale,
+                'steps_cross_buy' => $steps_cross_buy,
+                'steps_cross_sale' => $steps_cross_sale,
+                'rate_base_buy' => $rate_base_buy,
+                'rate_base_sale' => $rate_base_sale,
+                'is_cross' => true,
                 'created_at' => $timestamp,
             ]);
         }

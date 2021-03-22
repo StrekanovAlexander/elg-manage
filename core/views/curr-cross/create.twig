@@ -19,12 +19,6 @@
                                 <option value="{{ curr.id }}">{{ curr.short_name }}</option>
                             {% endfor %}
                         </select>
-                        {# <label for="short_name">Основная</label>
-                        <select class="form-control" name="short_name" id="curr_cross_short_name">
-                            {% for curr in currs %}
-                                <option value="{{ curr.short_name }}">{{ curr.short_name }}</option>
-                            {% endfor %}
-                        </select> #}
                     </div>
                 </td>
                 <td>
@@ -69,6 +63,18 @@
                         <select class="form-control" name="step_size_format" id="step_size_format">
                         {% for step_size_format in step_size_formats %}
                             <option value="{{ step_size_format.value }}">{{ step_size_format.value }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">        
+                    <div class="form-group">
+                        <label for="oper_cross">Операция</label>
+                        <select class="form-control" name="oper_cross" id="oper_cross">
+                        {% for oper_cross in oper_crosses %}
+                            <option value="{{ oper_cross.value }}">{{ oper_cross.value }}</option>
                         {% endfor %}
                         </select>
                     </div>

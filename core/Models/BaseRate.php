@@ -11,7 +11,11 @@ class BaseRate extends Model
         'curr_id', 
         'rate_buy',
         'rate_sale',
+        'rate_base_buy',
+        'rate_base_sale',
         'rate_cross',
+        'rate_cross_buy',
+        'rate_cross_sale',
         'steps',
         'steps_cross_buy',
         'steps_cross_sale',
@@ -63,6 +67,14 @@ class BaseRate extends Model
         $currs['rate_buy'] = $rates[0]['rate_buy'];    
         $currs['rate_sale'] = $rates[0]['rate_sale'];    
         return $currs;
+    }
+
+    public static function drop($id, $created_at)
+    {
+        self::where('curr_id', $id)
+            ->where('created_at', $created_at)
+            -> delete();
+        return 0;
     }
 
 }

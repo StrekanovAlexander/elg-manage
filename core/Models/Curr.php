@@ -16,6 +16,7 @@ class Curr extends Model
         'sign',
         'step_size',
         'step_size_format',
+        'oper_cross',
         'is_cross',
         'is_actual',
     ];

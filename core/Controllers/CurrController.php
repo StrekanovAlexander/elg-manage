@@ -24,6 +24,11 @@ class CurrController extends Controller
         ['value' => '0.00001'],
     ];
 
+    private static $oper_crosses = [
+        ['value' => '*'], 
+        ['value' => '/'], 
+    ];
+
     public function index($req, $res)
     {
         $colors = ColorCss::orderBy('full_name')->get();
@@ -123,6 +128,7 @@ class CurrController extends Controller
             'currs' => $currs,
             'step_sizes' => self::$step_sizes,
             'step_size_formats' => self::$step_size_formats,
+            'oper_crosses' => self::$oper_crosses,
         ]);
     }
 
@@ -140,6 +146,7 @@ class CurrController extends Controller
             'color_id' => $req->getParam('color_id'),
             'step_size' => $req->getParam('step_size'),
             'step_size_format' => $req->getParam('step_size_format'),
+            'oper_cross' => $req->getParam('oper_cross'),
             'is_cross' => true,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
@@ -163,6 +170,7 @@ class CurrController extends Controller
             'currs' => $currs,
             'step_sizes' => self::$step_sizes,
             'step_size_formats' => self::$step_size_formats,
+            'oper_crosses' => self::$oper_crosses,
         ]);
     }
 
@@ -180,6 +188,7 @@ class CurrController extends Controller
             'color_id' => $req->getParam('color_id'),
             'step_size' => $req->getParam('step_size'),
             'step_size_format' => $req->getParam('step_size_format'),
+            'oper_cross' => $req->getParam('oper_cross'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 

@@ -13,6 +13,7 @@
                     <th>Цвет</th>
                     <th>Шаг пункта</th>
                     <th>Формат пункта</th>
+                    <th>Операция</th>
                     <th>Актуальность</th>
                     <th></th>
                 </tr>
@@ -24,6 +25,7 @@
                    <td class="{{ curr.color.full_name }}">{{ curr.color.full_name }}</td>
                    <td>{{ curr.step_size }}</td>
                    <td>{{ curr.step_size_format }}</td>
+                   <td>{{ curr.oper_cross }}</td>
                    <td><i class="fas {{ curr.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td><a href="{{ path_for('curr.cross.edit', {'id': curr.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
                 </tr>    
