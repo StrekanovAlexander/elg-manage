@@ -14,18 +14,30 @@
                     <th colspan="2">Валюта</th>
                     <th class="text-right">Покупка</th>
                     <th class="text-right">Продажа</th>
-                    <th class="text-right">Дельта</th>
+                    <th>Дельта</th>
+                    <th>Кросс</th>
                     <th>Дата</th>
                 </tr>
             </thead>
             <tbody>
             {% for rate in base %}
                 <tr class="text-center">
-                   <td>{{ rate.curr.sign|raw }}</td>
-                   <td>{{ rate.curr.short_name }}</td>
-                   <td class="text-right">{{ rate.rate_buy }}</td>
-                   <td class="text-right">{{ rate.rate_sale }}</td>
-                   <td class="text-right">{{ rate.steps }}</td>
+                    <td>{{ rate.curr.sign|raw }}</td>
+                    <td>{{ rate.curr.short_name }}</td>
+                    <td class="text-right">{{ rate.rate_buy }}</td>
+                    <td class="text-right">{{ rate.rate_sale }}</td>
+                    <td>
+                        {% if rate.is_cross == 1 %}
+                            {{ rate.steps_cross_buy }} / {{ rate.steps_cross_sale }}
+                        {% else %}    
+                            {{ rate.steps }}
+                        {% endif %}
+                    </td>
+                    <td class="text-right">
+                    {% if rate.is_cross == 1 %}
+                        <strong>{{ rate.rate_cross }}</strong> / {{ rate.rate_cross_buy }} / {{ rate.rate_cross_sale }}
+                    {% endif %}
+                    </td>
                    <td>{{ rate.created_at|date("d.m.Y H:i:s") }}</td>
                 </tr>    
             {% endfor %}

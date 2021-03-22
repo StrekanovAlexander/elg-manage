@@ -75,6 +75,8 @@ class BaseRateController extends Controller
         foreach($arr as $value) {
             BaseRate::drop($value[0], $timestamp);
             $curr = Curr::find($value[0]); 
+            $oper_cross = $curr->oper_cross;
+            
             $rate_cross = $value[1];
             $steps_cross_buy = $value[2];
             $steps_cross_sale = $value[3];
@@ -82,11 +84,18 @@ class BaseRateController extends Controller
             $rate_base_sale = $value[5];
             $rate_cross_buy = $rate_cross - ($steps_cross_buy * $curr->step_size);
             $rate_cross_sale = $rate_cross - ($steps_cross_sale * $curr->step_size);
-
+            if ($curr->oper_cross == '*') {
+                $rate_buy = $rate_base_buy * $rate_cross_buy;
+                $rate_sale = $rate_base_buy * $rate_cross_sale;
+            } else {
+                $rate_buy = $rate_base_buy / $rate_cross_buy;
+                $rate_sale = $rate_base_sale / $rate_cross_sale;
+            }
+        
             BaseRate::create([
                 'curr_id' => $value[0],
-                'rate_buy' => $rate_base_buy * $rate_cross_buy,
-                'rate_sale' => $rate_base_sale * $rate_cross_sale,
+                'rate_buy' => $rate_buy,
+                'rate_sale' => $rate_sale,
                 'rate_cross' => $rate_cross,
                 'rate_cross_buy' => $rate_cross_buy,
                 'rate_cross_sale' => $rate_cross_sale,
@@ -94,7 +103,7 @@ class BaseRateController extends Controller
                 'steps_cross_sale' => $steps_cross_sale,
                 'rate_base_buy' => $rate_base_buy,
                 'rate_base_sale' => $rate_base_sale,
-                'is_cross' => true,
+                'is_cross' => 1,
                 'created_at' => $timestamp,
             ]);
         }

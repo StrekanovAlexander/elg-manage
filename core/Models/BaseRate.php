@@ -19,6 +19,7 @@ class BaseRate extends Model
         'steps',
         'steps_cross_buy',
         'steps_cross_sale',
+        'is_cross',
         'created_at',
     ];
 
@@ -53,7 +54,13 @@ class BaseRate extends Model
             $rate = self::where('curr_id', $curr->id)
                 ->where('created_at', self::max('created_at'))->get();
             $curr['rate_buy'] = $rate[0]['rate_buy'];    
-            $curr['rate_sale'] = $rate[0]['rate_sale'];    
+            $curr['rate_sale'] = $rate[0]['rate_sale']; 
+            $curr['rate_cross'] = $rate[0]['rate_cross'];   
+            $curr['rate_cross_buy'] = $rate[0]['rate_cross_buy'];    
+            $curr['rate_cross_sale'] = $rate[0]['rate_cross_sale']; 
+            $curr['steps_cross_buy'] = $rate[0]['steps_cross_buy'];    
+            $curr['steps_cross_sale'] = $rate[0]['steps_cross_sale']; 
+            $curr['is_cross'] = $rate[0]['is_cross'];   
         }    
         return $currs;
     }
