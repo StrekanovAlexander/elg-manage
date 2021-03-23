@@ -44,8 +44,8 @@ const init = () => {
       };
 
       const setBgInput = (el) => {
-        const color = el.value < 0 ? 'red' : el.value == 0 ? 'lightgray' : 'yellowgreen'; 
-        el.style.cssText = `border: 1px solid ${color}; text-align: center`;
+        const color = el.value < 0 ? 'red' : el.value == 0 ? 'lightgray' : 'green'; 
+        el.style.cssText = `border: 2px solid ${color}; text-align: center`;
       }  
 
     }

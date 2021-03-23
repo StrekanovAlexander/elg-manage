@@ -11,6 +11,11 @@
     <title>Elg-Панель управления</title>
 </head>
 <body>
+    {% if auth.check %}
+        <div>
+            <a class="btn btn-light" href="{{ path_for('home.index') }}">Elg-админ</a>
+        </div>    
+    {% endif %}
     {% include 'templates/partials/_flash.twig' %}
     {% block content %}{% endblock %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
