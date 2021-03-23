@@ -1,0 +1,99 @@
+{% extends 'templates/layout-empty.twig' %}
+
+{% block content %}
+    {% if places|length %}
+    <form action="{{ path_for('rules.set') }}" method="POST" id="bases"> 
+        <table class="table table-striped table-sm">
+        <tr class="small text-center">
+            <td></td>
+            {% for place in places %}
+            <td>{{ place.full_name|slice(0, 3)|upper }}</td>
+            {% endfor %}
+        </tr>
+        {% for curr in currs %}
+            {# <tr class="small" style="background-color: {{ curr.color.full_name }}"> #}
+            <tr class="small">
+                <td>{{ curr.short_name }}</td>
+                {% for place in places %}
+                    {% if place.is_base == 1 %}
+                        <td>
+                            <input class="form-control form-control-sm" name="base_rate_id_{{ curr.id }}" id="base_rate_id_{{ curr.id }}" style="width: 6em; text-align: center" readonly data-base-rate-id="{{ curr.id }}">
+                        </td>
+                    {% else %}
+                        {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                            <td>
+                                {# {{ rule.diff_buy < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }} #}
+                                <input class="form-control form-control-sm" name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}" style="text-align:center">
+                            </td>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %} 
+            </tr>
+        {% endfor %}
+
+        {# {% for curr in currs %}
+            <tr class="small">
+            <th class="{{ curr.color.full_name }}">
+                {{ curr.short_name }}
+            </th>
+            
+            {% for place in places %}
+                {% if place.is_base == 1 %}
+                <td class="{{ curr.color.full_name }} font-weight-bold text-right">
+                    {% for base_rate in base_rates|filter(base_rate => base_rate.curr_id == curr.id) %}
+                    {{ base_rate.rate_sale }}
+                    {% endfor %}
+                </td>
+                {% else %}
+                {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                    <td class="{{ rule.diff_sale < 0 ? 'orangered' : (rule.diff_sale == 0 ? 'white' : 'yellowgreen') }}">
+                    <div style="display: flex;">
+                        <input class="form-control input-step" name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" style="text-align: center" readonly>
+                        <div>
+                        <span class="btn-step">⇑</span>
+                        <span class="btn-step">⇓</span>
+                        </div>
+                    </div>  
+                    </td>
+                {% endfor %}
+                {% endif %}
+            {% endfor %} 
+            </tr>
+        {% endfor %} #}
+
+        </table>
+        <div class="row row justify-content-md-left">
+            <div class="col-2">
+                Cross
+            </div>
+            <div class="col-2">
+                Base rates
+                <table>
+                    {% for base in bases %}
+                        <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}">
+                            <td class="px-1">{{ base.short_name }}</td>
+                            <td class="d-flex">
+                                <input class="form-control form-control-sm" name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" type="number" data-rate-buy-id="{{ base.id }}" style="width: 6em; text-align: center">
+                                <button class="btn btn-light btn-sm btn-cnt">⇓</button>
+                                <button class="btn btn-light btn-sm btn-cnt">⇑</button>
+                                <input class="form-control form-control-sm" value="0" readonly style="width: 3em; text-align: center">
+                            </td> 
+                            <td class="px-2"></td>   
+                            <td class="d-flex">
+                                <input class="form-control form-control-sm" name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" type="number" data-rate-sale-id="{{ base.id }}" style="width: 6em; text-align: center">
+                                <button class="btn btn-light btn-sm btn-cnt">⇓</button>
+                                <button class="btn btn-light btn-sm btn-cnt">⇑</button>
+                                <input class="form-control form-control-sm" value="0" readonly style="width: 3em; text-align: center">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div>
+            {# <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit" >Сохранить</button> #}
+        </div>
+        {{ csrf.field | raw}}  
+    </form>
+    {% endif %}
+{% endblock %}

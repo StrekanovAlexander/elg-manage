@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BaseRate;
 use App\Models\Curr;
+use App\Models\Place;
+use App\Models\Rule;
 
 class BaseRateController extends Controller
 {
@@ -12,6 +14,34 @@ class BaseRateController extends Controller
         return $this->view->render($res, 'base/index.twig', [
             'base' => BaseRate::actual(),
         ]);
+    }
+
+    public function index2($req, $res)
+    {
+        $bases = BaseRate::bases();
+        $base_rates = BaseRate::actual();
+        
+
+        $currs = Curr::orderBy('id')
+            ->where('is_actual', true)
+            ->where('is_main', false)
+            ->get();
+
+        $places = Place::orderBy('is_base', 'DESC')
+            ->orderBy('full_name', 'ASC')
+            ->where('is_actual', true)
+            ->get();
+
+        $rules = Rule::where('is_actual', true)->get();
+
+        return $this->view->render($res, 'base/index2.twig', [
+            'bases' => $bases,
+            'base_rates' => $base_rates,
+            'currs' => $currs,
+            'places' => $places,
+            'rules' => $rules,
+        ]);
+
     }
 
     public function create($req, $res)
