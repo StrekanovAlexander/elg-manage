@@ -13,5 +13,29 @@
 } 
 
 .btn-cnt {
-  margin: 0;
+  align-self: center;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  &:hover {
+    cursor:pointer;
+  }
+}   
+
+.btn-cnt-down {
+  border-width: 15px 10px 0 10px;
+  border-color: black transparent transparent;
+  margin-left: .5em;
+  &:hover {
+    border-color: red transparent transparent;
+  }
+}
+
+.btn-cnt-up {
+  border-width: 0 10px 15px 10px;
+  border-color: transparent transparent black transparent;
+  margin-right: .5em;
+  &:hover {
+    border-color: transparent transparent green transparent;
+  }
 }   

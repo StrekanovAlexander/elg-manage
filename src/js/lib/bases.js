@@ -7,11 +7,22 @@ const init = () => {
         elem.value = val;
       };
 
+      const setRateSale = (id, val) => {
+        const elem = document.querySelector(`#base_rate_sale_id_${id}`);
+        elem.value = val;
+      };
+
       const rates_buy = document.querySelectorAll('[data-rate-buy-id]');
+      const rates_sale = document.querySelectorAll('[data-rate-sale-id]');
 
       [...rates_buy].forEach(el => {
         const id = el.id.replace('rate_buy_id_', '');
         setRateBuy(id, el.value);
+      });
+
+      [...rates_sale].forEach(el => {
+        const id = el.id.replace('rate_sale_id_', '');
+        setRateSale(id, el.value);
       });
 
       const btn_incs = document.querySelectorAll('.btn-cnt'); 
@@ -33,10 +44,13 @@ const init = () => {
           if (input_rate.dataset.rateBuyId) {  
             setRateBuy(curr_id, input_rate.value);
           }  
+          if (input_rate.dataset.rateSaleId) {  
+            setRateSale(curr_id, input_rate.value);
+          }  
         });
       });
 
-      const step = (el) => el.innerHTML == '⇑' ? 1 : -1;
+      const step = (el) => el.classList.contains('btn-cnt-up') ? 1 : -1;
 
       const getInput = (el, siblDir) => {
         const sibling = el[siblDir];
@@ -44,12 +58,26 @@ const init = () => {
       };
 
       const setBgInput = (el) => {
-        const color = el.value < 0 ? 'red' : el.value == 0 ? 'lightgray' : 'green'; 
-        el.style.cssText = `border: 2px solid ${color}; text-align: center`;
-      }  
+        if (el.value > 0) {
+          rmClass(el, 'input-step-minus'); 
+          el.classList.add('input-step-plus');
+        } else if (el.value < 0) {
+          rmClass(el, 'input-step-plus'); 
+          el.classList.add('input-step-minus');
+        } else {
+          rmClass(el, 'input-step-minus'); 
+          rmClass(el, 'input-step-plus'); 
+        }
+      } 
+      
+      const rmClass = (el, currClass) => {
+        if (el.classList.contains(currClass)) {
+          el.classList.remove(currClass);
+        }  
+      }
 
     }
-    
+
 };
 
 export { init };
