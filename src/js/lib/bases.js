@@ -76,6 +76,35 @@ const init = () => {
         }  
       }
 
+      const input_steps = document.querySelectorAll('.input-step');
+      [...input_steps].forEach(el => {
+        el.addEventListener('blur', function(ev) {
+          const el = ev.target;
+          correctStep(el);
+          setBgInput(el);
+        });
+      });
+
+      const input_rates = document.querySelectorAll('.input-rate');
+      [...input_rates].forEach(el => {
+        el.addEventListener('blur', function(ev) {
+          const el = ev.target;
+          correctRate(el);
+        });
+      });
+
+      const correctStep = (el) => {
+        const str = el.value;
+        const val = parseInt(str);
+        el.value = isNaN(val) ? 0 : val;
+      };  
+
+      const correctRate = (el) => {
+        const str = (el.value).replace(',', '.');
+        const val = parseFloat(str);
+        el.value = isNaN(val) ? 0 : el.value = val;
+      };  
+    
     }
 
 };

@@ -16,13 +16,12 @@
                 {% for place in places %}
                     {% if place.is_base == 1 %}
                         <td>
-                            <input name="base_rate_id_{{ curr.id }}" id="base_rate_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}">
+                            <input name="base_rate_id_{{ curr.id }}" id="base_rate_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                         </td>
                     {% else %}
                         {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
                             <td>
-                                {# {{ rule.diff_buy < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }} #}
-                                <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}">
+                                <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}" class="input-step{{ rule.diff_buy < 0 ? ' input-step-minus' : (rule.diff_buy > 0 ? ' input-step-plus' : '') }}">
                             </td>
                         {% endfor %}
                     {% endif %}
@@ -36,13 +35,12 @@
                 {% for place in places %}
                     {% if place.is_base == 1 %}
                         <td>
-                            <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}">
+                            <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                         </td>
                     {% else %}
                         {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
                             <td>
-                                {# {{ rule.diff_buy < 0 ? 'orangered' : (rule.diff_buy == 0 ? 'white' : 'yellowgreen') }} #}
-                                <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}">
+                                <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" class="input-step{{ rule.diff_sale < 0 ? ' input-step-minus' : (rule.diff_sale > 0 ? ' input-step-plus' : '') }}">
                             </td>
                         {% endfor %}
                     {% endif %}
@@ -63,14 +61,14 @@
                         <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}">
                             <td class="px-1 font-weight-bold" style="background-color: {{ base.color.full_name }}">{{ base.short_name }}</td>
                             <td class="d-flex">
-                                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" type="number" data-rate-buy-id="{{ base.id }}" style="width: 7em; text-align: center; font-weight: bold">
+                                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" data-rate-buy-id="{{ base.id }}" class="input-rate">
                                 <span class="btn-cnt btn-cnt-down"></span>
                                 <span class="btn-cnt btn-cnt-up"></span>
                                 <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
                             </td> 
                             <td class="px-2"></td>   
                             <td class="d-flex">
-                                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" type="number" data-rate-sale-id="{{ base.id }}" style="width: 7em; text-align: center; font-weight: bold">
+                                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" data-rate-sale-id="{{ base.id }}" class="input-rate">
                                 <span class="btn-cnt btn-cnt-down"></span>
                                 <span class="btn-cnt btn-cnt-up"></span>
                                 <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
