@@ -44,6 +44,14 @@ class Curr extends Model
             ->get();
     }
 
+    public function actualCross()
+    {
+        return self::orderBy('id', 'ASC')
+            ->where('is_actual', true)
+            ->where('is_cross', true)
+            ->get();
+    }
+
     public function isExists($short_name)
     {
         $count = self::where('short_name', $short_name)->count();

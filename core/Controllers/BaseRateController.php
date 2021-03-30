@@ -20,8 +20,6 @@ class BaseRateController extends Controller
     {
         $bases = BaseRate::bases();
         $base_rates = BaseRate::actual();
-        
-
         $currs = Curr::orderBy('id')
             ->where('is_actual', true)
             ->where('is_main', false)
@@ -34,12 +32,20 @@ class BaseRateController extends Controller
 
         $rules = Rule::where('is_actual', true)->get();
 
+        // Crosses
+        // $base = BaseRate::actualBase();
+        $cross_eqv = BaseRate::actualById(2); //  Curr::currCrossEq();
+        $bases_cross = BaseRate::actualBaseCross();
+        // End crosses
+
         return $this->view->render($res, 'base/index2.twig', [
             'bases' => $bases,
             'base_rates' => $base_rates,
             'currs' => $currs,
             'places' => $places,
             'rules' => $rules,
+            'cross_eqv' => $cross_eqv,
+            'bases_cross' => $bases_cross,
         ]);
 
     }

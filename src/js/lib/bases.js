@@ -3,7 +3,8 @@ const init = () => {
     const bases = document.querySelector('#bases');
     if (bases) {
       const setRateBuy = (id, val) => {
-        const elem = document.querySelector(`#base_rate_id_${id}`);
+        const elem = document.querySelector(`#base_rate_buy_id_${id}`);
+        // const elem = document.querySelector(`#base_rate_id_${id}`);
         elem.value = val;
       };
 
@@ -12,9 +13,20 @@ const init = () => {
         elem.value = val;
       };
 
+      const setRateCrossBuy = (id, val) => {
+        const elem = document.querySelector(`#base_rate_cross_buy_id_${id}`);
+        elem.value = val;
+      };
+
+      const setRateCrossSale = (id, val) => {
+        const elem = document.querySelector(`#base_rate_cross_sale_id_${id}`);
+        elem.value = val;
+      };
+
       const rates_buy = document.querySelectorAll('[data-rate-buy-id]');
       const rates_sale = document.querySelectorAll('[data-rate-sale-id]');
-
+      const rates_cross = document.querySelectorAll('[data-rate-cross-id]');
+ 
       [...rates_buy].forEach(el => {
         const id = el.id.replace('rate_buy_id_', '');
         setRateBuy(id, el.value);
@@ -23,6 +35,12 @@ const init = () => {
       [...rates_sale].forEach(el => {
         const id = el.id.replace('rate_sale_id_', '');
         setRateSale(id, el.value);
+      });
+
+      [...rates_cross].forEach(el => {
+        const id = el.id.replace('rate_cross_id_', '');
+        setRateCrossBuy(id, el.value);
+        setRateCrossSale(id, el.value);
       });
 
       const btn_incs = document.querySelectorAll('.btn-cnt'); 
@@ -38,15 +56,47 @@ const init = () => {
           const curr_id = tr.dataset.currId;
           input_steps.value = Number(input_steps.value) + step(el);
           setBgInput(input_steps);
-          input_rate.value = (
+          if (input_rate.dataset.rateBuyId) {  
+            input_rate.value = (
               Number(input_rate.value) + step(el) * Number(step_size)
             ).toFixed(5);
-          if (input_rate.dataset.rateBuyId) {  
             setRateBuy(curr_id, input_rate.value);
           }  
-          if (input_rate.dataset.rateSaleId) {  
+          if (input_rate.dataset.rateSaleId) { 
+            input_rate.value = (
+              Number(input_rate.value) + step(el) * Number(step_size)
+            ).toFixed(5); 
             setRateSale(curr_id, input_rate.value);
-          }  
+          } 
+          if (input_rate.dataset.rateCrossBuyId || input_rate.dataset.rateCrossSaleId) {
+            const input_rate_cross = document.querySelector(`#rate_cross_id_${curr_id}`);
+            input_rate.value = (
+              Number(input_rate_cross.value) + (Number(input_steps.value) * Number(step_size))
+            ).toFixed(5);
+            
+            const oper_cross = tr.dataset.operCross;
+            const cross_eqv_buy = tr.dataset.crossEqvBuy; 
+            const cross_eqv_sale = tr.dataset.crossEqvSale;   
+                        
+            if (input_rate.dataset.rateCrossBuyId) {
+              const input_base_rate_cross_buy = document.querySelector(`#base_rate_cross_buy_id_${ curr_id}`); 
+              if (oper_cross == '*') {
+                input_base_rate_cross_buy.value = (input_rate.value * Number(cross_eqv_buy)).toFixed(5);
+              } else if (oper_cross == '/') {
+                input_base_rate_cross_buy.value = input_rate.value == 0 ? 0 : (Number(cross_eqv_buy) / input_rate.value).toFixed(5);
+              }
+            }
+
+            if (input_rate.dataset.rateCrossSaleId) {
+              const input_base_rate_cross_sale = document.querySelector(`#base_rate_cross_sale_id_${ curr_id}`); 
+              if (oper_cross == '*') {
+                input_base_rate_cross_sale.value = (input_rate.value * Number(cross_eqv_buy)).toFixed(5);
+              } else if (oper_cross == '/') {
+                input_base_rate_cross_sale.value = input_rate.value == 0 ? 0 : (Number(cross_eqv_sale) / input_rate.value).toFixed(5);
+              }
+            }
+
+          } 
         });
       });
 

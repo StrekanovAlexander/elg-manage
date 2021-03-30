@@ -87,6 +87,27 @@ class BaseRate extends Model
         return $currs;
     }
 
+    public function actualBaseCross()
+    {
+        $currs = Curr::orderBy('id')
+            ->where('is_actual', true)
+            ->where('is_cross', true)
+            ->get();
+        foreach($currs as $curr) {
+            $rate = self::where('curr_id', $curr->id)
+                ->where('created_at', self::max('created_at'))->get();
+            $curr['rate_buy'] = $rate[0]['rate_buy'] ? $rate[0]['rate_buy'] : 0 ;    
+            $curr['rate_sale'] = $rate[0]['rate_sale'] ? $rate[0]['rate_sale'] : 0; 
+            $curr['rate_cross'] = $rate[0]['rate_cross'] ? $rate[0]['rate_cross']: 0;   
+            $curr['rate_cross_buy'] = $rate[0]['rate_cross_buy'] ? $rate[0]['rate_cross_buy'] : 0;    
+            $curr['rate_cross_sale'] = $rate[0]['rate_cross_sale'] ? $rate[0]['rate_cross_sale'] : 0; 
+            $curr['steps_cross_buy'] = $rate[0]['steps_cross_buy'] ? $rate[0]['steps_cross_buy'] : 0;    
+            $curr['steps_cross_sale'] = $rate[0]['steps_cross_sale'] ? $rate[0]['steps_cross_sale'] : 0; 
+            $curr['is_cross'] = $rate[0]['is_cross'];   
+        }    
+        return $currs;
+    }
+
     public function actualById($id)
     {
         $currs = Curr::where('id', $id)->get();
