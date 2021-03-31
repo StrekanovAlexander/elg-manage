@@ -20,16 +20,13 @@
                             {% if curr.is_cross == 1 %}
                                 <input name="base_rate_cross_buy_id_{{ curr.id }}" id="base_rate_cross_buy_id_{{ curr.id }}" readonly data-base-rate-cross-buy-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                             {% else %}
-                                {# <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}"> #}
-                                <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
+                                 <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                             {% endif %}
-                            {# <input name="base_rate_id_{{ curr.id }}" id="base_rate_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0"> #}
                         </td>
                     {% else %}
                         {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
                             <td>
-                                {# <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}"> #}
-                                <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}" class="input-step{{ rule.diff_buy < 0 ? ' input-step-minus' : (rule.diff_buy > 0 ? ' input-step-plus' : '') }}">
+                               <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}" class="input-step{{ rule.diff_buy < 0 ? ' input-step-minus' : (rule.diff_buy > 0 ? ' input-step-plus' : '') }}">
                             </td>
                         {% endfor %}
                     {% endif %}
@@ -48,12 +45,10 @@
                             {% else %}
                                 <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                             {% endif %}    
-                            {# <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0"> #}
                         </td>
                     {% else %}
                         {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
                             <td>
-                                {# <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}"> #}
                                 <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" class="input-step{{ rule.diff_sale < 0 ? ' input-step-minus' : (rule.diff_sale > 0 ? ' input-step-plus' : '') }}">
                             </td>
                         {% endfor %}
@@ -132,7 +127,7 @@
             </div>
         </div>
         <div>
-            {# <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit" >Сохранить</button> #}
+        {# <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit" >Сохранить</button> #}
         </div>
         {{ csrf.field | raw}}  
     </form>
