@@ -35,6 +35,7 @@ class BaseRateController extends Controller
         // Crosses
         // $base = BaseRate::actualBase();
         $cross_eqv = BaseRate::actualById(2); //  Curr::currCrossEq();
+
         $bases_cross = BaseRate::actualBaseCross();
         // End crosses
 

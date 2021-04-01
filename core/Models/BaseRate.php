@@ -110,7 +110,7 @@ class BaseRate extends Model
 
     public function actualById($id)
     {
-        $currs = Curr::where('id', $id)->get();
+        $currs = Curr::find($id);
         $rates = self::where('curr_id', $id)
             ->where('created_at', self::max('created_at'))
             ->get(); 
