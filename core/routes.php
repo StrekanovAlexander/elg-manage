@@ -11,6 +11,7 @@ $app->group('', function() {
     
     $this->get('/base', 'BaseRateController:index')->setName('base.index');
     $this->get('/base/index2', 'BaseRateController:index2')->setName('base.index2');
+    $this->post('/base/index2', 'BaseRateController:storeBaseAndRules');
 
     $this->get('/currs', 'CurrController:index')->setName('curr.index');
     $this->get('/currs/create', 'CurrController:create')->setName('curr.create');

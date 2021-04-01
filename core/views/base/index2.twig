@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if places|length %}
-    <form action="{{ path_for('rules.set') }}" method="POST" id="bases"> 
+    <form action="{{ path_for('base.index2') }}" method="POST" id="bases"> 
         <table class="table table-striped table-sm">
         <tr class="rates small text-center font-weight-bold bg-dark text-white">
             <td></td>
@@ -67,7 +67,7 @@
         <tr class="rates" style="background-color: black; height: 4px"><td colspan="{{ places|length + 1 }}"></td></tr>
         </table>
 
-        <div class="row row justify-content-md-left">
+        <div class="row justify-content-md-left">
             <div class="col col-5">
                 <h5>Кросс</h5>
                 <table>
@@ -106,7 +106,7 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="col col-3">
+            <div class="col col-4">
                 <h5>Базовые</h5>
                 <table>
                      <tr>
@@ -136,9 +136,9 @@
                     {% endfor %}
                 </table>
             </div>
-        </div>
-        <div>
-        {# <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit" >Сохранить</button> #}
+            <div class="col col-3">
+                <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Сохранить</button>
+            <div>
         </div>
         {{ csrf.field | raw}}  
     </form>

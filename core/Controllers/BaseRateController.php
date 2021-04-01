@@ -6,6 +6,7 @@ use App\Models\BaseRate;
 use App\Models\Curr;
 use App\Models\Place;
 use App\Models\Rule;
+use App\Common\StringUtil;
 
 class BaseRateController extends Controller
 {
@@ -147,6 +148,40 @@ class BaseRateController extends Controller
 
         $this->flash->addMessage('message', 'Базовые курсы - кросс успешно установлены');
         return $this->response->withRedirect($this->router->pathFor('rules.set'));
+
+    }
+
+    public function storeBaseAndRules($req, $res) 
+    {
+        $params = StringUtil::cleanParams($req->getParams(), ['csrf_name', 'csrf_value'], 8);
+        var_dump($params);
+        die();
+
+        return 'store base and rules';
+        // $currs = Curr::orderBy('id')
+        //     ->where('is_actual', true)
+        //     ->where('is_main', false)
+        //     ->get();
+
+        // $places = Place::orderBy('full_name')
+        //     ->where('is_actual', true)
+        //     ->where('is_base', false)
+        //     ->get();    
+
+        // foreach($currs as $curr) {
+        //     foreach($places as $place) {
+        //         $rule = Rule::where('place_id', $place->id)
+        //             ->where('curr_id', $curr->id)
+        //             ->first();
+        //         $rule->update([
+        //             'diff_buy' => $req->getParam('diff_buy_' . $curr->id . '_' . $place->id),
+        //             'diff_sale' => $req->getParam('diff_sale_' . $curr->id . '_' . $place->id),
+        //         ]);
+        //     }    
+        // }    
+    
+        // $this->flash->addMessage('message', 'Настройки курсов валют успешно записаны');
+        // return $this->response->withRedirect($this->router->pathFor('rules.set'));
 
     }
 
