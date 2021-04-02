@@ -80,8 +80,7 @@
                         <th>Sale (delta)</th>
                     </tr>
                     {% for base_cross in bases_cross %}
-                    <tr class="small" data-curr-id="{{ base_cross.id }}" data-base-curr-id="{{ base_cross.base_curr_id }}"  
-                        data-rel-curr-id="{{ base_cross.rel_curr_id }}" data-step-size="{{ base_cross.step_size }}" data-oper-cross="{{ base_cross.oper_cross }}" data-cross-eqv-id="{{ cross_eqv.id }}" data-cross-eqv-buy="{{ cross_eqv.rate_buy }}" data-cross-eqv-sale="{{ cross_eqv.rate_sale }}" >
+                    <tr class="small" data-curr-id="{{ base_cross.id }}" data-base-curr-id="{{ base_cross.base_curr_id }}" data-rel-curr-id="{{ base_cross.rel_curr_id }}" data-step-size="{{ base_cross.step_size }}" data-oper-cross="{{ base_cross.oper_cross }}" data-cross-eqv-id="{{ cross_eqv.id }}" data-cross-eqv-buy="{{ cross_eqv.rate_buy }}" data-cross-eqv-sale="{{ cross_eqv.rate_sale }}" >
                             <td class="px-1 font-weight-bold">{{ base_cross.short_name }}</td>
                             {# <td class="px-1 font-weight-bold" style="background-color: {{ base_cross.color.full_name }}">{{ base_cross.short_name }}</td> #}
                             <td class="d-flex">
@@ -109,7 +108,12 @@
             <div class="col col-4">
                 <h5>Bases</h5>
                 <table>
-                     <tr>
+                    <tr>
+                        <td colspan="4">
+                            <input type="checkbox" name="chk-set-by-base" id="chk-set-by-base"> Correct by base
+                        </td>
+                    </tr>
+                    <tr>
                         <td></td>
                         <th>Buy</th>
                         <td></td>
@@ -133,7 +137,7 @@
                                 <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
                             </td>
                         </tr>
-                    {% endfor %}
+                    {% endfor %}                    
                 </table>
             </div>
         </div>

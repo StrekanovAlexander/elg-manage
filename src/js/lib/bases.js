@@ -5,6 +5,13 @@ const init = () => {
     
     if (bases) {
 
+      const chk_set_by_base = document.querySelector('#chk-set-by-base');
+      chk_set_by_base.addEventListener('click', function(ev) {
+        if (ev.target.checked) {
+          setRatesByBase();
+        }
+      });
+
       const setBaseRate = (prefix, curr_id, val) => {
         const elem = document.querySelector(`#${prefix}_id_${curr_id}`);
         elem.value = val;
@@ -13,7 +20,7 @@ const init = () => {
       // const base_rates_buy = document.querySelectorAll('[data-base-rate-by-id]');
       const rates_buy = document.querySelectorAll('[data-rate-buy-id]');
       const rates_sale = document.querySelectorAll('[data-rate-sale-id]');
-      // const rates_cross = document.querySelectorAll('[data-rate-cross-id]');
+      const rates_cross = document.querySelectorAll('[data-rate-cross-id]');
       const rates_cross_buy = document.querySelectorAll('[data-rate-cross-buy-id]');
       const rates_cross_sale = document.querySelectorAll('[data-rate-cross-sale-id]');
  
@@ -58,8 +65,10 @@ const init = () => {
             ).toFixed(5);
             setBaseRate('base_rate_buy', curr_id, input_rate.value);
 
-            if (tr.dataset.isBaseCross) {
-              console.log('Base cross');
+            if (tr.dataset.isBaseCross == 1) {
+              if (chk_set_by_base.checked) {
+                setRatesByBase();
+              }
             }
 
           }  
@@ -68,6 +77,13 @@ const init = () => {
               Number(input_rate.value) + step(el) * Number(step_size)
             ).toFixed(5); 
             setBaseRate('base_rate_sale', curr_id, input_rate.value);
+
+            if (tr.dataset.isBaseCross == 1) {
+              if (chk_set_by_base.checked) {
+                setRatesByBase();
+              }
+            }
+
           } 
           if (input_rate.dataset.rateCrossBuyId || input_rate.dataset.rateCrossSaleId) {
             const input_rate_cross = document.querySelector(`#rate_cross_id_${curr_id}`);
@@ -169,6 +185,36 @@ const init = () => {
         const val = parseFloat(str);
         el.value = isNaN(val) ? 0 : el.value = val;
       };  
+
+      const setRatesByBase = () => {
+        const els_base_cross = document.querySelectorAll('[data-is-base-cross]');
+        const el_base_cross = [...els_base_cross].filter(el => el.dataset.isBaseCross == 1);
+        const main_curr_id = el_base_cross[0].dataset.currId;
+        const rate_buy = document.querySelector(`#rate_buy_id_${main_curr_id}`).value;
+        const rate_sale = document.querySelector(`#rate_sale_id_${main_curr_id}`).value;
+
+        const els_cross = document.querySelectorAll('[data-oper-cross]'); 
+
+        [...els_cross].forEach(el => {
+          const oper_cross = el.dataset.operCross;
+          const curr_id = el.dataset.currId;
+          const base_curr_id = oper_cross == '*' ? el.dataset.baseCurrId : el.dataset.relCurrId;
+          const input_rate_buy = document.querySelector(`#rate_cross_buy_id_${curr_id}`);
+          const input_rate_sale = document.querySelector(`#rate_cross_sale_id_${curr_id}`);
+          let base_rate_buy, base_rate_sale;
+          if (oper_cross == '*') {
+            base_rate_buy = (input_rate_buy.value * Number(rate_buy)).toFixed(5);
+            base_rate_sale = (input_rate_sale.value * Number(rate_sale)).toFixed(5);
+          } else if (oper_cross == '/') {
+            base_rate_buy = input_rate_buy.value == 0 ? 0 : (Number(rate_buy) / input_rate_buy.value).toFixed(5);
+            base_rate_sale = input_rate_sale.value == 0 ? 0 : (Number(rate_sale) / input_rate_sale.value).toFixed(5);
+          } 
+          setBaseRate('base_rate_buy', base_curr_id, base_rate_buy);
+          setBaseRate('base_rate_sale', base_curr_id, base_rate_sale);
+                    
+        });
+
+      }; 
     
     }
 
