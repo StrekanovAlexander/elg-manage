@@ -153,35 +153,53 @@ class BaseRateController extends Controller
 
     public function storeBaseAndRules($req, $res) 
     {
-        $params = StringUtil::cleanParams($req->getParams(), ['csrf_name', 'csrf_value'], 8);
-        var_dump($params);
-        die();
+        $currs = Curr::orderBy('id')->where('is_actual', true)
+            ->where('is_main', false)->get();
 
-        return 'store base and rules';
-        // $currs = Curr::orderBy('id')
-        //     ->where('is_actual', true)
-        //     ->where('is_main', false)
-        //     ->get();
+        $places = Place::orderBy('full_name')->where('is_actual', true)
+            ->where('is_base', false)->get();    
 
-        // $places = Place::orderBy('full_name')
-        //     ->where('is_actual', true)
-        //     ->where('is_base', false)
-        //     ->get();    
-
-        // foreach($currs as $curr) {
-        //     foreach($places as $place) {
-        //         $rule = Rule::where('place_id', $place->id)
-        //             ->where('curr_id', $curr->id)
-        //             ->first();
-        //         $rule->update([
-        //             'diff_buy' => $req->getParam('diff_buy_' . $curr->id . '_' . $place->id),
-        //             'diff_sale' => $req->getParam('diff_sale_' . $curr->id . '_' . $place->id),
-        //         ]);
-        //     }    
-        // }    
+        foreach($currs as $curr) {
+            foreach($places as $place) {
+                $rule = Rule::where('place_id', $place->id)
+                    ->where('curr_id', $curr->id)->first();
+                $rule->update([
+                    'diff_buy' => $req->getParam('diff_buy_' . $curr->id . '_' . $place->id),
+                    'diff_sale' => $req->getParam('diff_sale_' . $curr->id . '_' . $place->id),
+                ]);
+            }    
+        }    
     
-        // $this->flash->addMessage('message', 'Настройки курсов валют успешно записаны');
-        // return $this->response->withRedirect($this->router->pathFor('rules.set'));
+        $timestamp = date('Y-m-d H:i:s');
+
+        $currs = Curr::orderBy('id')
+            ->where('is_actual', true)
+            ->where('is_main', false)
+            ->get();
+
+        foreach($currs as $curr) {
+            $rate_buy = $curr->is_cross ? 
+                $req->getParam('base_rate_cross_buy_id_' . $curr->id) :
+                $req->getParam('base_rate_buy_id_' . $curr->id); 
+            $rate_sale = $curr->is_cross ? 
+                $req->getParam('base_rate_cross_sale_id_' . $curr->id) :
+                $req->getParam('base_rate_sale_id_' . $curr->id); 
+             
+            BaseRate::create([
+                'curr_id' => $curr->id,
+                'rate_buy' => $rate_buy,
+                'rate_sale' => $rate_sale,
+                'rate_cross' => $curr->is_cross ? $req->getParam('rate_cross_id_' . $curr->id) : null,
+                'steps_cross_buy' => $curr->is_cross ? $req->getParam('steps_cross_buy_id_' . $curr->id) : null,
+                'steps_cross_sale' => $curr->is_cross ? $req->getParam('steps_cross_sale_id_' . $curr->id) : null,
+                'is_cross' => $curr->is_cross ? true : false,
+                'created_at' => $timestamp,
+            ]);
+
+        }    
+    
+        $this->flash->addMessage('message', 'Success');
+        return $this->response->withRedirect($this->router->pathFor('base.index2'));
 
     }
 

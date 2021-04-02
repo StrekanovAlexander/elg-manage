@@ -68,16 +68,16 @@
         </table>
 
         <div class="row justify-content-md-left">
-            <div class="col col-5">
-                <h5>Кросс</h5>
+            <div class="col col-4">
+                <h5>Cross</h5>
                 <table>
                     <tr>
                         <td></td>
-                        <th>Форекс</th>
+                        <th>Fx</th>
                         <td></td>
-                        <th>Покупка (дельта)</th>
+                        <th>Buy (delta)</th>
                         <td></td>
-                        <th>Продaжa (дельта)</th>
+                        <th>Sale (delta)</th>
                     </tr>
                     {% for base_cross in bases_cross %}
                     <tr class="small" data-curr-id="{{ base_cross.id }}" data-base-curr-id="{{ base_cross.base_curr_id }}"  
@@ -85,35 +85,35 @@
                             <td class="px-1 font-weight-bold">{{ base_cross.short_name }}</td>
                             {# <td class="px-1 font-weight-bold" style="background-color: {{ base_cross.color.full_name }}">{{ base_cross.short_name }}</td> #}
                             <td class="d-flex">
-                                <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="1.1904" data-rate-cross-id="{{ base_cross.id }}">
+                                <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-id="{{ base_cross.id }}">
                                 {# <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-id="{{ base_cross.id }}"> #}
                             </td> 
                             <td class="px-2"></td> 
                             <td class="d-flex">
-                               <input name="rate_cross_buy_id_{{ base_cross.id }}" id="rate_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-buy-id="{{ base_cross.id }}" class="input-rate" disabled>
+                               <input name="rate_cross_buy_id_{{ base_cross.id }}" id="rate_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.rate_buy }}" data-rate-cross-buy-id="{{ base_cross.id }}" class="input-rate" readonly>
                                 <span class="btn-cnt btn-cnt-down"></span>
                                 <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
+                                <input class="form-control form-control-sm input-step" name="steps_cross_buy_id_{{ base_cross.id }}" id="steps_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_buy }}" readonly>
                             </td>
                             <td class="px-2"></td>
                             <td class="d-flex" style="width: 100px">
-                                <input name="rate_cross_sale_id_{{ base_cross.id }}" id="rate_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-sale-id="{{ base_cross.id }}" class="input-rate" disabled>
+                                <input name="rate_cross_sale_id_{{ base_cross.id }}" id="rate_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.rate_sale }}" data-rate-cross-sale-id="{{ base_cross.id }}" class="input-rate" readonly>
                                 <span class="btn-cnt btn-cnt-down"></span>
                                 <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
+                                <input class="form-control form-control-sm input-step" name="steps_cross_sale_id_{{ base_cross.id }}" id="steps_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_sale }}" readonly>
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
             <div class="col col-4">
-                <h5>Базовые</h5>
+                <h5>Bases</h5>
                 <table>
                      <tr>
                         <td></td>
-                        <th>Покупка</th>
+                        <th>Buy</th>
                         <td></td>
-                        <th>Продажа</th>
+                        <th>Sale</th>
                     </tr>
                     {% for base in bases %}
                         <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}" data-is-base-cross="{{ base.is_base_cross }}">
@@ -136,10 +136,10 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="col col-3">
-                <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Сохранить</button>
-            <div>
         </div>
+        <div>
+            <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Save</button>
+        <div>
         {{ csrf.field | raw}}  
     </form>
     {% endif %}

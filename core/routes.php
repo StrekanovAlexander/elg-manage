@@ -2,6 +2,7 @@
 
 $app->group('', function() {
     $this->get('/', 'HomeController:index')->setName('home.index');
+    
     // $this->get('/', 'RuleController:getRules')->setName('home.index');
    
     $this->get('/base/create', 'BaseRateController:create')->setName('base.create');

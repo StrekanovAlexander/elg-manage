@@ -10,35 +10,35 @@
                     <a class="nav-link" href="{{ path_for('base.index') }}">Базовые курсы</a>
                 </li> #}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path_for('base.index2') }}">Базовые курсы</a>
+                    <a class="nav-link" href="{{ path_for('base.index2') }}">Bases</a>
                 </li>
                 {# <li class="nav-item">
                     <a class="nav-link" href="{{ path_for('rules.set') }}">Настройка правил</a>
                 </li> #}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Справочники
+                        Dictionaries
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path_for('place.index') }}">Населенные пункты</a>
-                        <a class="dropdown-item" href="{{ path_for('dep.index') }}">Отделения</a>
+                        <a class="dropdown-item" href="{{ path_for('place.index') }}">Places</a>
+                        <a class="dropdown-item" href="{{ path_for('dep.index') }}">Deps</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path_for('curr.index') }}">Валюты</a>
-                        <a class="dropdown-item" href="{{ path_for('curr.cross.index') }}">Валюты (кросс)</a>
+                        <a class="dropdown-item" href="{{ path_for('curr.index') }}">Currs</a>
+                        <a class="dropdown-item" href="{{ path_for('curr.cross.index') }}">Currs (cross)</a>
                     </div>
                 </li>
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Настройки
+                        Settings
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path_for('user.edit') }}">Доступ</a>
+                        <a class="dropdown-item" href="{{ path_for('user.edit') }}">Access</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path_for('user.logout') }}">Выход</a>
+                    <a class="nav-link" href="{{ path_for('user.logout') }}">Exit</a>
                 </li>
             </ul>
         </div>

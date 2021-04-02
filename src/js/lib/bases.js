@@ -11,10 +11,11 @@ const init = () => {
       };
 
       // const base_rates_buy = document.querySelectorAll('[data-base-rate-by-id]');
-      
       const rates_buy = document.querySelectorAll('[data-rate-buy-id]');
       const rates_sale = document.querySelectorAll('[data-rate-sale-id]');
-      const rates_cross = document.querySelectorAll('[data-rate-cross-id]');
+      // const rates_cross = document.querySelectorAll('[data-rate-cross-id]');
+      const rates_cross_buy = document.querySelectorAll('[data-rate-cross-buy-id]');
+      const rates_cross_sale = document.querySelectorAll('[data-rate-cross-sale-id]');
  
       [...rates_buy].forEach(el => {
         const id = el.id.replace('rate_buy_id_', '');
@@ -26,9 +27,17 @@ const init = () => {
         setBaseRate('base_rate_sale', id, el.value);
       });
 
-      [...rates_cross].forEach(el => {
-        const id = el.id.replace('rate_cross_id_', '');
+      [...rates_cross_buy].forEach(el => {
+        const id = el.id.replace('rate_cross_buy_id_', '');
+        setBaseRate('base_rate_cross_buy', id, el.value);
       });
+
+      [...rates_cross_sale].forEach(el => {
+        const id = el.id.replace('rate_cross_sale_id_', '');
+        setBaseRate('base_rate_cross_sale', id, el.value);
+      });
+
+      // [...rates_cross].forEach(el => { // const id = el.id.replace('rate_cross_id_', ''); // setBaseRate ('base_rate_cross_buy', id, el.value); // });
 
       const btn_incs = document.querySelectorAll('.btn-cnt'); 
 
@@ -75,7 +84,7 @@ const init = () => {
             }
             
             let oper_cross = tr.dataset.operCross;
-            const cross_eqv_id = tr.dataset.crossEqvId; 
+            // const cross_eqv_id = tr.dataset.crossEqvId; 
             const cross_eqv_buy = tr.dataset.crossEqvBuy; 
             const cross_eqv_sale = tr.dataset.crossEqvSale;   
             const base_curr_id = oper_cross == '*' ? tr.dataset.baseCurrId : tr.dataset.relCurrId;

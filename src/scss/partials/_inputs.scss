@@ -26,7 +26,8 @@ input[type=number]{
 
 .input-step {
     font-weight: bold;
-    width: 4em;
+    text-align: center;
+    width: 3em;
     &.input-step-minus {
         background-color: red !important;
         color: white;        
