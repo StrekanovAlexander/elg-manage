@@ -34,6 +34,40 @@ const init = () => {
         setBaseRate('base_rate_sale', id, el.value);
       });
 
+      [...rates_cross].forEach(el => {
+        const id = el.id.replace('rate_cross_id_', '');
+        el.addEventListener('change', function(ev) {
+          const rate_cross = ev.target;
+          const rate_cross_buy = document.querySelector(`#rate_cross_buy_id_${id}`);
+          const steps_cross_buy = document.querySelector(`#steps_cross_buy_id_${id}`);
+          const rate_cross_sale = document.querySelector(`#rate_cross_sale_id_${id}`);
+          const steps_cross_sale = document.querySelector(`#steps_cross_sale_id_${id}`);
+          const step_size = ev.target.closest('td').closest('tr').dataset.stepSize;
+          rate_cross_buy.value = (Number(rate_cross.value) + (steps_cross_buy.value * step_size)).toFixed(5);
+          rate_cross_sale.value = (Number(rate_cross.value) + (steps_cross_sale.value * step_size)).toFixed(5);
+          setBaseRate('base_rate_cross_buy', id, rate_cross_buy.value);
+          setBaseRate('base_rate_cross_sale', id, rate_cross_sale.value);
+          const base_cross_eqv = getBaseCrossEqv();
+          // edit base rates
+          const tr = ev.target.closest('td').closest('tr');
+          const oper_cross = tr.dataset.operCross;
+          const base_curr_id = oper_cross == '*' ? tr.dataset.baseCurrId : tr.dataset.relCurrId;
+          let base_rate_buy, base_rate_sale;
+          if (oper_cross == '*') {
+            base_rate_buy = (rate_cross_buy.value * Number(base_cross_eqv.rate_buy)).toFixed(5);
+            base_rate_sale = (rate_cross_sale.value * Number(base_cross_eqv.rate_sale)).toFixed(5);
+          } else if (oper_cross == '/') {
+            base_rate_buy = rate_cross_buy.value == 0 ? 0 : (Number(base_cross_eqv.rate_buy) / rate_cross_buy.value).toFixed(5);
+            base_rate_sale = rate_cross_sale.value == 0 ? 0 : (Number(base_cross_eqv.rate_sale) / rate_cross_sale.value).toFixed(5);
+
+          } 
+          setBaseRate('base_rate_buy', base_curr_id, base_rate_buy);
+          setBaseRate('base_rate_sale', base_curr_id, base_rate_sale);
+          // end edit base rates
+        });
+
+      });
+
       [...rates_cross_buy].forEach(el => {
         const id = el.id.replace('rate_cross_buy_id_', '');
         setBaseRate('base_rate_cross_buy', id, el.value);
@@ -101,16 +135,19 @@ const init = () => {
             
             let oper_cross = tr.dataset.operCross;
             // const cross_eqv_id = tr.dataset.crossEqvId; 
-            const cross_eqv_buy = tr.dataset.crossEqvBuy; 
-            const cross_eqv_sale = tr.dataset.crossEqvSale;   
+            // const cross_eqv_buy = tr.dataset.crossEqvBuy; 
+            // const cross_eqv_sale = tr.dataset.crossEqvSale;   
+
+            const base_cross_eqv = getBaseCrossEqv();
+
             const base_curr_id = oper_cross == '*' ? tr.dataset.baseCurrId : tr.dataset.relCurrId;
                         
             if (input_rate.dataset.rateCrossBuyId) {
               let base_rate_buy;
               if (oper_cross == '*') {
-                base_rate_buy = (input_rate.value * Number(cross_eqv_buy)).toFixed(5);
+                base_rate_buy = (input_rate.value * Number(base_cross_eqv.rate_buy)).toFixed(5);
               } else if (oper_cross == '/') {
-                base_rate_buy = input_rate.value == 0 ? 0 : (Number(cross_eqv_buy) / input_rate.value).toFixed(5);
+                base_rate_buy = input_rate.value == 0 ? 0 : (Number(base_cross_eqv.rate_buy) / input_rate.value).toFixed(5);
               } 
               setBaseRate('base_rate_buy', base_curr_id, base_rate_buy);
             }
@@ -118,9 +155,9 @@ const init = () => {
             if (input_rate.dataset.rateCrossSaleId) {
               let base_rate_sale;
               if (oper_cross == '*') {
-                base_rate_sale = (input_rate.value * Number(cross_eqv_buy)).toFixed(5);
+                base_rate_sale = (input_rate.value * Number(base_cross_eqv.rate_buy)).toFixed(5);
               } else if (oper_cross == '/') {
-                base_rate_sale = input_rate.value == 0 ? 0 : (Number(cross_eqv_sale) / input_rate.value).toFixed(5);
+                base_rate_sale = input_rate.value == 0 ? 0 : (Number(base_cross_eqv.rate_sale) / input_rate.value).toFixed(5);
               } 
               setBaseRate('base_rate_sale', base_curr_id, base_rate_sale);
             }
@@ -215,6 +252,16 @@ const init = () => {
         });
 
       }; 
+
+      const getBaseCrossEqv = () => {
+        const els_base_cross = document.querySelectorAll('[data-is-base-cross]');
+        const el_base_cross = [...els_base_cross].filter(el => el.dataset.isBaseCross == 1);
+        const main_curr_id = el_base_cross[0].dataset.currId;
+        return {
+          rate_buy: document.querySelector(`#rate_buy_id_${main_curr_id}`).value,
+          rate_sale: document.querySelector(`#rate_sale_id_${main_curr_id}`).value
+        }
+      };
     
     }
 
