@@ -61,7 +61,7 @@ class Bot extends \TelegramBot\Api\Client
     {
         $created_at = $this->maxRateTimestamp();
         $stmt = $this->db->prepare(
-            'SELECT r.*, c.short_name 
+            'SELECT r.*, c.short_name, c.icon 
             FROM elg_rates r INNER JOIN elg_currs c ON r.curr_id = c.id 
             WHERE r.place_id = ? AND r.created_at = ? 
             ORDER BY c.id'
@@ -88,7 +88,7 @@ class Bot extends \TelegramBot\Api\Client
         $s = $this->placeName();
         $s .= sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа"); 
         foreach ($rates as $rate){
-            $s .= sprintf("\n%-10s %' 9s  %' 9s", $rate['short_name'], $rate['rate_buy'], $rate['rate_sale']);
+            $s .= sprintf("\n%-10s %' 9s  %' 9s", hex2bin($rate['icon']) . $rate['short_name'], $rate['rate_buy'], $rate['rate_sale']);
         }
         return $s;
     }
