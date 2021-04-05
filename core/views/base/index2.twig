@@ -141,6 +141,7 @@
         </div>
         <div>
             <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Записать</button>
+            <a class="btn btn-sm btn-success ml-2 text-uppercase" href="{{ path_for('rate.send') }}" class="btn btn-primary mb-2 float-right" role="button">Отправить по Е-mail</a>
         <div>
         {{ csrf.field | raw}}  
     </form>

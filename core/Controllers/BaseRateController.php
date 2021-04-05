@@ -198,8 +198,9 @@ class BaseRateController extends Controller
 
         }    
     
-        $this->flash->addMessage('message', 'Success');
+        $this->flash->addMessage('message', 'Курсы были записаны в базу.');
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
+        // return $this->response->withRedirect($this->router->pathFor('home.index'));
 
     }
 

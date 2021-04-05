@@ -72,8 +72,8 @@ class RateController extends Controller
                 $tds_buy .= StringUtil::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
                 $tds_sale .= StringUtil::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
             }
-            $trs_buy .= StringUtil::setTag('tr', $tds_buy);
-            $trs_sale .= StringUtil::setTag('tr', $tds_sale);
+            $trs_buy .= StringUtil::setTag('tr', $tds_buy, 'background-color: ' . $curr->color->full_name);
+            $trs_sale .= StringUtil::setTag('tr', $tds_sale, 'background-color: ' . $curr->color->full_name);
         }
         $trs_empty = StringUtil::setTag('tr', StringUtil::setTag('td', '', 'height: 1em'));
         return StringUtil::setTag('table', $theader . $trs_buy . $trs_empty . $trs_sale, 'border-collapse: collapse');
@@ -82,14 +82,16 @@ class RateController extends Controller
 
     public function send($req, $res)
     {
-        // $emails = $this->emailList();
-        $emalils = [];
-        // array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
-        array_push($emails, 'alexis.s@i.ua');
-         
+        $emails = $this->emailList();
+        // $emails = [];
+        array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
+        
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
+
+        // $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+        // ->setUsername('')->setPassword('');
 
         $transport = (new \Swift_SmtpTransport('mail.elg.co.ua', 587, 'tls'))
             ->setUsername('manager@elg.co.ua')
@@ -106,7 +108,9 @@ class RateController extends Controller
         if ($result) {
             $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
         }
-        return $this->response->withRedirect($this->router->pathFor('base-rate.index'));
+
+        // return $this->response->withRedirect($this->router->pathFor('home.index'));
+        return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
 
     private function emailList()
