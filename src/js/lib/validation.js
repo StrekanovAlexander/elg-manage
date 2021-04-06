@@ -3,6 +3,7 @@ const run = () => {
   const curr_short_name = document.querySelector('#curr_short_name');
   const curr_base_curr_id = document.querySelector('#curr_base_curr_id');
   const dep_full_name = document.querySelector('#dep_full_name');
+  const place_full_name = document.querySelector('#place_full_name');
 
   if (password) {
     const btn = document.querySelector('#btn-save');
@@ -44,10 +45,18 @@ const run = () => {
     
   if (dep_full_name) {
     const btn = document.querySelector('#btn-save');
-    const check = (el) => /^\w{3,}$/.test(el.value);
-  
+ 
     dep_full_name.addEventListener('blur', function() {
-      btn.disabled = !check(dep_full_name);
+      btn.disabled = !checkFullName(dep_full_name);
+    });
+  
+  }    
+
+  if (place_full_name) {
+    const btn = document.querySelector('#btn-save');
+
+    place_full_name.addEventListener('blur', function() {
+      btn.disabled = !checkFullName(place_full_name);
     });
   
   }    
@@ -55,5 +64,6 @@ const run = () => {
 };
 
 const equiv = (first, second) => first === second;
+const checkFullName = (el) => /^[\s0-9a-zA-Zа-яёА-ЯЁ]{3,}$/.test(el.value);
 
 export { run };
