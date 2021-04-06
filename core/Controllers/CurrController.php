@@ -16,12 +16,12 @@ class CurrController extends Controller
         ['value' => '0.00001'],
     ];
 
-    private static $step_size_formats = [
-        ['value' => '0.10'], 
-        ['value' => '0.01'], 
-        ['value' => '0.001'],
-        ['value' => '0.0001'],
-        ['value' => '0.00001'],
+    private static $precision_sizes = [
+        ['value' => 1], 
+        ['value' => 2], 
+        ['value' => 3],
+        ['value' => 4],
+        ['value' => 5],
     ];
 
     private static $oper_crosses = [
@@ -48,7 +48,7 @@ class CurrController extends Controller
         return $this->view->render($res, 'curr/create.twig', [
             'colors' => $colors,
             'step_sizes' => self::$step_sizes,
-            'step_size_formats' => self::$step_size_formats,
+            'precision_sizes' => self::$precision_sizes,
         ]);
     }
 
@@ -65,7 +65,7 @@ class CurrController extends Controller
             'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
-            'step_size_format' => $req->getParam('step_size_format'),
+            'precision_size' => $req->getParam('precision_size'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
       
@@ -82,7 +82,7 @@ class CurrController extends Controller
             'colors' => $colors,
             'curr' => $curr,
             'step_sizes' => self::$step_sizes,
-            'step_size_formats' => self::$step_size_formats,
+            'precision_sizes' => self::$precision_sizes,
         ]);
     }
 
@@ -94,7 +94,7 @@ class CurrController extends Controller
             'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
-            'step_size_format' => $req->getParam('step_size_format'),
+            'precision_size' => $req->getParam('precision_size'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 
@@ -127,7 +127,7 @@ class CurrController extends Controller
             'colors' => $colors,
             'currs' => $currs,
             'step_sizes' => self::$step_sizes,
-            'step_size_formats' => self::$step_size_formats,
+            'precision_sizes' => self::$precision_sizes,
             'oper_crosses' => self::$oper_crosses,
         ]);
     }
@@ -145,7 +145,7 @@ class CurrController extends Controller
             'rel_curr_id' => $req->getParam('rel_curr_id'),
             'color_id' => $req->getParam('color_id'),
             'step_size' => $req->getParam('step_size'),
-            'step_size_format' => $req->getParam('step_size_format'),
+            'precision_size' => $req->getParam('precision_size'),
             'oper_cross' => $req->getParam('oper_cross'),
             'is_cross' => true,
             'is_actual' => $req->getParam('is_actual') ? true : false,
@@ -169,7 +169,7 @@ class CurrController extends Controller
             'curr' => $curr,
             'currs' => $currs,
             'step_sizes' => self::$step_sizes,
-            'step_size_formats' => self::$step_size_formats,
+            'precision_sizes' => self::$precision_sizes,
             'oper_crosses' => self::$oper_crosses,
         ]);
     }
@@ -187,7 +187,7 @@ class CurrController extends Controller
             'rel_curr_id' => $req->getParam('rel_curr_id'),
             'color_id' => $req->getParam('color_id'),
             'step_size' => $req->getParam('step_size'),
-            'step_size_format' => $req->getParam('step_size_format'),
+            'precision_size' => $req->getParam('precision_size'),
             'oper_cross' => $req->getParam('oper_cross'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);

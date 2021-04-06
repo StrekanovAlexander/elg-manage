@@ -59,10 +59,10 @@
             <tr>
                 <td colspan="2">        
                     <div class="form-group">
-                        <label for="step_size_format">Формат пункта</label>
-                        <select class="form-control" name="step_size_format" id="step_size_format">
-                        {% for step_size_format in step_size_formats %}
-                            <option value="{{ step_size_format.value }}">{{ step_size_format.value }}</option>
+                        <label for="precision_size">Точность</label>
+                        <select class="form-control" name="precision_size" id="precision_size">
+                        {% for precision_size in precision_sizes %}
+                            <option value="{{ precision_size.value }}">{{ precision_size.value }}</option>
                         {% endfor %}
                         </select>
                     </div>
