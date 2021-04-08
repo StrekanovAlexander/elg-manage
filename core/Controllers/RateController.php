@@ -69,8 +69,16 @@ class RateController extends Controller
             $tds_sale = StringUtil::setTag('td', $curr->short_name . '_прод', 'border: 1px solid gray');
             $rates = Rate::actualByCurr($curr->id);
             foreach($rates as $rate) {
-                $tds_buy .= StringUtil::setTag('td', $rate->rate_buy, 'text-align:right;border: 1px solid gray');
-                $tds_sale .= StringUtil::setTag('td', $rate->rate_sale, 'text-align:right;border: 1px solid gray');
+                $tds_buy .= StringUtil::setTag(
+                    'td', 
+                    number_format($rate->rate_buy, $curr->precision_size), 
+                    'text-align:right;border: 1px solid gray'
+                );
+                $tds_sale .= StringUtil::setTag(
+                    'td', 
+                    number_format($rate->rate_sale, $curr->precision_size), 
+                    'text-align:right;border: 1px solid gray'
+                );
             }
             $trs_buy .= StringUtil::setTag('tr', $tds_buy, 'background-color: ' . $curr->color->full_name);
             $trs_sale .= StringUtil::setTag('tr', $tds_sale, 'background-color: ' . $curr->color->full_name);
