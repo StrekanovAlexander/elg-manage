@@ -65,8 +65,8 @@
         <tr class="rates" style="background-color: black; height: 4px"><td colspan="{{ places|length + 1 }}"></td></tr>
         </table>
 
-        <div class="row justify-content-md-left">
-            <div class="col col-4">
+        <div class="d-flex justify-content-start p-2" style="background-color: #eee">
+            <div class="col-4" style="overflow: auto">
                 <h5>Кросс</h5>
                 <table>
                     <tr>
@@ -103,7 +103,7 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="col col-4">
+            <div class="col-8" style="overflow: auto; border-left: 2px solid #ccc">
                 <h5>Базовые курсы</h5>
                 <table>
                     <tr>
@@ -139,7 +139,7 @@
                 </table>
             </div>
         </div>
-        <div>
+        <div class="mt-2">
             <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Записать</button>
             <a class="btn btn-sm btn-success ml-2 text-uppercase" href="{{ path_for('rate.send') }}" class="btn btn-primary mb-2 float-right" role="button">Отправить по Е-mail</a>
         <div>
