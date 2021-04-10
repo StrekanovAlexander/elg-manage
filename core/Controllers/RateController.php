@@ -142,8 +142,8 @@ class RateController extends Controller
             $rates[] = [
                 'id' => $rate->curr->id,
                 'currency' => $rate->curr->short_name,
-                'buy' => $rate->rate_buy,
-                'sale' => $rate->rate_sale,
+                'buy' => number_format($rate->rate_buy, $rate->curr->precision_size),
+                'sale' => number_format($rate->rate_sale, $rate->curr->precision_size),
             ];         
         }
         
