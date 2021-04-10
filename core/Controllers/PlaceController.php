@@ -14,6 +14,24 @@ class PlaceController extends Controller
         ]);
     }
 
+    public function create($req, $res)
+    {
+        return $this->view->render($res, 'place/create.twig');
+    }
+
+    public function store($req, $res)
+    {
+        Place::create([
+            'full_name' => $req->getParam('full_name'), 
+            'sign' => $req->getParam('sign'), 
+            'is_actual' => $req->getParam('is_actual') ? true : false,
+        ]);
+      
+        $this->flash->addMessage('message', 'Населенный пункт был успешно создан.');
+        return $res->withRedirect($this->router->pathFor('place.index'));
+      
+    }
+
     public function edit($req, $res, $args)
     {
         $place = Place::find($args['id']);

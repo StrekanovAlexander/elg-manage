@@ -2,6 +2,9 @@
 
 {% block content %}
     <h3 class="my-5">Населенные пункты</h3>
+    <div>
+        <a href="{{ path_for('place.create') }}" class="btn btn-success mb-2" role="button">Создать</a>
+    </div>
     {% if places|length %}
         <table class="table table-bordered table-sm table-striped">
             <thead>

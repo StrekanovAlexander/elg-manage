@@ -37,6 +37,10 @@ $app->group('', function() {
     $this->post('/deps/edit', 'DepController:update');
 
     $this->get('/places', 'PlaceController:index')->setName('place.index');
+
+    $this->get('/places/create', 'PlaceController:create')->setName('place.create');
+    $this->post('/places/create', 'PlaceController:store');
+
     $this->get('/places/edit[/{id}]', 'PlaceController:edit')->setName('place.edit');
     $this->post('/places/edit', 'PlaceController:update');
 
