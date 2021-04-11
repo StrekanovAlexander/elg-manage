@@ -6,6 +6,7 @@ use App\Models\BaseRate;
 use App\Models\Curr;
 use App\Models\Place;
 use App\Models\Rule;
+use App\Models\Rate;
 use App\Common\StringUtil;
 
 class BaseRateController extends Controller
@@ -206,9 +207,35 @@ class BaseRateController extends Controller
 
     public function sendToChannel($req, $res)
     {
-        $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
-        $chat_id = '-1001378695678';
-        $message = $req->getParam('message') ? $req->getParam('message') : '*';
+        $base_place = Place::where('is_actual', true)->where('is_base', true)->first();
+        $rates = Rate::actualByPlace($base_place->id);
+        $s = 'ОПТОВЫЙ КУРС ВАЛЮТ ' . hex2bin('F09F92B5') . ' от 300 $, €';
+
+        $s .= sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа");
+        foreach ($rates as $rate) {
+            $s .= sprintf(
+            "\n%-10s %' 9s  %' 9s", 
+            hex2bin($rate->curr->icon) . $rate->curr->short_name, 
+            number_format($rate['rate_buy'], $rate->curr->precision_size), 
+            number_format($rate['rate_sale'], $rate->curr->precision_size)
+            );
+        }
+
+        $s .= "\n\n";
+        $s .= hex2bin('E280BCEFB88F') . ' Курс в течении дня  может меняться в зависимости от ситуации на валютном рынке как в ' . hex2bin('F09F9388') . ', так и в ' . hex2bin('F09F9389') . '.';
+
+        // var_dump($s);
+        // die();
+        
+        // Test settings
+        $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
+        $chat_id = '-1001242571685';
+        
+        // Works settings
+        //$token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
+        //$chat_id = '-1001378695678';
+        $message = $req->getParam('message') ? $req->getParam('message') : '';
+        $message = $s . $message;
 
         \App\Common\Bot::sendToChat($token, $chat_id, $message);
 
