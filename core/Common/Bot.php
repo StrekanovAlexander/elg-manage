@@ -149,4 +149,22 @@ class Bot extends \TelegramBot\Api\Client
         return $this->settings['placesButtons'];
     }
 
+    public static function sendToChat($token, $chat_id, $message)
+    {
+        $curl = curl_init();
+        curl_setopt_array(
+            $curl, [
+                CURLOPT_URL => 'https://api.telegram.org/bot' . $token . '/sendMessage',
+                CURLOPT_POST => TRUE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_TIMEOUT => 10,
+                CURLOPT_POSTFIELDS => [
+                    'chat_id' => $chat_id,
+                    'text' => $message,
+                ],
+            ]
+        );
+        curl_exec($curl);
+    }
+
 }

@@ -14,6 +14,8 @@ $app->group('', function() {
     $this->get('/base/index2', 'BaseRateController:index2')->setName('base.index2');
     $this->post('/base/index2', 'BaseRateController:storeBaseAndRules');
 
+    $this->post('/base/channel', 'BaseRateController:sendToChannel')->setName('base.channel');
+
     $this->get('/currs', 'CurrController:index')->setName('curr.index');
     $this->get('/currs/create', 'CurrController:create')->setName('curr.create');
     $this->post('/currs/create', 'CurrController:store');

@@ -204,4 +204,28 @@ class BaseRateController extends Controller
 
     }
 
+    public function sendToChannel($req, $res)
+    {
+        $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
+        $chat_id = '-1001378695678';
+        $message = $req->getParam('message') ? $req->getParam('message') : '*';
+
+        \App\Common\Bot::sendToChat($token, $chat_id, $message);
+
+        $this->flash->addMessage('message', 'Сообщение в Telegram было отправлено.');
+        return $this->response->withRedirect($this->router->pathFor('base.index2'));
+    }
+
+    public function sendInfoToChannel($req, $res)
+    {
+        // $token = '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU'; 
+        // $chat_id = '-1001378695678';
+        // $message = 'Изменения курсов валют';
+
+        // \App\Common\Bot::sendToChat($token, $chat_id, $message);
+
+        // $this->flash->addMessage('message', 'Сообщение об изменении курсов было отправлено.');
+        // return $this->response->withRedirect($this->router->pathFor('base.index2'));
+    }
+   
 } 
