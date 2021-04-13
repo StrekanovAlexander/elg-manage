@@ -92,7 +92,7 @@ class RateController extends Controller
     {
         $emails = $this->emailList();
         // $emails = [];
-        array_push($emails, 'alexis.s@i.ua', '8899897@gmail.com');
+        array_push($emails, '8899897@gmail.com');
         
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
@@ -115,7 +115,10 @@ class RateController extends Controller
 
         $result = $mailer->send($message);
         if ($result) {
-            $this->flash->addMessage('message', 'Актуальные курсы валют отправлены на отделения.');
+            $token = '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU'; 
+            $chat_id = '-1001268528953';
+            \App\Common\Bot::sendToChat($token, $chat_id, 'курс');
+            $this->flash->addMessage('message', 'Курсы валют отправлены на отделения.');
         }
 
         // return $this->response->withRedirect($this->router->pathFor('home.index'));

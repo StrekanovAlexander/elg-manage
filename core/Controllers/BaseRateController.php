@@ -222,18 +222,27 @@ class BaseRateController extends Controller
         }
 
         $s .= "\n\n";
-        $s .= hex2bin('E280BCEFB88F') . ' Курс в течении дня  может меняться в зависимости от ситуации на валютном рынке как в ' . hex2bin('F09F9388') . ', так и в ' . hex2bin('F09F9389') . '.';
+        $s .= hex2bin('E280BCEFB88F') . " Курс в течении дня  может меняться в зависимости от ситуации на валютном рынке как в " . hex2bin('F09F9388') . ", так и в " . hex2bin('F09F9389') . ".";
+
+        $s .= "\n\n" . hex2bin('F09F93B2') . "0961010000 Владислав (Telegram, Viber, WhatsApp)\nНаписать менеджеру - @ELG_obmen";
+
+        $s .= "\n\nДенежные переводы по Украине и за рубежом:\n";
+        $s .= hex2bin('F09F93B2') . " 0981010000 Татьяна  (Telegram)\nНаписать менеджеру @perevody_ELG";
+
+        $s .= "\n\nПроверяйте актуальный курс в Вашем городе на сайте: https://elg.co.ua\nили у нашего бота @elgzp_bot";
+
+        $s .= "\n\n";
 
         // var_dump($s);
         // die();
         
         // Test settings
-        $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
-        $chat_id = '-1001242571685';
+        //$token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
+        //$chat_id = '-1001242571685';
         
         // Works settings
-        //$token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
-        //$chat_id = '-1001378695678';
+        $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
+        $chat_id = '-1001378695678';
         $message = $req->getParam('message') ? $req->getParam('message') : '';
         $message = $s . $message;
 
@@ -243,16 +252,20 @@ class BaseRateController extends Controller
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
 
-    public function sendInfoToChannel($req, $res)
-    {
+    // public function sendInfoToChannel($req, $res)
+    // {
+        //  Test settings
+        //  $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
+        //  $chat_id = '-1001242571685';
+
+        // Work settings
         // $token = '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU'; 
-        // $chat_id = '-1001378695678';
-        // $message = 'Изменения курсов валют';
+        // $chat_id = '-1001268528953';
 
+        // $message = 'курс';
         // \App\Common\Bot::sendToChat($token, $chat_id, $message);
-
-        // $this->flash->addMessage('message', 'Сообщение об изменении курсов было отправлено.');
+        // $this->flash->addMessage('message', 'Оповещение об изменении курсов валют было отправлено.');
         // return $this->response->withRedirect($this->router->pathFor('base.index2'));
-    }
+    // }
    
 } 

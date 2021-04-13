@@ -141,19 +141,59 @@
         </div>
         <div class="mt-2">
             <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Записать</button>
-            <a class="btn btn-sm btn-success ml-2 text-uppercase" href="{{ path_for('rate.send') }}" class="btn btn-primary mb-2 float-right" role="button">Отправить по Е-mail</a>
+            <a class="btn btn-sm btn-success ml-2 text-uppercase" href="{{ path_for('rate.send') }}"  role="button">Отправить по Е-mail</a>
+            <a class= "btn btn-sm btn-primary ml-2 text-white text-uppercase" data-toggle="modal" data-target="#modalForm">Сообщение (Телеграм)</a>
+            {# <a class= "btn btn-sm btn-danger ml-2 text-white text-uppercase" data-toggle="modal" data-target="#modalForm2">Оповещение (Телеграм)</a> #}
         <div>
         {{ csrf.field | raw}}  
     </form>
     {% endif %}
-    <h5 class="mt-3">Отправка сообщения в канал</h5>
-    <form action="{{ path_for('base.channel') }}" method="POST">
-        <div class="form-group">
-            <label for="message">Текст</label>
-            <textarea class="form-control" id="message" name="message"></textarea>
+    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Отправка сообщения в Телеграм</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <button class="btn btn-sm btn-info ml-2 text-uppercase" type="submit">Отправить</button>
-        {{ csrf.field | raw}} 
-    </form>
-
+        <form action="{{ path_for('base.channel') }}" class="form-horizontal" role="form" method="post" id="">
+          <div class="modal-body">
+            <div class="form-group">
+                <label for="message">Текст сообщения</label>
+                <textarea class="form-control" id="message" name="message"></textarea>
+            </div>
+          </div>  
+          <div class="modal-footer">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+          </div>
+          {{ csrf.field | raw}}
+        </form>
+      </div>
+    </div>
+  </div>
+    {# <div class="modal fade" id="modalForm2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Оповещение о смене курса (Телеграм)</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action="{{ path_for('base.channel.info') }}" class="form-horizontal" role="form" method="post" id="">
+          <div class="modal-footer">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+          </div>
+          {{ csrf.field | raw}}
+        </form>
+      </div>
+    </div>
+  </div> #}
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 {% endblock %}

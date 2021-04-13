@@ -15,6 +15,7 @@ $app->group('', function() {
     $this->post('/base/index2', 'BaseRateController:storeBaseAndRules');
 
     $this->post('/base/channel', 'BaseRateController:sendToChannel')->setName('base.channel');
+    // $this->post('/base/channel/info', 'BaseRateController:sendInfoToChannel')->setName('base.channel.info');
 
     $this->get('/currs', 'CurrController:index')->setName('curr.index');
     $this->get('/currs/create', 'CurrController:create')->setName('curr.create');
