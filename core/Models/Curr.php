@@ -65,4 +65,21 @@ class Curr extends Model
         return $base->short_name . '/' . $rel->short_name;
     }
 
+    public static function iconed($curr)
+    {
+        if (!$curr->is_cross) {
+            return self::addIcon($curr);
+        } else {
+            $base_curr = self::find($curr->base_curr_id);
+            $rel_curr = self::find($curr->rel_curr_id);
+            return self::addIcon($base_curr) . "/" . self::addIcon($rel_curr);
+        }
+    }
+ 
+    private static function addIcon($curr)
+    {
+        return hex2bin($curr->icon) . $curr->short_name;
+    }
+
+
 }

@@ -215,7 +215,7 @@ class BaseRateController extends Controller
         foreach ($rates as $rate) {
             $s .= sprintf(
             "\n%-10s %' 9s  %' 9s", 
-            hex2bin($rate->curr->icon) . $rate->curr->short_name, 
+            Curr::iconed($rate->curr),
             number_format($rate['rate_buy'], $rate->curr->precision_size), 
             number_format($rate['rate_sale'], $rate->curr->precision_size)
             );
@@ -237,12 +237,12 @@ class BaseRateController extends Controller
         // die();
         
         // Test settings
-        //$token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
-        //$chat_id = '-1001242571685';
+        $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
+        $chat_id = '-1001242571685';
         
         // Works settings
-        $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
-        $chat_id = '-1001378695678';
+        // $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
+        // $chat_id = '-1001378695678';
         $message = $req->getParam('message') ? $req->getParam('message') : '';
         $message = $s . $message;
 
