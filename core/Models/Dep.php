@@ -11,7 +11,9 @@ class Dep extends Model
         'full_name', 
         'place_id', 
         'email',
+        'chat_id',
         'is_mail',
+        'is_chat',
         'is_actual',
     ];
 

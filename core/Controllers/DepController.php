@@ -25,11 +25,14 @@ class DepController extends Controller
 
     public function store($req, $res)
     {
+        $chat_id = trim($req->getParam('chat_id'));
         Dep::create([
             'full_name' => $req->getParam('full_name'), 
             'place_id' => $req->getParam('place_id'), 
             'email' => $req->getParam('email'),
             'is_mail' => $req->getParam('is_mail') ? true : false,
+            'chat_id' => $chat_id,
+            'is_chat' => $req->getParam('is_chat') && $chat_id ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
       
@@ -51,11 +54,14 @@ class DepController extends Controller
     public function update($req, $res)
     {
         $dep = Dep::find($req->getParam('id'));
+        $chat_id = trim($req->getParam('chat_id'));
         $dep->update([
             'full_name' => $req->getParam('full_name'), 
             'place_id' => $req->getParam('place_id'), 
             'email' => $req->getParam('email'),
             'is_mail' => $req->getParam('is_mail') ? true : false,
+            'chat_id' => $chat_id,
+            'is_chat' => $req->getParam('is_chat') && $chat_id ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 

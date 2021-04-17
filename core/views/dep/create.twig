@@ -1,6 +1,12 @@
 {% extends 'templates/layout.twig' %}
 
 {% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('dep.index') }}">Отделения</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Создание</li>
+        </ol>
+    </nav>
     <h3 class="my-5">Создать отделение</h3>
     <form action="{{ path_for('dep.create')}}" method="POST">
         <div class="form-group">
@@ -23,6 +29,17 @@
             <div class="form-check">
                 <label for="is_mail" class="form-check-label">
                 <input type="checkbox" class="form-check-input" name="is_mail" id="is_mail">В рассылке
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="chat_id">Чат <span class="text-secondary">@elginfo_bot /getchat</span></label>
+            <input class="form-control" name="chat_id" id="chat_id" type="text">
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_chat" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_chat" id="is_chat">В чате
                 </label>
             </div>
         </div>
