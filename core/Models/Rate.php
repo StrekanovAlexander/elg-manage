@@ -33,5 +33,20 @@ class Rate extends Model
             ->where('created_at', self::max('created_at'))
             ->get();
     }
+
+    public static function ratesToStr($rates)
+    {
+        $s = sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа");
+        foreach ($rates as $rate) {
+            $s .= sprintf(
+            "\n%-10s %' 9s  %' 9s", 
+            \App\Models\Curr::iconed($rate->curr),
+            number_format($rate['rate_buy'], $rate->curr->precision_size), 
+            number_format($rate['rate_sale'], $rate->curr->precision_size)
+            );
+        }
+
+        return $s;
+    }
     
 }

@@ -5,6 +5,7 @@ namespace App\Common;
 class Settings
 {
     public static $global = [
+        'bot_info_token' => '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU',
         'brand' => 'Евроломбард', 
         'mainButtons' => [
             [

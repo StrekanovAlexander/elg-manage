@@ -6,6 +6,7 @@ use App\Models\Curr;
 use App\Models\Dep;
 use App\Models\Place;
 use App\Models\Rate;
+use App\Common\Settings;
 use App\Common\StringUtil;
 
 class RateController extends Controller
@@ -153,5 +154,20 @@ class RateController extends Controller
         
         return $rates;
 
+    }
+
+    public function sendRatesDep()
+    {
+        $deps = Dep::where('is_actual', true)
+            ->where('is_chat', true)->get();
+        
+        foreach($deps as $dep) {
+            $rates = Rate::actualByPlace($dep->place_id);
+            $s = Rate::ratesToStr($rates);
+            \App\Common\Bot::sendToChat(Settings::$global['bot_info_token'], $dep->chat_id, $s);
+        }
+        $this->flash->addMessage('message', 'Курсы отправлены по отделениям');
+        
+        return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
 }    
