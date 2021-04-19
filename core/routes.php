@@ -39,6 +39,14 @@ $app->group('', function() {
     $this->get('/deps/edit[/{id}]', 'DepController:edit')->setName('dep.edit');
     $this->post('/deps/edit', 'DepController:update');
 
+    $this->get('/messages', 'MessageController:index')->setName('message.index');
+
+    $this->get('/messages/create', 'MessageController:create')->setName('message.create');
+    $this->post('/messages/create', 'MessageController:store');
+
+    $this->get('/messages/edit[/{id}]', 'MessageController:edit')->setName('message.edit');
+    $this->post('/messages/edit', 'MessageController:update');
+
     $this->get('/places', 'PlaceController:index')->setName('place.index');
 
     $this->get('/places/create', 'PlaceController:create')->setName('place.create');

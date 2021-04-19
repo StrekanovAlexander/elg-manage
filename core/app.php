@@ -65,6 +65,10 @@ $c['HomeController'] = function($c) {
     return new App\Controllers\HomeController($c);
 };
 
+$c['MessageController'] = function($c) {
+    return new App\Controllers\MessageController($c);
+};
+
 $c['PlaceController'] = function($c) {
     return new App\Controllers\PlaceController($c);
 };

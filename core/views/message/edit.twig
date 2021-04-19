@@ -1,0 +1,41 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('message.index') }}">Тексты сообщений</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Редактировать текст</h3>
+    <form action="{{ path_for('message.edit')}}" method="POST">
+        <div class="form-group">
+            <label for="content">Текст сообщения</label>
+            <textarea class="form-control" name="content" id="content">{{ message.content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="prefix">Префикс</label>
+            <input class="form-control" name="prefix" id="prifix" type="text" value="{{ message.prefix }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="position">Порядок</label>
+            <select class="form-control" name="position" id="position">
+                {% for i in 1..max_pos %}
+                    <option value="{{ i }}"  {{ message.position == i ? 'selected' : '' }}>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual" {{ message.is_actual ? ' checked="checked"' : ''}}>Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit">Записать</button>
+        </div>
+        <input type="hidden" name="id" id="id" value="{{ message.id }}">    
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    
