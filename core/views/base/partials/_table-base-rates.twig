@@ -12,17 +12,17 @@
         <th>Продажа</th>
     </tr>
     {% for base in bases %}
-        <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}" data-is-base-cross="{{ base.is_base_cross }}">
+        <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}" data-is-base-cross="{{ base.is_base_cross }}" data-precision-size="{{ base.precision_size }}">
             <td class="px-1 font-weight-bold" style="background-color: {{ base.color.full_name }}">{{ base.short_name }}</td>
             <td class="d-flex">
-                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" data-rate-buy-id="{{ base.id }}" class="input-rate">
+                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy|number_format(base.precision_size) }}" data-rate-buy-id="{{ base.id }}" class="input-rate">
                 <span class="btn-cnt btn-cnt-down"></span>
                 <span class="btn-cnt btn-cnt-up"></span>
                 <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
             </td> 
             <td class="px-2"></td>   
             <td class="d-flex">
-                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" data-rate-sale-id="{{ base.id }}" class="input-rate">
+                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale|number_format(base.precision_size) }}" data-rate-sale-id="{{ base.id }}" class="input-rate">
                 <span class="btn-cnt btn-cnt-down"></span>
                 <span class="btn-cnt btn-cnt-up"></span>
                 <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">

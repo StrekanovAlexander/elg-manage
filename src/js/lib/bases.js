@@ -90,13 +90,15 @@ const init = () => {
           const input_steps = getInput(el, 'nextElementSibling');
           const tr = el.closest('td').closest('tr');  
           const step_size = tr.dataset.stepSize;
+          // precision size
+          const precision_size = tr.dataset.precisionSize;
           let curr_id = tr.dataset.currId;
           input_steps.value = Number(input_steps.value) + step(el);
           setBgInput(input_steps);
           if (input_rate.dataset.rateBuyId) {  
             input_rate.value = (
               Number(input_rate.value) + step(el) * Number(step_size)
-            ).toFixed(5);
+            ).toFixed(precision_size); // 1 buy precision size
             setBaseRate('base_rate_buy', curr_id, input_rate.value);
 
             if (tr.dataset.isBaseCross == 1) {
@@ -109,7 +111,7 @@ const init = () => {
           if (input_rate.dataset.rateSaleId) { 
             input_rate.value = (
               Number(input_rate.value) + step(el) * Number(step_size)
-            ).toFixed(5); 
+            ).toFixed(precision_size); // 2 sale precision size
             setBaseRate('base_rate_sale', curr_id, input_rate.value);
 
             if (tr.dataset.isBaseCross == 1) {
@@ -123,7 +125,7 @@ const init = () => {
             const input_rate_cross = document.querySelector(`#rate_cross_id_${curr_id}`);
             input_rate.value = (
               Number(input_rate_cross.value) + (Number(input_steps.value) * Number(step_size))
-            ).toFixed(5);
+            ).toFixed(precision_size); // 3 cross precision size
 
             if (input_rate.dataset.rateCrossBuyId) {
               setBaseRate('base_rate_cross_buy', curr_id, input_rate.value); 
@@ -234,17 +236,18 @@ const init = () => {
 
         [...els_cross].forEach(el => {
           const oper_cross = el.dataset.operCross;
+          const precision_size = el.dataset.precisionSize; // 4 precision size
           const curr_id = el.dataset.currId;
           const base_curr_id = oper_cross == '*' ? el.dataset.baseCurrId : el.dataset.relCurrId;
           const input_rate_buy = document.querySelector(`#rate_cross_buy_id_${curr_id}`);
           const input_rate_sale = document.querySelector(`#rate_cross_sale_id_${curr_id}`);
           let base_rate_buy, base_rate_sale;
           if (oper_cross == '*') {
-            base_rate_buy = (input_rate_buy.value * Number(rate_buy)).toFixed(5);
-            base_rate_sale = (input_rate_sale.value * Number(rate_sale)).toFixed(5);
+            base_rate_buy = (input_rate_buy.value * Number(rate_buy)).toFixed(precision_size); // 6
+            base_rate_sale = (input_rate_sale.value * Number(rate_sale)).toFixed(precision_size); // 7
           } else if (oper_cross == '/') {
-            base_rate_buy = input_rate_buy.value == 0 ? 0 : (Number(rate_buy) / input_rate_buy.value).toFixed(5);
-            base_rate_sale = input_rate_sale.value == 0 ? 0 : (Number(rate_sale) / input_rate_sale.value).toFixed(5);
+            base_rate_buy = input_rate_buy.value == 0 ? 0 : (Number(rate_buy) / input_rate_buy.value).toFixed(precision_size); // 8
+            base_rate_sale = input_rate_sale.value == 0 ? 0 : (Number(rate_sale) / input_rate_sale.value).toFixed(precision_size); // 9
           } 
           setBaseRate('base_rate_buy', base_curr_id, base_rate_buy);
           setBaseRate('base_rate_sale', base_curr_id, base_rate_sale);
