@@ -1,0 +1,32 @@
+<h5>Базовые курсы</h5>
+<table>
+    <tr>
+        <td colspan="4">
+            <input type="checkbox" name="chk-set-by-base" id="chk-set-by-base"> Корректировать по базовому (USD)
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>Покупка</th>
+        <th></th>
+        <th>Продажа</th>
+    </tr>
+    {% for base in bases %}
+        <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}" data-is-base-cross="{{ base.is_base_cross }}">
+            <td class="px-1 font-weight-bold" style="background-color: {{ base.color.full_name }}">{{ base.short_name }}</td>
+            <td class="d-flex">
+                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" data-rate-buy-id="{{ base.id }}" class="input-rate">
+                <span class="btn-cnt btn-cnt-down"></span>
+                <span class="btn-cnt btn-cnt-up"></span>
+                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
+            </td> 
+            <td class="px-2"></td>   
+            <td class="d-flex">
+                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" data-rate-sale-id="{{ base.id }}" class="input-rate">
+                <span class="btn-cnt btn-cnt-down"></span>
+                <span class="btn-cnt btn-cnt-up"></span>
+                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
+            </td>
+        </tr>
+    {% endfor %}                    
+</table>

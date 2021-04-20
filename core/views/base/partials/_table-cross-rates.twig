@@ -1,0 +1,35 @@
+<h5>Кросс</h5>
+<table>
+    <tr>
+        <th></th>
+        <th>Форекс</th>
+        <th></th>
+        <th>Покупка (дельта)</th>
+        <th></th>
+        <th>Продажа (дельта)</th>
+    </tr>
+    {% for base_cross in bases_cross %}
+        <tr class="small" data-curr-id="{{ base_cross.id }}" data-base-curr-id="{{ base_cross.base_curr_id }}" data-rel-curr-id="{{ base_cross.rel_curr_id }}" data-step-size="{{ base_cross.step_size }}" data-oper-cross="{{ base_cross.oper_cross }}" data-cross-eqv-id="{{ cross_eqv.id }}" data-cross-eqv-buy="{{ cross_eqv.rate_buy }}" data-cross-eqv-sale="{{ cross_eqv.rate_sale }}">
+            <td class="px-1 font-weight-bold" style="background-color: {{ base_cross.color.full_name }}">
+                {{ base_cross.short_name }}
+            </td>
+            <td class="d-flex">
+                <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-id="{{ base_cross.id }}">
+            </td>
+            <td class="px-2"></td>
+            <td class="d-flex">
+                <input name="rate_cross_buy_id_{{ base_cross.id }}" id="rate_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.rate_buy }}" data-rate-cross-buy-id="{{ base_cross.id }}" class="input-rate" readonly>
+                <span class="btn-cnt btn-cnt-down"></span>
+                <span class="btn-cnt btn-cnt-up"></span>
+                <input class="form-control form-control-sm input-step" name="steps_cross_buy_id_{{ base_cross.id }}" id="steps_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_buy }}" readonly>
+            </td>
+            <td class="px-2"></td>
+            <td class="d-flex" style="width: 100px">
+                <input name="rate_cross_sale_id_{{ base_cross.id }}" id="rate_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.rate_sale }}" data-rate-cross-sale-id="{{ base_cross.id }}" class="input-rate" readonly>
+                <span class="btn-cnt btn-cnt-down"></span>
+                <span class="btn-cnt btn-cnt-up"></span>
+                <input class="form-control form-control-sm input-step" name="steps_cross_sale_id_{{ base_cross.id }}" id="steps_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_sale }}" readonly>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

@@ -4,197 +4,30 @@
     {% if places|length %}
     <form action="{{ path_for('base.index2') }}" method="POST" id="bases"> 
         <table class="table table-striped table-sm">
-        <tr class="rates small text-center font-weight-bold bg-dark text-white">
-            <td></td>
-            {% for place in places %}
-            <td>{{ place.full_name|slice(0, 4)|upper }}</td>
-            {% endfor %}
-        </tr>
-        {% for curr in currs %}
-            <tr class="small rates" style="background-color: {{ curr.color.full_name }}">
-                <td class="font-weight-bold text-center">{{ curr.short_name }}</td>
-                {% for place in places %}
-                    {% if place.is_base == 1 %}
-                        <td>
-                            {% if curr.is_cross == 1 %}
-                                {# <input name="base_rate_cross_buy_id_{{ curr.id }}" id="base_rate_cross_buy_id_{{ curr.id }}" readonly data-base-rate-cross-buy-id="{{ curr.id }}"> #}
-                                <input name="base_rate_cross_buy_id_{{ curr.id }}" id="base_rate_cross_buy_id_{{ curr.id }}" readonly data-base-rate-cross-buy-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
-                            {% else %}
-                                 {# <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-by-id="{{ curr.id }}"> #}
-                                 <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
-                            {% endif %}
-                        </td>
-                    {% else %}
-                        {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
-                            <td>
-                               {# <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}"> #}
-                               <input name="diff_buy_{{ curr.id }}_{{ place.id }}" id="diff_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_buy }}" class="input-step{{ rule.diff_buy < 0 ? ' input-step-minus' : (rule.diff_buy > 0 ? ' input-step-plus' : '') }}">
-                            </td>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %} 
-            </tr>
-        {% endfor %}
-        <tr class="rates" style="background-color: black; height: 4px"><td colspan="{{ places|length + 1 }}"></td></tr>
-        {% for curr in currs %}
-            {# <tr class="small rates"> #}
-            <tr class="small rates" style="background-color: {{ curr.color.full_name }}">
-                <td class="font-weight-bold text-center">{{ curr.short_name }}</td>
-                {% for place in places %}
-                    {% if place.is_base == 1 %}
-                        <td>
-                             {% if curr.is_cross == 1 %}
-                                {# <input name="base_rate_cross_sale_id_{{ curr.id }}" id="base_rate_cross_sale_id_{{ curr.id }}" readonly data-base-rate-cross-sale-id="{{ curr.id }}"> #}
-                                <input name="base_rate_cross_sale_id_{{ curr.id }}" id="base_rate_cross_sale_id_{{ curr.id }}" readonly data-base-rate-cross-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
-                            {% else %}
-                                {# <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}"> #}
-                                <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
-                            {% endif %}    
-                        </td>
-                    {% else %}
-                        {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
-                            <td>
-                                {# <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}"> #}
-                                <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" class="input-step{{ rule.diff_sale < 0 ? ' input-step-minus' : (rule.diff_sale > 0 ? ' input-step-plus' : '') }}">
-                            </td>
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %} 
-            </tr>
-        {% endfor %}
-        <tr class="rates" style="background-color: black; height: 4px"><td colspan="{{ places|length + 1 }}"></td></tr>
+            {% include 'base/partials/_header-rates.twig' %}
+            {% include 'base/partials/_buy-rates.twig' %}
+            {% include 'base/partials/_rates-splitter.twig' %}
+            {% include 'base/partials/_sale-rates.twig' %}
+            {% include 'base/partials/_rates-splitter.twig' %}
         </table>
 
         <div class="d-flex justify-content-start p-2" style="background-color: #eee">
             <div class="col-4" style="overflow: auto">
-                <h5>Кросс</h5>
-                <table>
-                    <tr>
-                        <td></td>
-                        <th>Форекс</th>
-                        <td></td>
-                        <th>Покупка (дельта)</th>
-                        <td></td>
-                        <th>Продажа (дельта)</th>
-                    </tr>
-                    {% for base_cross in bases_cross %}
-                    <tr class="small" data-curr-id="{{ base_cross.id }}" data-base-curr-id="{{ base_cross.base_curr_id }}" data-rel-curr-id="{{ base_cross.rel_curr_id }}" data-step-size="{{ base_cross.step_size }}" data-oper-cross="{{ base_cross.oper_cross }}" data-cross-eqv-id="{{ cross_eqv.id }}" data-cross-eqv-buy="{{ cross_eqv.rate_buy }}" data-cross-eqv-sale="{{ cross_eqv.rate_sale }}" >
-                            {# <td class="px-1 font-weight-bold">{{ base_cross.short_name }}</td> #}
-                            <td class="px-1 font-weight-bold" style="background-color: {{ base_cross.color.full_name }}">{{ base_cross.short_name }}</td>
-                            <td class="d-flex">
-                                {# <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-id="{{ base_cross.id }}"> #}
-                                <input class="form-control form-control-sm input-rate" name="rate_cross_id_{{ base_cross.id }}" id="rate_cross_id_{{ base_cross.id }}" value="{{ base_cross.rate_cross }}" data-rate-cross-id="{{ base_cross.id }}">
-                            </td> 
-                            <td class="px-2"></td> 
-                            <td class="d-flex">
-                               <input name="rate_cross_buy_id_{{ base_cross.id }}" id="rate_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.rate_buy }}" data-rate-cross-buy-id="{{ base_cross.id }}" class="input-rate" readonly>
-                                <span class="btn-cnt btn-cnt-down"></span>
-                                <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" name="steps_cross_buy_id_{{ base_cross.id }}" id="steps_cross_buy_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_buy }}" readonly>
-                            </td>
-                            <td class="px-2"></td>
-                            <td class="d-flex" style="width: 100px">
-                                <input name="rate_cross_sale_id_{{ base_cross.id }}" id="rate_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.rate_sale }}" data-rate-cross-sale-id="{{ base_cross.id }}" class="input-rate" readonly>
-                                <span class="btn-cnt btn-cnt-down"></span>
-                                <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" name="steps_cross_sale_id_{{ base_cross.id }}" id="steps_cross_sale_id_{{ base_cross.id }}" value="{{ base_cross.steps_cross_sale }}" readonly>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                {% include 'base/partials/_table-cross-rates.twig' %}
             </div>
             <div class="col-8" style="overflow: auto; border-left: 2px solid #ccc">
-                <h5>Базовые курсы</h5>
-                <table>
-                    <tr>
-                        <td colspan="4">
-                            <input type="checkbox" name="chk-set-by-base" id="chk-set-by-base"> Корректировать по базовому (USD)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <th>Покупка</th>
-                        <td></td>
-                        <th>Продажа</th>
-                    </tr>
-                    {% for base in bases %}
-                        <tr class="small" data-step-size="{{ base.step_size }}" data-curr-id="{{ base.id }}" data-is-base-cross="{{ base.is_base_cross }}">
-                            {# <td class="px-1 font-weight-bold">{{ base.short_name }}</td> #}
-                            <td class="px-1 font-weight-bold" style="background-color: {{ base.color.full_name }}">{{ base.short_name }}</td>
-                            <td class="d-flex">
-                                <input name="rate_buy_id_{{ base.id }}" id="rate_buy_id_{{ base.id }}" value="{{ base.rate_buy }}" data-rate-buy-id="{{ base.id }}" class="input-rate">
-                                <span class="btn-cnt btn-cnt-down"></span>
-                                <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
-                            </td> 
-                            <td class="px-2"></td>   
-                            <td class="d-flex">
-                                <input name="rate_sale_id_{{ base.id }}" id="rate_sale_id_{{ base.id }}" value="{{ base.rate_sale }}" data-rate-sale-id="{{ base.id }}" class="input-rate">
-                                <span class="btn-cnt btn-cnt-down"></span>
-                                <span class="btn-cnt btn-cnt-up"></span>
-                                <input class="form-control form-control-sm input-step" value="0" disabled style="width: 3em; text-align: center">
-                            </td>
-                        </tr>
-                    {% endfor %}                    
-                </table>
+                {% include 'base/partials/_table-base-rates.twig' %}    
             </div>
         </div>
         <div class="mt-2">
-            <button class="btn btn-sm btn-primary ml-2 text-uppercase" type="submit">Записать</button>
-            <a class="btn btn-sm btn-success ml-2 text-uppercase" href="{{ path_for('rate.send') }}"  role="button">Отправить по Е-mail</a>
-            <a class= "btn btn-sm btn-primary ml-2 text-white text-uppercase" data-toggle="modal" data-target="#modalForm">Сообщение (Телеграм)</a>
-            <a class="btn btn-sm btn-danger ml-2 text-uppercase" href="{{ path_for('rate.dep.send') }}">Курсы в личку</a>
-            {# <a class= "btn btn-sm btn-danger ml-2 text-white text-uppercase" data-toggle="modal" data-target="#modalForm2">Оповещение (Телеграм)</a> #}
+            {% include 'base/partials/_nav-buttons.twig' %}
         <div>
         {{ csrf.field | raw}}  
     </form>
     {% endif %}
-    <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Отправка сообщения в Телеграм</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="{{ path_for('base.channel') }}" class="form-horizontal" role="form" method="post" id="">
-          <div class="modal-body">
-            <div class="form-group">
-                <label for="message">Текст сообщения</label>
-                <textarea class="form-control" id="message" name="message"></textarea>
-            </div>
-          </div>  
-          <div class="modal-footer">
-            <div class="pull-right">
-              <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-          </div>
-          {{ csrf.field | raw}}
-        </form>
-      </div>
-    </div>
-  </div>
-    {# <div class="modal fade" id="modalForm2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Оповещение о смене курса (Телеграм)</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <form action="{{ path_for('base.channel.info') }}" class="form-horizontal" role="form" method="post" id="">
-          <div class="modal-footer">
-            <div class="pull-right">
-              <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-          </div>
-          {{ csrf.field | raw}}
-        </form>
-      </div>
-    </div>
-  </div> #}
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    {% include 'base/partials/_form-modal.twig' %}
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 {% endblock %}

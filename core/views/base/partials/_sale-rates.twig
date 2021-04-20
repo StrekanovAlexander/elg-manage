@@ -1,0 +1,22 @@
+{% for curr in currs %}
+    <tr class="small rates" style="background-color: {{ curr.color.full_name }}">
+        <td class="font-weight-bold text-center">{{ curr.short_name }}</td>
+        {% for place in places %}
+            {% if place.is_base == 1 %}
+                <td>
+                    {% if curr.is_cross == 1 %}
+                        <input name="base_rate_cross_sale_id_{{ curr.id }}" id="base_rate_cross_sale_id_{{ curr.id }}" readonly data-base-rate-cross-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
+                    {% else %}
+                        <input name="base_rate_sale_id_{{ curr.id }}" id="base_rate_sale_id_{{ curr.id }}"  readonly data-base-rate-sale-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
+                    {% endif %}    
+                </td>
+            {% else %}
+                {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                    <td>
+                        <input name="diff_sale_{{ curr.id }}_{{ place.id }}" id="diff_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_sale }}" class="input-step{{ rule.diff_sale < 0 ? ' input-step-minus' : (rule.diff_sale > 0 ? ' input-step-plus' : '') }}">
+                    </td>
+                {% endfor %}
+            {% endif %}
+        {% endfor %} 
+    </tr>
+{% endfor %}

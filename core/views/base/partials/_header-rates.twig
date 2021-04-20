@@ -1,0 +1,6 @@
+<tr class="rates small text-center font-weight-bold bg-dark text-white">
+    <td></td>
+    {% for place in places %}
+        <td>{{ place.full_name|slice(0, 4)|upper }}</td>
+    {% endfor %}
+</tr>
