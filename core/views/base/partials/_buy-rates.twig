@@ -5,9 +5,9 @@
                 {% if place.is_base == 1 %}
                     <td>
                         {% if curr.is_cross == 1 %}
-                            <input name="base_rate_cross_buy_id_{{ curr.id }}" id="base_rate_cross_buy_id_{{ curr.id }}" readonly data-base-rate-cross-buy-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
+                            <input name="base_rate_cross_buy_id_{{ curr.id }}" id="base_rate_cross_buy_id_{{ curr.id }}" readonly data-base-rate-cross-buy-id="{{ curr.id }}" data-precision-size="{{ curr.precision_size }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                         {% else %}
-                            <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" style="background-color: {{ curr.color.full_name }}; border: 0">
+                            <input name="base_rate_buy_id_{{ curr.id }}" id="base_rate_buy_id_{{ curr.id }}" readonly data-base-rate-id="{{ curr.id }}" data-precision-size="{{ curr.precision_size }}" style="background-color: {{ curr.color.full_name }}; border: 0">
                         {% endif %}
                     </td>
                 {% else %}
