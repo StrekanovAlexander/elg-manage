@@ -67,6 +67,9 @@ $app->group('', function() {
     $this->post('/rules/set', 'RuleController:storeRules');
 
     $this->get('/rules/place/{id}', 'RuleController:details')->setName('rule.details');
+    
+    $this->get('/settings', 'SettingController:index')->setName('setting.index');
+    $this->post('/settings/edit', 'SettingController:update')->setName('setting.edit');
 
     $this->get('/user', 'UserController:index')->setName('user.index');
     $this->get('/user/logout', 'UserController:logout')->setName('user.logout');

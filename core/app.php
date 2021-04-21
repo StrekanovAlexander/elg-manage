@@ -81,6 +81,10 @@ $c['RuleController'] = function($c) {
     return new App\Controllers\RuleController($c);
 };
 
+$c['SettingController'] = function($c) {
+    return new App\Controllers\SettingController($c);
+};
+
 $c['UserController'] = function($c) {
     return new App\Controllers\UserController($c);
 };
