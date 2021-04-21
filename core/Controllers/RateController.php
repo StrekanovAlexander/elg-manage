@@ -6,6 +6,7 @@ use App\Models\Curr;
 use App\Models\Dep;
 use App\Models\Place;
 use App\Models\Rate;
+use App\Common\Bot;
 use App\Common\Settings;
 use App\Common\StringUtil;
 
@@ -116,13 +117,14 @@ class RateController extends Controller
 
         $result = $mailer->send($message);
         if ($result) {
-            $token = '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU'; 
-            $chat_id = '-1001268528953';
-            \App\Common\Bot::sendToChat($token, $chat_id, 'курс');
-            $this->flash->addMessage('message', 'Курсы валют отправлены на отделения.');
+            $settings = \App\Models\Setting::first();
+            if ($settings->is_chat_alert) {
+                Bot::sendToChat(Settings::$global['info_bot_token'], Settings::$global['alert_chat_id'], 'Курс');
+            }  
+            $this->sendRatesToDeps();  
+            $this->flash->addMessage('message', 'Курсы валют разосланы по отделениям');
         }
 
-        // return $this->response->withRedirect($this->router->pathFor('home.index'));
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
 
@@ -156,7 +158,7 @@ class RateController extends Controller
 
     }
 
-    public function sendRatesDep()
+    private function sendRatesToDeps()
     {
         $deps = Dep::where('is_actual', true)
             ->where('is_chat', true)->get();
@@ -164,10 +166,8 @@ class RateController extends Controller
         foreach($deps as $dep) {
             $rates = Rate::actualByPlace($dep->place_id);
             $s = Rate::ratesToStr($rates);
-            \App\Common\Bot::sendToChat(Settings::$global['bot_info_token'], $dep->chat_id, $s);
+            Bot::sendToChat(Settings::$global['info_bot_token'], $dep->chat_id, $s);
         }
-        $this->flash->addMessage('message', 'Курсы отправлены по отделениям');
-        
-        return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
+
 }    

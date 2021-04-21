@@ -58,7 +58,7 @@ $app->group('', function() {
     $this->get('/rates/places/{id}', 'RateController:details')->setName('rate.details');
     //$this->get('/send', 'RateController:send')->setName('rate.send');
     $this->get('/rates/send', 'RateController:send')->setName('rate.send');
-    $this->get('/rates/dep/send', 'RateController:sendRatesDep')->setName('rate.dep.send');
+    // $this->get('/rates/dep/send', 'RateController:sendRatesDep')->setName('rate.dep.send');
 
     $this->get('/rules/place/edit[/{id}]', 'RuleController:edit')->setName('rule.edit');
     $this->post('/rules/place/edit', 'RuleController:update');
