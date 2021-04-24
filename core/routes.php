@@ -7,9 +7,7 @@ $app->group('', function() {
    
     $this->get('/base/create', 'BaseRateController:create')->setName('base.create');
     $this->post('/base/create', 'BaseRateController:store');
-    $this->get('/base/cross/create', 'BaseRateController:createCross')->setName('base.cross.create');
-    $this->post('/base/cross/create', 'BaseRateController:storeCross');
-    
+   
     $this->get('/base', 'BaseRateController:index')->setName('base.index');
     $this->get('/base/index2', 'BaseRateController:index2')->setName('base.index2');
     $this->post('/base/index2', 'BaseRateController:storeBaseAndRules');
