@@ -6,7 +6,9 @@ class Settings
 {
     public static $global = [
         'info_bot_token' => '1777201537:AAFqqrlkkuLjtCstVKfbAfoxI8YeDM136xU',
+        'main_bot_token' => '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE',
         'alert_chat_id' => '-1001268528953',
+        'main_chat_id' => '-1001378695678',
         'brand' => 'Евроломбард', 
         'mainButtons' => [
             [

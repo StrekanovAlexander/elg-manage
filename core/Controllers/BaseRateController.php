@@ -8,8 +8,9 @@ use App\Models\Message;
 use App\Models\Place;
 use App\Models\Rule;
 use App\Models\Rate;
-use App\Common\StringUtil;
 use App\Common\Emoji;
+use App\Common\Settings;
+use App\Common\StringUtil;
 
 class BaseRateController extends Controller
 {
@@ -203,56 +204,8 @@ class BaseRateController extends Controller
     
         $this->flash->addMessage('message', 'Курсы были записаны в базу.');
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
-        // return $this->response->withRedirect($this->router->pathFor('home.index'));
 
     }
-
-    // public function sendToChannel($req, $res)
-    // {
-    //     $base_place = Place::where('is_actual', true)->where('is_base', true)->first();
-    //     $rates = Rate::actualByPlace($base_place->id);
-    //     $s = 'ОПТОВЫЙ КУРС ВАЛЮТ ' . hex2bin('F09F92B5') . ' от 300 $, €';
-
-    //     $s .= sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа");
-    //     foreach ($rates as $rate) {
-    //         $s .= sprintf(
-    //         "\n%-10s %' 9s  %' 9s", 
-    //         Curr::iconed($rate->curr),
-    //         number_format($rate['rate_buy'], $rate->curr->precision_size), 
-    //         number_format($rate['rate_sale'], $rate->curr->precision_size)
-    //         );
-    //     }
-
-    //     $s .= "\n\n";
-    //     $s .= hex2bin('E280BCEFB88F') . " Курс в течении дня  может меняться в зависимости от ситуации на валютном рынке как в " . hex2bin('F09F9388') . ", так и в " . hex2bin('F09F9389') . ".";
-
-    //     $s .= "\n\n" . hex2bin('F09F93B2') . "0961010000 Владислав (Telegram, Viber, WhatsApp)\nНаписать менеджеру - @ELG_obmen";
-
-    //     $s .= "\n\nДенежные переводы по Украине и за рубежом:\n";
-    //     $s .= hex2bin('F09F93B2') . " 0981010000 Татьяна  (Telegram)\nНаписать менеджеру @perevody_ELG";
-
-    //     $s .= "\n\nПроверяйте актуальный курс в Вашем городе на сайте: https://elg.co.ua\nили у нашего бота @elgzp_bot";
-
-    //     $s .= "\n\n";
-
-    //     // var_dump($s);
-    //     // die();
-        
-    //     // Test settings
-    //     $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
-    //     $chat_id = '-1001242571685';
-        
-    //     // Works settings
-    //     // $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
-    //     // $chat_id = '-1001378695678';
-    //     $message = $req->getParam('message') ? $req->getParam('message') : '';
-    //     $message = $s . $message;
-
-    //     \App\Common\Bot::sendToChat($token, $chat_id, $message);
-
-    //     $this->flash->addMessage('message', 'Сообщение в Telegram было отправлено.');
-    //     return $this->response->withRedirect($this->router->pathFor('base.index2'));
-    // }
 
     public function sendToChannel($req, $res)
     {
@@ -276,44 +229,17 @@ class BaseRateController extends Controller
             $s .= Emoji::decode($message->content) . "\n\n";
         }
 
-    // var_dump($s);
-    // die();
-    //     $base_place = Place::where('is_actual', true)->where('is_base', true)->first();
-    //     $rates = Rate::actualByPlace($base_place->id);
-    //     $s = 'ОПТОВЫЙ КУРС ВАЛЮТ ' . hex2bin('F09F92B5') . ' от 300 $, €';
-
-    //     $s .= sprintf("\n%-10s  %' 10s  %' 10s","Валюта","Покупка","Продажа");
-    //     foreach ($rates as $rate) {
-    //         $s .= sprintf(
-    //         "\n%-10s %' 9s  %' 9s", 
-    //         Curr::iconed($rate->curr),
-    //         number_format($rate['rate_buy'], $rate->curr->precision_size), 
-    //         number_format($rate['rate_sale'], $rate->curr->precision_size)
-    //         );
-    //     }
-
-    //     $s .= "\n\n";
-    //     $s .= hex2bin('E280BCEFB88F') . " Курс в течении дня  может меняться в зависимости от ситуации на валютном рынке как в " . hex2bin('F09F9388') . ", так и в " . hex2bin('F09F9389') . ".";
-
-    //     $s .= "\n\n" . hex2bin('F09F93B2') . "0961010000 Владислав (Telegram, Viber, WhatsApp)\nНаписать менеджеру - @ELG_obmen";
-
-    //     $s .= "\n\nДенежные переводы по Украине и за рубежом:\n";
-    //     $s .= hex2bin('F09F93B2') . " 0981010000 Татьяна  (Telegram)\nНаписать менеджеру @perevody_ELG";
-
-    //     $s .= "\n\nПроверяйте актуальный курс в Вашем городе на сайте: https://elg.co.ua\nили у нашего бота @elgzp_bot";
-
-    //     $s .= "\n\n";
-
-    //     // var_dump($s);
-    //     // die();
+        // Test settings
+        //   $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
+        //   $chat_id = '-1001242571685';
         
-    // Test settings
-    //   $token = '1689953716:AAHQDVsVUYOJBhVdgTLyS8ojFKdm_jLHgCA'; 
-    //   $chat_id = '-1001242571685';
+        // Works settings
+        // $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
+        // $chat_id = '-1001378695678';
+
+        $token = Settings::$global['main_bot_token']; 
+        $chat_id = Settings::$global['main_chat_id'];
         
-    // Works settings
-        $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE'; 
-        $chat_id = '-1001378695678';
         $message = $req->getParam('message') ? $req->getParam('message') : '';
         $message = $s . $message;
 
@@ -321,6 +247,7 @@ class BaseRateController extends Controller
 
         $this->flash->addMessage('message', 'Сообщение в Telegram было отправлено.');
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
+
     }
   
 } 
