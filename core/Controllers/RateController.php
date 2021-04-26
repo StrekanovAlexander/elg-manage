@@ -94,24 +94,23 @@ class RateController extends Controller
     {
         $emails = $this->emailList();
         // $emails = [];
-        array_push($emails, '8899897@gmail.com');
+        array_push($emails, Settings::$global['mail']['general_email']);
         
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
 
-        $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
-            ->setUsername('fin.lombard@gmail.com')
-            ->setPassword('Aksafefy');
+        $transport = (new \Swift_SmtpTransport(
+            Settings::$global['mail']['smtp'], 
+            Settings::$global['mail']['port'],
+            Settings::$global['mail']['encrypt']))
+            ->setUsername(Settings::$global['mail']['usr'])
+            ->setPassword(Settings::$global['mail']['pwd']);
 
-        // $transport = (new \Swift_SmtpTransport('mail.elg.co.ua', 587, 'tls'))
-        //     ->setUsername('manager@elg.co.ua')
-        //     ->setPassword('4Rs68BUf7u');
-    
         $mailer = new \Swift_Mailer($transport);
         
         $message = (new \Swift_Message($title))
-            ->setFrom(['fin.lombard@gmail.com' => 'Elg Manager'])
+            ->setFrom([Settings::$global['mail']['usr'] => 'Elg Manager'])
             ->setTo($emails)
             ->setBody($body, 'text/html');
 
