@@ -93,8 +93,8 @@ class RateController extends Controller
     public function send($req, $res)
     {
         $emails = $this->emailList();
-        // $emails = [];
-        array_push($emails, Settings::$global['mail']['general_email']);
+
+//        array_push($emails, Settings::$global['mail']['general_email']);
         
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
