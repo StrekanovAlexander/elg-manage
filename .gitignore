@@ -1,3 +1,4 @@
 /css/*.map
 /node_modules
 /vendor
+/dumps/*.gz
