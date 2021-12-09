@@ -92,29 +92,42 @@ class RateController extends Controller
 
     public function send($req, $res)
     {
-        $emails = $this->emailList();
-
-//        array_push($emails, Settings::$global['mail']['general_email']);
-        
+        $emails = $this->emailList(); // array_push($emails, Settings::$global['mail']['general_email']);
+               
         $title = 'Курсы валют ' . date('H:i:s d.m.Y');
         $body = StringUtil::setTag('h4', $title, 'font-weight: normal');
         $body .= $this->ratesTable();
 
+        /*
         $transport = (new \Swift_SmtpTransport(
             Settings::$global['mail']['smtp'], 
             Settings::$global['mail']['port'],
             Settings::$global['mail']['encrypt']))
             ->setUsername(Settings::$global['mail']['usr'])
             ->setPassword(Settings::$global['mail']['pwd']);
+        */
+
+        $transport = (new \Swift_SmtpTransport('mail.elg.co.ua', 587, 'tls'))
+            ->setUsername('manager@elg.co.ua')
+            ->setPassword('4Rs68BUf7u');
 
         $mailer = new \Swift_Mailer($transport);
         
+        /*
         $message = (new \Swift_Message($title))
             ->setFrom([Settings::$global['mail']['usr'] => 'Elg Manager'])
             ->setTo($emails)
             ->setBody($body, 'text/html');
+        */    
+
+            $message = (new \Swift_Message($title))
+            ->setFrom(['manager@elg.co.ua' => 'Elg Manager'])
+            ->setTo($emails)
+            ->setBody($body, 'text/html');
+    
 
         $result = $mailer->send($message);
+
         if ($result) {
             $settings = \App\Models\Setting::first();
             if ($settings->is_chat_alert) {
@@ -123,7 +136,7 @@ class RateController extends Controller
             $this->sendRatesToDeps();  
             $this->flash->addMessage('message', 'Курсы валют разосланы по отделениям');
         }
-
+        
         return $this->response->withRedirect($this->router->pathFor('base.index2'));
     }
 
