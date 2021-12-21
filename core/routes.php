@@ -73,6 +73,13 @@ $app->group('', function() {
     $this->get('/user/logout', 'UserController:logout')->setName('user.logout');
     $this->get('/user/edit', 'UserController:edit')->setName('user.edit');
     $this->post('/user/edit', 'UserController:update');
+
+    $this->get('/service', 'ServiceController:index')->setName('service.index');
+    $this->get('/service/clear', 'ServiceController:getClear')->setName('service.clear');
+    $this->post('/service/clear', 'ServiceController:postClear');
+
+    $this->get('/retailrates', 'RetailRateController:index')->setName('retailrate.index');
+    $this->post('/retailrates', 'RetailRateController:storeRetailRateRules');
     
 })->add(new \App\Middleware\AuthMiddleware($c));
 

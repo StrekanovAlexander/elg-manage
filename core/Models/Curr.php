@@ -75,6 +75,11 @@ class Curr extends Model
             return self::addIcon($base_curr) . "/" . self::addIcon($rel_curr);
         }
     }
+
+    public static function countActual()
+    {
+        return self::where('is_actual', true)->get()->count();
+    }
  
     private static function addIcon($curr)
     {

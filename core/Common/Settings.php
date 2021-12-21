@@ -27,7 +27,7 @@ class Settings
         ],
         'siteButton' => [
             [
-                ['url' => 'https://elg.co.ua', 'text' => 'Перейти на сайт'],
+                ['url' => 'https://obmen1.zp.ua', 'text' => 'Перейти на сайт'],
             ]
         ],
         'titles' => [

@@ -1,0 +1,27 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+<h4 class="mb-5">Обслуживание</h4>
+<h5>Количество записей</h5>
+<table class="table table-bordered table-sm table-striped">
+  <tr>
+    <td>Базовые курсы (ID: {{ baseRateMaxId }})</td>
+    <td class="text-right">{{ baseRatesCount|number_format(0, '.', ' ') }}</td>
+  </tr>
+  <tr>
+    <td>Курсы по отделениям (ID: {{ rateMaxId }})</td>
+    <td class="text-right">{{ ratesCount|number_format(0, '.', ' ') }}</td>
+  </tr>
+  <tr>
+    <td>Актуальных валют</td>
+    <td class="text-right">{{ currsCount }}</td>
+  </tr>
+  <tr>
+    <td>Населенных пунктов</td>
+    <td class="text-right">{{ placesCount }}</td>
+  </tr>
+</table>
+<p>
+  <a href="{{ path_for('service.clear') }}">Очистить курсы</a>
+</p>
+{% endblock %}

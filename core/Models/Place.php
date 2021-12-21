@@ -25,4 +25,9 @@ class Place extends Model
             ->orderBy('id')
             ->get();
     }
+
+    public static function countActual()
+    {
+        return self::where('is_actual', true)->get()->count();
+    }
 }

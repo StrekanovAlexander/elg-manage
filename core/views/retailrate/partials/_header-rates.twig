@@ -1,0 +1,9 @@
+<tr class="rates small text-center font-weight-bold bg-dark text-white">
+    <td style="height: 3em"></td>
+    <td style="background-color: black">БАЗОВЫЙ</td>
+    {% set i = 0 %}
+    {% for place in places %}
+        <td {{ i is even ? 'style="background-color: dimgray"' }}>{{ place.full_name|slice(0, 7)|upper }}</td>
+        {% set i = i + 1 %}
+    {% endfor %}
+</tr>

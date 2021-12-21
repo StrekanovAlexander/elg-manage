@@ -1,0 +1,38 @@
+<tr><td colspan="{{ places|length + 2 }}">Покупка (розница)</td></tr>
+{% for curr in currs %}
+    <tr class="small rates" style="background-color: {{ curr.color.full_name }}">
+        <td class="font-weight-bold text-center">{{ curr.short_name }}</td>
+        <td class="text-center font-weight-bold">
+            {% for base_rate in base_rates|filter(base_rate => base_rate.curr.id == curr.id) %}
+                {{ base_rate.rate_buy|number_format(curr.precision_size, '.', '') }}
+            {% endfor %}    
+        </td>
+        {% for place in places %}
+            <td>
+                {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                    <input name="diff_retail_buy_{{ curr.id }}_{{ place.id }}" id="diff_retail_buy_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_retail_buy }}" class="input-step{{ rule.diff_retail_buy < 0 ? ' input-step-minus' : (rule.diff_retail_buy > 0 ? ' input-step-plus' : '') }}">
+                    </td>
+                {% endfor %}
+            </td> 
+        {% endfor %}        
+    </tr>
+{% endfor %}
+<tr><td colspan="{{ places|length + 2 }}">Продажа (розница)</td></tr>
+{% for curr in currs %}
+    <tr class="small rates" style="background-color: {{ curr.color.full_name }}">
+        <td class="font-weight-bold text-center">{{ curr.short_name }}</td>
+        <td class="text-center font-weight-bold">
+            {% for base_rate in base_rates|filter(base_rate => base_rate.curr.id == curr.id) %}
+                {{ base_rate.rate_sale|number_format(curr.precision_size, '.', '') }}
+            {% endfor %}    
+        </td>
+        {% for place in places %}
+            <td>
+                {% for rule in rules|filter(rule => rule.place_id == place.id and rule.curr_id == curr.id) %}
+                    <input name="diff_retail_sale_{{ curr.id }}_{{ place.id }}" id="diff_retail_sale_{{ curr.id }}_{{ place.id }}" type="number" step="1" value="{{ rule.diff_retail_sale }}" class="input-step{{ rule.diff_retail_sale < 0 ? ' input-step-minus' : (rule.diff_retail_sale > 0 ? ' input-step-plus' : '') }}">
+                    </td>
+                {% endfor %}
+            </td> 
+        {% endfor %}        
+    </tr>
+{% endfor %}

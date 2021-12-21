@@ -10,6 +10,8 @@ class Rule extends Model
     protected $fillable = [
         'diff_buy',
         'diff_sale',
+        'diff_retail_buy',
+        'diff_retail_sale',
     ];
 
     public function curr()

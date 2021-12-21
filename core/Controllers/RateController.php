@@ -163,6 +163,9 @@ class RateController extends Controller
                 'currency' => $rate->curr->short_name,
                 'buy' => number_format($rate->rate_buy, $rate->curr->precision_size),
                 'sale' => number_format($rate->rate_sale, $rate->curr->precision_size),
+                'retail_buy' => number_format($rate->rate_retail_buy, $rate->curr->precision_size),
+                'retail_sale' => number_format($rate->rate_retail_sale, $rate->curr->precision_size),
+
             ];         
         }
         

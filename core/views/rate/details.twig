@@ -11,25 +11,31 @@
     <h3 class="my-5">Текущие курсы валют: {{ place.full_name }}</h3>
     {% if rates|length %}
         <table class="table table-bordered table-striped">
-            <thead>
-                <tr class="text-center">
-                    <th colspan="2">Валюта</th>
-                    <th class="text-right">Покупка</th>
-                    <th class="text-right">Продажа</th>
-                    <th>Дата</th>
-                </tr>
-            </thead>
-            <tbody>
+            <tr class="text-center">
+                <th colspan="2"></th>
+                <th colspan="2">Опт</th>
+                <th colspan="2">Розница</th>
+                <th></th>
+            </tr>
+            <tr class="text-center">
+                <th colspan="2">Валюта</th>
+                <th class="text-right">Покупка</th>
+                <th class="text-right">Продажа</th>
+                <th class="text-right">Покупка</th>
+                <th class="text-right">Продажа</th>
+                <th>Дата</th>
+            </tr>
             {% for rate in rates %}
                 <tr class="text-center">
                    <td>{{ rate.curr.sign|raw }}</td>
                    <td>{{ rate.curr.short_name }}</td>
                    <td class="text-right">{{ rate.rate_buy }}</td>
                    <td class="text-right">{{ rate.rate_sale }}</td>
+                    <td class="text-right">{{ rate.rate_retail_buy }}</td>
+                   <td class="text-right">{{ rate.rate_retail_sale }}</td>
                    <td>{{ rate.created_at|date("d.m.Y H:i:s") }}</td>
                 </tr>    
             {% endfor %}
-            </tbody>
         </table>        
     {% endif %} 
 {% endblock %}

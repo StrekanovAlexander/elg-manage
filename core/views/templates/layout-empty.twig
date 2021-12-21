@@ -12,9 +12,8 @@
 </head>
 <body>
     {% if auth.check %}
-        <div>
-            <a class="btn btn-light" href="{{ path_for('home.index') }}">Elg-админ</a>
-        </div>    
+        <a class="btn btn-outline-primary m-1" href="{{ path_for('base.index2') }}">Базовые курсы</a>
+        <a class="btn btn-outline-primary m-1" href="{{ path_for('retailrate.index') }}">Настройки розницы</a>
     {% endif %}
     {% include 'templates/partials/_flash.twig' %}
     {% block content %}{% endblock %}

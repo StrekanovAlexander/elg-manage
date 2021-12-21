@@ -77,8 +77,16 @@ $c['RateController'] = function($c) {
     return new App\Controllers\RateController($c);
 };
 
+$c['RetailRateController'] = function($c) {
+    return new App\Controllers\RetailRateController($c);
+};
+
 $c['RuleController'] = function($c) {
     return new App\Controllers\RuleController($c);
+};
+
+$c['ServiceController'] = function($c) {
+    return new App\Controllers\ServiceController($c);
 };
 
 $c['SettingController'] = function($c) {
