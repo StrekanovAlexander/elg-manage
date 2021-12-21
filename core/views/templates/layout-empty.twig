@@ -12,6 +12,7 @@
 </head>
 <body>
     {% if auth.check %}
+        <a class="btn btn-outline-primary m-1" href="{{ path_for('home.index') }}">Главная</a>
         <a class="btn btn-outline-primary m-1" href="{{ path_for('base.index2') }}">Базовые курсы</a>
         <a class="btn btn-outline-primary m-1" href="{{ path_for('retailrate.index') }}">Настройки розницы</a>
     {% endif %}

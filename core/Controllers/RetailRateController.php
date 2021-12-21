@@ -17,6 +17,7 @@ class RetailRateController extends Controller
       $currs = Curr::orderBy('id')
         ->where('is_actual', true)
         ->where('is_main', false)
+        ->where('is_cross', false)
         ->get();  
 
       $places = Place::orderBy('is_base', 'DESC')
@@ -43,6 +44,7 @@ class RetailRateController extends Controller
         $currs = Curr::orderBy('id')
           ->where('is_actual', true)
           ->where('is_main', false)
+          ->where('is_cross', false)
           ->get();
 
         $places = Place::orderBy('is_base', 'DESC')
