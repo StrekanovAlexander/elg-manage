@@ -1,0 +1,39 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('channel.index') }}">Каналы</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ channel.full_name }}</li>
+            <li class="breadcrumb-item"><a href="{{ path_for('channel.message.index', {'id': channel.id}) }}">Сообщения</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Создание</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Создать сообщение в канале: {{ channel.full_name }}</h3>
+    <form action="{{ path_for('channel.message.store')}}" method="POST">
+        <div class="form-group">
+            <label for="content">Текст сообщения</label>
+            <textarea class="form-control" name="content" id="content"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="position">Порядок</label>
+            <select class="form-control" name="position" id="position">
+                {% for i in 1..max_pos %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual">Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit">Записать</button>
+        </div>
+        <input type="hidden" name="id" id="id" value="{{ channel.id }}">     
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    

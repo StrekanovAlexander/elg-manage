@@ -80,6 +80,20 @@ $app->group('', function() {
 
     $this->get('/retailrates', 'RetailRateController:index')->setName('retailrate.index');
     $this->post('/retailrates', 'RetailRateController:storeRetailRateRules');
+
+    $this->get('/channels', 'ChannelController:index')->setName('channel.index');
+    $this->get('/channels/create', 'ChannelController:create')->setName('channel.create');
+    $this->post('/channels/create', 'ChannelController:store');
+
+    $this->get('/channels/edit[/{id}]', 'ChannelController:edit')->setName('channel.edit');
+    $this->post('/channels/edit', 'ChannelController:update');
+
+    $this->get('/channels/{id}/messages', 'ChannelController:messages')->setName('channel.message.index');
+    $this->get('/channels/{id}/messages/create', 'ChannelController:createMessage')->setName('channel.message.create');
+    $this->post('/channels/messages/store', 'ChannelController:storeMessage')->setName('channel.message.store');
+
+    $this->get('/channels/messages/edit[/{id}]', 'ChannelController:editMessage')->setName('channel.message.edit');
+    $this->post('/channels/messages/update', 'ChannelController:updateMessage')->setName('channel.message.update');
     
 })->add(new \App\Middleware\AuthMiddleware($c));
 

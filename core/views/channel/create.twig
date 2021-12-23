@@ -1,0 +1,36 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path_for('channel.index') }}">Каналы</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Создание</li>
+        </ol>
+    </nav>
+    <h3 class="my-5">Создать канал</h3>
+    <form action="{{ path_for('channel.create')}}" method="POST">
+        <div class="form-group">
+            <label for="full_name">Наименование</label>
+            <input class="form-control" name="full_name" id="dep_full_name" type="text">
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input class="form-control" name="url" id="url" type="text">
+        </div>
+        <div class="form-group">
+            <label for="chat_id">Chat ID</label>
+            <input class="form-control" name="chat_id" id="chat_id" type="text">
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <label for="is_actual" class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="is_actual" id="is_actual">Актуальность
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" id="btn-save" type="submit" disabled>Записать</button>
+        </div>  
+        {{ csrf.field | raw}}
+    </form>
+{% endblock %}    

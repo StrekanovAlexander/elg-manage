@@ -53,6 +53,10 @@ $c['BaseRateController'] = function($c) {
     return new App\Controllers\BaseRateController($c);
 };
 
+$c['ChannelController'] = function($c) {
+    return new App\Controllers\ChannelController($c);
+};
+
 $c['CurrController'] = function($c) {
     return new App\Controllers\CurrController($c);
 };
