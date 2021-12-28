@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Common\Bot;
 use App\Common\Emoji;
 use App\Models\Channel;
 use App\Models\ChannelMessage;
+use App\Common\Settings;
 
 class ChannelController extends Controller
 {
@@ -130,6 +132,38 @@ class ChannelController extends Controller
             'id' => $channel->id,
         ]));
 
+    }
+
+    public function sendMessages($req, $res) {
+
+        $channels = Channel::where('is_actual', true)->get();
+        
+        $messages = []; 
+        foreach($channels as $key => $value) {
+            $channel_messages = ChannelMessage::orderBy('position')
+                ->where('channel_id', $value->id)->where('is_actual', true)
+                ->get()->toArray();
+
+            $content = array_reduce($channel_messages, function($acc, $el) {
+                return $el['content'] ? $acc .= $el['content'] . "\n\n" : null;
+            }, '');
+
+            $bot_token = $value->id == 6 ? Settings::$global['main_bot_token'] : Settings::$global['info_bot_token']; 
+
+            if ($content) {
+                Bot::sendToChat($bot_token, $value->chat_id, Emoji::decode($content));
+                // $messages[] = ['chat_id' => $value->chat_id, 'content' => $content];
+            }    
+        }
+
+        $this->flash->addMessage('message', 'Сообщения в каналы были отправлены');
+        return $this->response->withRedirect($this->router->pathFor('base.index2'));
+
+        // return $this->view->render($res, 'channel/message/debug.twig', [
+        //     'channels' => $channels,
+        //     'messages' => $messages,
+        // ]);
+        
     }
 
 }  

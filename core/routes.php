@@ -94,6 +94,8 @@ $app->group('', function() {
 
     $this->get('/channels/messages/edit[/{id}]', 'ChannelController:editMessage')->setName('channel.message.edit');
     $this->post('/channels/messages/update', 'ChannelController:updateMessage')->setName('channel.message.update');
+
+    $this->post('/channels/messages/send', 'ChannelController:sendMessages')->setName('channel.messages.send');
     
 })->add(new \App\Middleware\AuthMiddleware($c));
 

@@ -1,0 +1,20 @@
+<div class="modal fade" id="modalFormChannelsSend" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Отправка сообщений в каналы</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ path_for('channel.messages.send')}}" class="form-horizontal" role="form" method="post" id="">
+          <div class="modal-footer">
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+          </div>
+          {{ csrf.field | raw}}
+        </form>
+    </div>
+  </div>
+</div>

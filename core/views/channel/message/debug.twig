@@ -1,0 +1,9 @@
+{% extends 'templates/layout.twig' %}
+
+{% block content %}
+  <h3 class="my-5">Debug</h3>
+  {% for message in messages %}
+   <p>{{ message.chat_id ~ " :: " ~ message.content }}</p>
+  {% endfor %}
+
+{% endblock %}    
