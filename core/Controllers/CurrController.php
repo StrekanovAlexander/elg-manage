@@ -59,15 +59,19 @@ class CurrController extends Controller
             $this->flash->addMessage('error', 'Отказ! Попытка создания уже существующей валюты.');
             return $this->response->withRedirect($this->router->pathFor('curr.create'));
         }
-    
+
+        $step_size_format = $this->getStepSizeFormat($req->getParam('step_size'));
+        
         Curr::create([
             'short_name' => $req->getParam('short_name'), 
             'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
+            'step_size_format' => $step_size_format,
             'precision_size' => $req->getParam('precision_size'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
+        
       
         $this->flash->addMessage('message', 'Валюта была успешно создана');
         return $res->withRedirect($this->router->pathFor('curr.index'));
@@ -89,11 +93,15 @@ class CurrController extends Controller
     public function update($req, $res)
     {
         $curr = Curr::find($req->getParam('id'));
+
+        $step_size_format = $this->getStepSizeFormat($req->getParam('step_size'));
+
         $curr->update([
             'short_name' => $req->getParam('short_name'), 
             'color_id' => $req->getParam('color_id'),
             'sign' => $req->getParam('sign'), 
             'step_size' => $req->getParam('step_size'),
+            'step_size_format' => $step_size_format,
             'precision_size' => $req->getParam('precision_size'),
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
@@ -194,6 +202,12 @@ class CurrController extends Controller
 
         $this->flash->addMessage('message', 'Валюта (кросс) была отредактирована');
         return $res->withRedirect($this->router->pathFor('curr.cross.index'));
+    }
+
+    private function getStepSizeFormat($step_size) 
+    {
+        $pos = strripos($step_size, '1');
+        return substr($step_size, 0, $pos + 1);
     }
 
 }  

@@ -15,6 +15,7 @@ class Curr extends Model
         'short_name',
         'sign',
         'step_size',
+        'step_size_format',
         'precision_size',
         'oper_cross',
         'is_cross',

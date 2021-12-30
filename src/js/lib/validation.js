@@ -23,7 +23,7 @@ const run = () => {
     
   if (curr_short_name) {
     const btn = document.querySelector('#btn-save');
-    const check = (el) => /^[a-zA-Z]{3}$/.test(el.value);
+    const check = (el) => /^[a-zA-Z]{4}$/.test(el.value);
     
     curr_short_name.addEventListener('blur', function() {
       btn.disabled = !check(curr_short_name);
