@@ -12,6 +12,7 @@
                     <th class="text-left">Наименование</th>
                     <th>URL</th>
                     <th>Chat ID</th>
+                    <th>Основной</th>
                     <th>Актуальность</th>
                     <th>Сообщения</th>
                     <th></th>
@@ -23,6 +24,7 @@
                    <td>{{ channel.full_name }}</td>
                    <td>{{ channel.url }}</td>
                    <td>{{ channel.chat_id }}</td>
+                   <td class="text-center"><i class="fas {{ channel.is_main ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><i class="fas {{ channel.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><a href="{{ path_for('channel.message.index', {'id': channel.id}) }}">Сообщения</a></td>
                    <td class="text-center"><a href="{{ path_for('channel.edit', {'id': channel.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>

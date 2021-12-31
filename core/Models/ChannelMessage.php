@@ -12,6 +12,7 @@ class ChannelMessage extends Model
       'channel_id',
       'content',
       'position',
+      'is_header',
       'is_actual',
     ];
     

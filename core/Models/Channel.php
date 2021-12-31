@@ -11,6 +11,7 @@ class Channel extends Model
       'full_name', 
       'url', 
       'chat_id',
+      'is_main',
       'is_actual',
     ];
     

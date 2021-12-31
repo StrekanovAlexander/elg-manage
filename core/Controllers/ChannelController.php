@@ -6,6 +6,7 @@ use App\Common\Bot;
 use App\Common\Emoji;
 use App\Models\Channel;
 use App\Models\ChannelMessage;
+use App\Models\Rate;
 use App\Common\Settings;
 
 class ChannelController extends Controller
@@ -29,6 +30,7 @@ class ChannelController extends Controller
             'full_name' => $req->getParam('full_name') ? $req->getParam('full_name') : 'Новый канал'  , 
             'url' => $req->getParam('url') ? $req->getParam('url') : 'URL', 
             'chat_id' => $req->getParam('chat_id') ? $req->getParam('chat_id') : 'chat_id', 
+            'is_main' => $req->getParam('is_main') ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
       
@@ -50,7 +52,8 @@ class ChannelController extends Controller
         $channel->update([
             'full_name' => $req->getParam('full_name'), 
             'url' => $req->getParam('url'), 
-            'chat_id' => $req->getParam('chat_id'), 
+            'chat_id' => $req->getParam('chat_id'),
+            'is_main' => $req->getParam('is_main') ? true : false, 
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
         $this->flash->addMessage('message', 'Канал был отредактирован');
@@ -92,7 +95,8 @@ class ChannelController extends Controller
         ChannelMessage::create([
             'channel_id' => $channel->id, 
             'content' => Emoji::encode($req->getParam('content')), 
-            'position' => $req->getParam('position'), 
+            'position' => $req->getParam('position'),
+            'is_header' => $req->getParam('is_header') ? true : false, 
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
   
@@ -124,6 +128,7 @@ class ChannelController extends Controller
         $channel_message->update([
             'content' => Emoji::encode($req->getParam('content')), 
             'position' => $req->getParam('position'), 
+            'is_header' => $req->getParam('is_header') ? true : false, 
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 
@@ -140,14 +145,25 @@ class ChannelController extends Controller
         
         $messages = []; 
         foreach($channels as $key => $value) {
-            $channel_messages = ChannelMessage::orderBy('position')
-                ->where('channel_id', $value->id)->where('is_actual', true)
-                ->get()->toArray();
+            $channel_messages = ChannelMessage::where('channel_id', $value->id)
+                ->where('is_actual', true)
+                ->where('is_header', true)
+                ->first();
+  
+            $content = $channel_messages->content ? $channel_messages->content  . "\n" : "";  
+           
+            $rates = Rate::actualByPlace($value->place_id);
+            $content .= Rate::ratesToStr($rates) . "\n\n";
 
-            $content = array_reduce($channel_messages, function($acc, $el) {
+            $channel_messages = ChannelMessage::orderBy('position')
+                ->where('channel_id', $value->id)
+                ->where('is_actual', true)
+                ->where('is_header', false)->get()->toArray();
+
+            $content .= array_reduce($channel_messages, function($acc, $el) {
                 return $el['content'] ? $acc .= $el['content'] . "\n\n" : null;
             }, '');
-
+            
             $bot_token = $value->id == 6 ? Settings::$global['main_bot_token'] : Settings::$global['info_bot_token']; 
 
             if ($content) {

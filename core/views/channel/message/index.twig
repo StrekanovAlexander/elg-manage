@@ -17,6 +17,7 @@
             <tr class="text-center">
                 <th class="text-left">Сообщение</th>
                 <th>Порядок</th>
+                <th>Заголовок курсов</th>
                 <th>Актуальность</th>
                 <th></th>
             </tr>
@@ -24,6 +25,7 @@
                 <tr>
                    <td>{{ channel_message.content }}</td>
                    <td>{{ channel_message.position }}</td>
+                   <td class="text-center"><i class="fas {{ channel_message.is_header ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><i class="fas {{ channel_message.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><a href="{{ path_for('channel.message.edit', {'id': channel_message.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
                 </tr>    
