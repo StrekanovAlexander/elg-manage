@@ -20,9 +20,11 @@ class Rate extends Model
 
     public function actualByPlace($id)
     {
-        return self::orderBy('curr_id', 'ASC')
-            ->where('place_id', $id)
-            ->where('created_at', self::max('created_at'))
+        return self::query()
+            ->join('currs', 'rates.curr_id', '=', 'currs.id')
+            ->where('rates.place_id', $id)
+            ->where('rates.created_at', self::max('created_at'))
+            ->where('currs.is_actual', true)
             ->get();
     }
 
