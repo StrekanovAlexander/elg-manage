@@ -6,6 +6,7 @@ use App\Common\Bot;
 use App\Common\Emoji;
 use App\Models\Channel;
 use App\Models\ChannelMessage;
+use App\Models\Place;
 use App\Models\Rate;
 use App\Common\Settings;
 
@@ -20,14 +21,15 @@ class ChannelController extends Controller
 
     public function create($req, $res)
     {
-        return $this->view->render($res, 'channel/create.twig');
+        return $this->view->render($res, 'channel/create.twig', [
+            'places' => Channel::availablePlaces(),
+        ]);
     }
-
 
     public function store($req, $res)
     {
         Channel::create([
-            'full_name' => $req->getParam('full_name') ? $req->getParam('full_name') : 'Новый канал'  , 
+            'place_id' => $req->getParam('place_id'), 
             'url' => $req->getParam('url') ? $req->getParam('url') : 'URL', 
             'chat_id' => $req->getParam('chat_id') ? $req->getParam('chat_id') : 'chat_id', 
             'is_main' => $req->getParam('is_main') ? true : false,
@@ -43,6 +45,7 @@ class ChannelController extends Controller
     {
         return $this->view->render($res, 'channel/edit.twig', [
             'channel' => Channel::find($args['id']),
+            'places' => Channel::availablePlaces(),
         ]);
     }
 
@@ -50,7 +53,7 @@ class ChannelController extends Controller
     {
         $channel = Channel::find($req->getParam('id'));
         $channel->update([
-            'full_name' => $req->getParam('full_name'), 
+            'place_id' => $req->getParam('place_id'),  
             'url' => $req->getParam('url'), 
             'chat_id' => $req->getParam('chat_id'),
             'is_main' => $req->getParam('is_main') ? true : false, 

@@ -9,9 +9,14 @@
     </nav>
     <h3 class="my-5">Создать канал</h3>
     <form action="{{ path_for('channel.create')}}" method="POST">
+        <input class="form-control" name="full_name" type="hidden" value="full_name">
         <div class="form-group">
             <label for="full_name">Наименование</label>
-            <input class="form-control" name="full_name" id="dep_full_name" type="text">
+            <select class="form-control" name="place_id" id="place_id">
+                {% for place in places %}
+                    <option value="{{ place.id }}">{{ place.full_name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group">
             <label for="url">URL</label>
@@ -36,7 +41,7 @@
             </div>
         </div>
         <div class="form-group">
-            <button class="btn btn-success" id="btn-save" type="submit" disabled>Записать</button>
+            <button class="btn btn-success" id="btn-save" type="submit">Записать</button>
         </div>  
         {{ csrf.field | raw}}
     </form>

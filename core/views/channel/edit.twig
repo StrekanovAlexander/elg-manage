@@ -7,11 +7,16 @@
             <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
         </ol>
     </nav>
-    <h3 class="my-5">Редактировать канал: {{ channel.full_name }}</h3>
+    <h3 class="my-5">Редактировать канал: {{ channel.place.full_name }}</h3>
     <form action="{{ path_for('channel.edit')}}" method="POST">
         <div class="form-group">
             <label for="dep_full_name">Наименование</label>
-            <input class="form-control" name="full_name" id="dep_full_name" type="text" value="{{ channel.full_name }}">
+            <select class="form-control" name="place_id" id="place_id">
+                <option value="{{ channel.place_id }}" selected>{{ channel.place.full_name }}</option>
+                {% for place in places %}
+                    <option value="{{ place.id }}">{{ place.full_name }}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group">
             <label for="url">URL</label>

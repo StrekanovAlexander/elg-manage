@@ -21,7 +21,7 @@
             <tbody>
             {% for channel in channels %}
                 <tr>
-                   <td>{{ channel.full_name }}</td>
+                   <td>{{ channel.place.full_name }}</td>
                    <td>{{ channel.url }}</td>
                    <td>{{ channel.chat_id }}</td>
                    <td class="text-center"><i class="fas {{ channel.is_main ? 'fa-check' : 'fa-times' }}"></i></td>
