@@ -46,6 +46,7 @@ class PlaceController extends Controller
         $place->update([
             'full_name' => $req->getParam('full_name'), 
             'sign' => $req->getParam('sign'), 
+            'is_bot_active' => $req->getParam('is_bot_active') ? true : false,
             'is_actual' => $req->getParam('is_actual') ? true : false,
         ]);
 

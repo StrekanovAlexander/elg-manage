@@ -13,8 +13,9 @@
                     <th>Префикс</th>
                     <th>Правила</th>
                     <th colspan="2">Курсы валют</th>
+                    <th>Акивность бота</th>
                     <th>Актуальность</th>
-                    <th></th>
+                    <th><i class="fas fa-pencil-alt"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,7 @@
                    <td><a href="{{ path_for('rule.details', {'id': place.id}) }}">Настройка</a></td>
                    <td><a href="{{ path_for('rate.details', {'id': place.id}) }}">Текущие курсы</a></td>
                    <td><a href="{{ path_for('rate.json', {'id': place.id}) }}" target="_blank">JSON</a></td>
+                   <td><i class="fas {{ place.is_bot_active ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td><i class="fas {{ place.is_actual ? 'fa-check' : 'fa-times' }}"></i></td>
                    <td class="text-center"><a href="{{ path_for('place.edit', {'id': place.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
                 </tr>    

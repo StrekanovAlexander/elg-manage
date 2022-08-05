@@ -11,6 +11,7 @@ class Place extends Model
     protected $fillable = [
         'full_name',
         'sign',
+        'is_bot_active',
         'is_actual',
     ];
 

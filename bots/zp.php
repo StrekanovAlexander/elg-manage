@@ -30,6 +30,10 @@ try {
             $bot->sendMessage($message->getChat()->getId(), $bot->printRates());
         }
 
+        if (mb_stripos($text, 'Сайт компании') !== false) {
+            $bot->replyKeyboard($message);
+        }
+
     }, function () {
         return true;
     });
