@@ -9,26 +9,33 @@ use App\Common\Bot;
 
 $token = '1647327669:AAHS4UGQmxhsVNZmkZH_ecsTwrX7gWwTsWE';
 
-$bot = new Bot($token, $db);
+try {
+    $bot = new Bot($token, $db);
 
-$bot->command('start', function ($message) use ($bot) {
-    $bot->replyKeyboard($message);
-});
+    $bot->command('start', function ($message) use ($bot) {
+        $bot->replyKeyboard($message);
+    });
+    
+    $bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
+        
+        $message = $update->getMessage();
+        $id = $message->getChat()->getId();
+        $text = $message->getText();
 
-$bot->on(function($update) use ($bot) {
-	$message = $update->getMessage();
-	$text = $message->getText();
-	if (mb_stripos($text, 'Сайт компании') !== false) {
-        $bot->inlineKeyboard($message, $bot->getSiteButton(), 'site');
-    }
-	if (mb_stripos($text, 'Выбрать город') !== false) {
-        $bot->inlineKeyboard($message, $bot->printPlaces(), 'places');
-    }
-    if (mb_stripos($text, 'Курсы валют') !== false) {
-        $bot->sendMessage($message->getChat()->getId(), $bot->printRates());
-    }}, function($message) use ($name) {
+        if (mb_stripos($text, 'Выбрать город') !== false) {
+            $bot->inlineKeyboard($message, $bot->printPlaces(), 'places');
+        }
+
+        if (mb_stripos($text, 'Курсы валют') !== false) {
+            $bot->sendMessage($message->getChat()->getId(), $bot->printRates());
+        }
+
+    }, function () {
         return true;
-    }
-);
+    });
+    
+    $bot->run();
 
-$bot->run();
+} catch (\TelegramBot\Api\Exception $e) {
+    $e->getMessage();
+}
